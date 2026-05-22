@@ -64,8 +64,8 @@ td.noHit{background:#f5f5f5;color:#555;}
 <div id="hdr"><div id="top">
 <input id="scanInput" type="text" autocomplete="off" autofocus placeholder="scan...">
 <button id="resetBtn" type="button">reset</button></div>
-<div id="meta"><span id="titleMeta" title="Zmieñ terminal / pracownika">terminal: —</span>
-<span id="taskCode" title="Przytrzymaj, ¿eby eksportowaæ">0795</span>
+<div id="meta"><span id="titleMeta" title="ZmieÃ± terminal / pracownika">terminal: â€”</span>
+<span id="taskCode" title="Przytrzymaj, Â¿eby eksportowaÃ¦">0795</span>
 <span>wersja: <b id="versionMeta">macro_2026-05-22_1301</b></span>
 <span>lista: <b id="allCount">0</b></span>
 <span>scan: <b id="scanCount">0</b></span>
@@ -143,10 +143,10 @@ ts:new Date().toISOString(),task_version:taskVersion,task_code:taskCode,
 device_id:terminalId,employee:employeeName,timer_session_id:timerSessionId,
 timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs(),details:details||{}});}
 function updateMeta(){
-document.getElementById('titleMeta').textContent='terminal: '+(terminalId||'—')+(employeeName?' · '+employeeName:'');
+document.getElementById('titleMeta').textContent='terminal: '+(terminalId||'â€”')+(employeeName?' Â· '+employeeName:'');
 document.getElementById('taskCode').textContent=taskCode||'----';
-document.getElementById('versionMeta').textContent=taskVersion||'—';
-document.title=(terminalId?terminalId+' · ':'')+(employeeName||'')+' · '+(taskCode||'');}
+document.getElementById('versionMeta').textContent=taskVersion||'â€”';
+document.title=(terminalId?terminalId+' Â· ':'')+(employeeName||'')+' Â· '+(taskCode||'');}
 function openConfig(){
 document.getElementById('regTerminal').value=terminalId||'';
 document.getElementById('regEmployee').value=employeeName||'';
@@ -217,7 +217,7 @@ const k=(e.kind||'scan')+'|'+(e.id||((e.nr||e.event||'')+'|'+(e.ts||'')));
 if(!m.has(k))m.set(k,e);}
 loadJournal().forEach(add);scans.forEach(add);
 return Array.from(m.values()).sort((a,b)=>String(a.ts||'').localeCompare(String(b.ts||'')));}
-function doExport(){const rows=exportRows();if(!rows.length){alert('Brak zapisów');return;}logEvent('manual_export',{trigger:'task_code_long_press'});const rows2=exportRows();
+function doExport(){const rows=exportRows();if(!rows.length){alert('Brak zapisÃ³w');return;}logEvent('manual_export',{trigger:'task_code_long_press'});const rows2=exportRows();
 const lines=rows2.map(e=>{
 if((e.kind||'scan')==='event')return ['@EVENT',e.event||'event',e.ts||'',
 e.task_version||taskVersion,e.task_code||taskCode,e.id||'',e.employee||employeeName,
@@ -233,15 +233,15 @@ try{const a=document.createElement('a');
 a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
 a.download='oos_macro_'+(terminalId||'terminal')+'_'+(taskCode||'code')+'.txt';
 document.body.appendChild(a);a.click();a.remove();
-setTimeout(()=>URL.revokeObjectURL(a.href),1000);alert('Eksport gotowy: '+rows2.length+' zapisów');
+setTimeout(()=>URL.revokeObjectURL(a.href),1000);alert('Eksport gotowy: '+rows2.length+' zapisÃ³w');
 }catch(_){prompt('Kopiuj:',txt);}}
 function setupCodeExport(){const box=document.getElementById('taskCode');
 let tm=null,fired=false;
 function start(e){fired=false;if(e&&e.type==='touchstart')e.preventDefault();
 clearTimeout(tm);tm=setTimeout(()=>{fired=true;
-const p=prompt('Has³o eksportu: wpisz kod zadania');
+const p=prompt('HasÂ³o eksportu: wpisz kod zadania');
 if(p!==null&&String(p).trim()===String(taskCode).trim())doExport();
-else if(p!==null)alert('B³êdny kod');},1200);}
+else if(p!==null)alert('BÂ³Ãªdny kod');},1200);}
 function stop(){clearTimeout(tm);}
 box.addEventListener('mousedown',start);
 box.addEventListener('touchstart',start,{passive:false});
@@ -249,7 +249,7 @@ box.addEventListener('touchstart',start,{passive:false});
 box.addEventListener('click',e=>{if(fired)e.preventDefault();});}
 let clearTimer=null;scanInput.addEventListener('input',()=>{clearTimeout(clearTimer);if(scanInput.value.trim())clearTimer=setTimeout(process,250);});
 scanInput.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key==='Tab'){e.preventDefault();clearTimeout(clearTimer);setTimeout(process,10);}});
-function clearAll(){if(!confirm('Reset widocznych klików?'))return;logEvent('visible_log_reset',{});scans.length=0;counts.clear();try{localStorage.removeItem(scanKey());}catch(_){}render(false);scanInput.focus();}
+function clearAll(){if(!confirm('Reset widocznych klikÃ³w?'))return;logEvent('visible_log_reset',{});scans.length=0;counts.clear();try{localStorage.removeItem(scanKey());}catch(_){}render(false);scanInput.focus();}
 window.addEventListener('pagehide',()=>logEvent('page_hide',{}));
 document.addEventListener('visibilitychange',()=>{logEvent(document.hidden?'page_hidden':'page_visible',{});});
 document.getElementById('startBtn').addEventListener('click',saveConfig);
