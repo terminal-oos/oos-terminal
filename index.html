@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>2026-05-25_1912</title>
+<title>2026-05-25_1920</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -63,16 +63,16 @@ td.noHit{background:#f5f5f5;color:#555;}
 <h2>Konfiguracja terminala</h2>
 <input id="regTerminal" placeholder="nr terminala">
 <input id="regEmployee" placeholder="pracownik">
-<input id="regVersion" placeholder="wersja zadania" value="macro_2026-05-25_1912">
-<input id="regCode" placeholder="kod zadania" value="4952">
+<input id="regVersion" placeholder="wersja zadania" value="test">
+<input id="regCode" placeholder="kod zadania" value="0000">
 <button id="startBtn" type="button">start</button></div></div>
 <div id="hdr">
 <div class="termLine">
 <div>
 <div class="termMain" id="titleMeta" title="Zmien terminal / pracownika">terminal · —</div>
-<div class="termMeta">wersja: <b id="versionMeta">macro_2026-05-25_1912</b></div>
+<div class="termMeta">wersja: <b id="versionMeta">test</b></div>
 </div>
-<div id="taskCode" title="Przytrzymaj, zeby eksportowac">4952</div>
+<div id="taskCode" title="Przytrzymaj, zeby eksportowac">0000</div>
 </div>
 <div id="top">
 <input id="scanInput" type="text" autocomplete="off" autofocus placeholder="Skanuj karton...">
@@ -91,8 +91,8 @@ td.noHit{background:#f5f5f5;color:#555;}
 <th class="klik">Kliki</th></tr></thead><tbody id="tb"></tbody></table></div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION="macro_2026-05-25_1912";
-const DEFAULT_TASK_CODE="4952";
+const DEFAULT_TASK_VERSION="test";
+const DEFAULT_TASK_CODE="0000";
 const DATA=[];
 DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3025960517","prio":"BLOK","tsu":"MDTPUT"});
 DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074540907","prio":"BLOK","tsu":"MDTPUT"});
@@ -165,7 +165,7 @@ ts:new Date().toISOString(),task_version:taskVersion,task_code:taskCode,
 device_id:terminalId,employee:employeeName,timer_session_id:timerSessionId,
 timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs(),details:details||{}});}
 function updateMeta(){
-document.getElementById('titleMeta').textContent='terminal: '+(terminalId||'—')+(employeeName?' · '+employeeName:'');
+document.getElementById('titleMeta').textContent='#'+(terminalId||'—')+(employeeName?' · '+employeeName:'');
 document.getElementById('taskCode').textContent=taskCode||'----';
 document.getElementById('versionMeta').textContent=taskVersion||'—';
 document.title=(terminalId?terminalId+' · ':'')+(employeeName||'')+' · '+(taskCode||'');}
