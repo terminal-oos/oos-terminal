@@ -1,891 +1,269 @@
 <!DOCTYPE html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8">
+<html lang="pl"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta name="mobile-web-app-capable" content="yes">
-<meta http-equiv="Cache-Control" content="private, max-age=604800">
-<title>Szukaj · 6861</title>
+<title>2026-05-27_2154</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-html,body{height:100%}
-body{background:#fff;color:#111;overflow:hidden;display:flex;flex-direction:column}
-.term-header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  flex:0 0 auto;
-
-  background:#f4f4f4;
-  border-bottom:1px solid #d7d7d7;
-  padding:8px 10px;
-
-  box-shadow:0 1px 4px rgba(0,0,0,.08);
-}
-
-.term-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.term-main{
-  font-size:26px;
-  font-weight:900;
-  color:#111;
-  letter-spacing:-0.03em;
-}
-
-.term-subline{
-  margin-top:2px;
-}
-
-.term-online{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-size:13px;
-  font-weight:700;
-  color:#008f3a;
-}
-
-.online-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#00b140;
-  display:inline-block;
-}
-
-.code-box{
-  background:#111;
-  color:#fff;
-  padding:4px 10px;
-  border-radius:7px;
-  font-size:26px;
-  font-weight:900;
-  letter-spacing:.08em;
-}
-
-.term-meta{
-  font-size:11px;
-  color:#777;
-}
-
-.hdr-meta{
-  margin-top:4px;
-  margin-bottom:7px;
-  font-size:11px;
-  color:#666;
-}
-
-#syncStatus{
-  font-size:13px;
-}
-#scanInput{width:100%;height:30px;border:2px solid #4a90e2;background:#f7fbff;padding:0 8px;font-size:14px;font-weight:bold;outline:none}
-#scanInput:focus{outline:none;border-color:#000}
-#resetBtn{height:24px;padding:0 8px;border:1px solid #bbb;background:#eee;font-size:11px;border-radius:4px}
-#stats{margin-top:4px;display:flex;gap:6px;font-size:11px;font-weight:bold;align-items:center;flex-wrap:wrap}
-.statBox{background:#f3f3f3;padding:3px 7px;border-radius:4px;border:1px solid #ddd}
-.statBox span{color:#0055cc}
-#dupWarning{margin-top:4px;background:#ffdddd;color:#a10000;padding:4px 7px;border-radius:4px;font-size:11px;font-weight:bold;display:none}
-#newBanner{position:fixed;inset:0;background:rgba(255,255,255,.96);z-index:997;display:none;align-items:center;justify-content:center;gap:18px;flex-direction:column;text-align:center;padding:24px;border:8px solid #ffc107}
-#newBanner span{font-size:24px;font-weight:800;line-height:1.25;color:#111}
-#newBanner button{background:#ffc107;border:none;padding:16px 24px;border-radius:10px;font-weight:bold;font-size:20px;cursor:pointer}
-#wrap{overflow:auto;flex:1 1 auto;min-height:0;height:auto;-webkit-overflow-scrolling:touch}
-table{border-collapse:collapse;width:max-content;background:#fff}
-thead th{position:sticky;top:0;z-index:10}
-th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 4px;font-size:10px;height:22px;white-space:nowrap;text-align:left}
-td{border:1px solid #e1e1e1;padding:1px 4px;font-size:11px;height:22px;white-space:nowrap}
-th.sc,td.sc{width:6px;padding:0;border:none}
-th.nr,td.nr{width:78px;font-weight:bold}
-th.brand,td.brand{width:55px}
-th.loc,td.loc{width:70px}
-th.klik,td.klik{min-width:105px;text-align:center;font-weight:bold}
-.sticky1{position:sticky;left:6px;z-index:12;background:#f1f1f1}
-.sticky2{position:sticky;left:84px;z-index:12;background:#f1f1f1}
-.sticky3{position:sticky;left:139px;z-index:12;background:#f1f1f1}
-td.nr{position:sticky;left:6px;background:#fff;z-index:4}
-td.brand{position:sticky;left:84px;background:#fff;z-index:4}
-td.loc{position:sticky;left:139px;background:#fff;z-index:4}
-tr.green>td:not(.klik):not(.sc){background:#b9f6ca}
-tr.red>td:not(.klik):not(.sc){background:#ffcdd2}
-tr.blue>td:not(.klik):not(.sc){background:#bbdefb}
-tr.yellow>td:not(.klik):not(.sc){background:#fff9c4}
-tr.sg>.sc{background:#00c853} tr.sr>.sc{background:#ff1744} tr.sb>.sc{background:#2979ff} tr.sy>.sc{background:#ffd600}
-tr.green.found>td:not(.klik):not(.sc),tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;color:#fff;font-weight:bold}
-tr.red.found>td:not(.klik):not(.sc),tr.red.match>td:not(.klik):not(.sc){background:#ff1744!important;color:#fff;font-weight:bold}
-tr.blue.found>td:not(.klik):not(.sc),tr.blue.match>td:not(.klik):not(.sc){background:#2979ff!important;color:#fff;font-weight:bold}
-tr.yellow.found>td:not(.klik):not(.sc),tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;color:#000;font-weight:bold}
-tr.source-row>td:not(.klik):not(.sc){background:var(--src-bg)!important;box-shadow:inset 6px 0 0 var(--src-color)}
-tr.source-row.found>td:not(.klik):not(.sc),tr.source-row.match>td:not(.klik):not(.sc){background:var(--src-found)!important;color:#111;font-weight:bold;box-shadow:inset 6px 0 0 var(--src-color)}
-td.hitGreen{background:#00c853;color:#fff;font-weight:bold}
-td.hitRed{background:#ff1744;color:#fff;font-weight:bold}
-td.hitBlue{background:#2979ff;color:#fff;font-weight:bold}
-td.hitYellow{background:#ffd600;color:#000;font-weight:bold}
-td.hitSource{background:var(--src-found)!important;color:#111;font-weight:bold;box-shadow:inset 6px 0 0 var(--src-color)}
-td.dupScan{background:#fce4ec!important;color:#880e4f;font-weight:bold;box-shadow:inset 8px 0 0 var(--dup-color, transparent)}
-td.noHit{background:#f5f5f5;color:#555}
-#regOverlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;display:flex;align-items:center;justify-content:center}
-.reg-card{background:#fff;border-radius:12px;padding:24px;max-width:340px;width:90%}
-.reg-card h2{font-size:18px;margin-bottom:16px}
-.reg-card input{width:100%;padding:12px;font-size:18px;border:2px solid #ccc;border-radius:8px;margin-bottom:12px}
-.reg-card button{width:100%;padding:14px;font-size:18px;background:#111;color:#fff;border:none;border-radius:8px;cursor:pointer}
-#exportText{width:100%;min-height:80px;font-family:monospace;font-size:12px;padding:8px;border:1px solid #ccc;border-radius:6px;display:none}
-.src-badge{display:inline-block;margin-left:6px;padding:2px 5px;border-radius:4px;background:#eee;color:#555;border:1px solid #ccc;font-size:10px;font-weight:bold;vertical-align:middle}
-.finished-box{position:fixed;inset:0;background:#fff;z-index:998;display:none;align-items:center;justify-content:center;padding:24px;text-align:center}
-.finished-card{border:2px solid #ddd;border-radius:12px;padding:24px;max-width:360px}
-.finished-card h2{font-size:20px;margin-bottom:10px}
-.finished-card p{font-size:14px;color:#666;margin-bottom:16px}
-.finished-card button{width:100%;padding:14px;font-size:17px;background:#111;color:#fff;border:none;border-radius:8px;cursor:pointer}
-</style>
-</head>
-<body>
-
-<div id="regOverlay">
-  <div class="reg-card">
-    <h2>Konfiguracja terminala</h2>
-    <input id="regDevice" type="text" placeholder="nomer terminala" autocapitalize="off">
-    <input id="regEmployee" type="text" placeholder="nickname OOS agent">
-    <button onclick="doRegister()">save</button>
-  </div>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
+html,body{height:100%;}
+body{background:#fff;color:#111;overflow:hidden;display:flex;flex-direction:column;}
+#hdr{position:sticky;top:0;z-index:100;flex:0 0 auto;background:#f4f4f4;border-bottom:1px solid #d7d7d7;padding:8px 10px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.termLine{display:flex;justify-content:space-between;align-items:center;}
+.termMain{font-size:26px;font-weight:900;color:#111;letter-spacing:-0.03em;}
+.termMeta{font-size:11px;color:#777;margin-top:2px;}
+#taskCode{background:#111!important;color:#fff!important;font-size:26px!important;font-weight:900!important;letter-spacing:.08em;padding:4px 10px!important;border-radius:7px;cursor:pointer;}
+#titleMeta{cursor:pointer;}
+#top{margin-top:8px;display:flex;gap:4px;align-items:center;}
+#scanInput{width:100%;height:30px;border:2px solid #111;background:#f7fbff;padding:0 8px;font-size:14px;font-weight:bold;outline:none;}
+#scanInput:focus{outline:none;border-color:#000;background:#f7fbff;}
+#meta{margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+#meta span{background:#f3f3f3;padding:3px 7px;border-radius:4px;border:1px solid #ddd;font-size:11px;font-weight:bold;}
+#meta b{color:#0055cc;}
+#resetBtn{height:24px;padding:0 8px;border:1px solid #bbb;background:#eee;font-size:11px;border-radius:4px;}
+#dupWarning{display:none;margin-top:4px;background:#ffdddd;color:#a10000;padding:4px 7px;border-radius:4px;font-size:11px;font-weight:bold;}
+#wrap{overflow:auto;flex:1 1 auto;min-height:0;height:auto;-webkit-overflow-scrolling:touch;}
+table{border-collapse:collapse;width:max-content;background:#fff;}
+thead th{position:sticky;top:0;z-index:20;}
+th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 4px;font-size:10px;height:22px;white-space:nowrap;text-align:left;}
+td{border:1px solid #e1e1e1;padding:1px 4px;font-size:11px;height:22px;white-space:nowrap;}
+th.sc,td.sc{width:6px;padding:0;border:none;}
+th.nr,td.nr{width:72px;max-width:76px;font-weight:bold;overflow:hidden;text-overflow:clip;}
+th.brand,td.brand{width:56px;max-width:64px;overflow:hidden;text-overflow:clip;}
+th.loc,td.loc{width:72px;max-width:78px;overflow:hidden;text-overflow:clip;}
+th.klik,td.klik{min-width:104px;text-align:center;font-weight:bold;}
+.sticky1{position:sticky;left:6px;z-index:25;background:#f1f1f1;}
+.sticky2{position:sticky;left:78px;z-index:25;background:#f1f1f1;}
+.sticky3{position:sticky;left:134px;z-index:25;background:#f1f1f1;}
+td.nr{position:sticky;left:6px;background:#fff;z-index:5;}
+td.brand{position:sticky;left:78px;background:#fff;z-index:5;}
+td.loc{position:sticky;left:134px;background:#fff;z-index:5;}
+tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
+tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
+tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
+tr.yellow>td:not(.klik):not(.sc){background:#fff9c4;}
+tr.sg>.sc{background:#00c853;} tr.sr>.sc{background:#ff1744;}
+tr.sb>.sc{background:#2979ff;} tr.sy>.sc{background:#ffd600;}
+tr.green.found>td:not(.klik):not(.sc),tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;color:#fff;font-weight:bold;}
+tr.red.found>td:not(.klik):not(.sc),tr.red.match>td:not(.klik):not(.sc){background:#ff1744!important;color:#fff;font-weight:bold;}
+tr.blue.found>td:not(.klik):not(.sc),tr.blue.match>td:not(.klik):not(.sc){background:#2979ff!important;color:#fff;font-weight:bold;}
+tr.yellow.found>td:not(.klik):not(.sc),tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;color:#000;font-weight:bold;}
+td.hitGreen{background:#00c853;color:#fff;font-weight:bold;}
+td.hitRed{background:#ff1744;color:#fff;font-weight:bold;}
+td.hitBlue{background:#2979ff;color:#fff;font-weight:bold;}
+td.hitYellow{background:#ffd600;color:#000;font-weight:bold;}
+td.dupScan{background:#fce4ec!important;color:#880e4f;font-weight:bold;box-shadow:inset 8px 0 0 var(--dup-color,transparent);}
+td.noHit{background:#f5f5f5;color:#555;}
+#regOverlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:999;display:flex;align-items:center;justify-content:center;padding:18px;}
+#regCard{background:#fff;border-radius:12px;padding:18px;max-width:360px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+#regCard h2{font-size:18px;margin-bottom:12px;}
+#regCard input{width:100%;height:38px;margin-bottom:8px;padding:0 10px;border:2px solid #ccc;border-radius:7px;font-size:16px;}
+#startBtn{width:100%;height:40px;border:none;border-radius:8px;background:#111;color:#fff;font-size:16px;font-weight:bold;}
+#exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
+</style></head><body>
+<div id="regOverlay"><div id="regCard">
+<h2>Konfiguracja terminala</h2>
+<input id="regTerminal" placeholder="nr terminala">
+<input id="regEmployee" placeholder="pracownik">
+<input id="regVersion" placeholder="wersja zadania" value="V_2026-05-27_2154">
+<input id="regCode" placeholder="kod zadania" value="4319">
+<button id="startBtn" type="button">start</button></div></div>
+<div id="hdr">
+<div class="termLine">
+<div>
+<div class="termMain" id="titleMeta" title="Zmien terminal / pracownika">terminal � �</div>
+<div class="termMeta">wersja: <b id="versionMeta">V_2026-05-27_2154</b></div>
 </div>
-
-<div id="newBanner">
-  <span>!! UPDATE !!</span>
-  <button onclick="reloadTask()">Pobierz aktualizację</button>
+<div id="taskCode" title="Przytrzymaj, zeby eksportowac">4319</div>
 </div>
-
-<div id="finishedOverlay" class="finished-box">
-  <div class="finished-card">
-    <h2 id="blockedTitle">Sesja zakończona</h2>
-    <p id="blockedText">Ten terminal nie wysyła już wyników. Zacznij nową sesję, gdy przyjdzie nowy pracownik.</p>
-    <button onclick="startNewSession()">Zmień pracownika</button>
-  </div>
+<div id="top">
+<input id="scanInput" type="text" autocomplete="off" autofocus placeholder="Skanuj karton...">
 </div>
-
-<header class="term-header">
-
-  <div class="term-line">
-
-    <div class="term-main">
-      <span id="termTitle">TERMINAL</span>
-    </div>
-
-    <div id="taskCodeBox" class="code-box" title="Przytrzymaj, żeby zrobić eksport offline">
-      6861
-    </div>
-
-  </div>
-
-  <div class="term-line term-subline">
-
-    <div class="term-online">
-      <span id="syncStatus">offline</span>
-    </div>
-
-    <div class="term-meta">
-      v3421bee5 · 2026-05-27T18:18:14
-    </div>
-
-  </div>
-
-  <div class="hdr-meta" style="display:none">
-    <span id="termInfo">Inicjalizacja...</span>
-  </div>
-
-  <input
-    id="scanInput"
-    type="text"
-    autocomplete="off"
-    autocorrect="off"
-    autocapitalize="off"
-    spellcheck="false"
-    placeholder="Skanuj karton..."
-    inputmode="numeric"
-  >
-
-  <div id="stats">
-    <div class="statBox">
-      lista: <span id="allCount">102</span>
-    </div>
-
-    <div class="statBox">
-      scan: <span id="scannedCount">0</span>
-    </div>
-
-    <div class="statBox">
-      znal.: <span id="uniqueCount">0</span>
-    </div>
-
-    <button id="resetBtn" onclick="clearLog()">
-      reset
-    </button>
-  </div>
-
-  <div id="dupWarning">
-    &#9888; DUPLIKAT &mdash; karton już był skanowany!
-  </div>
-
-</header>
-
-<div id="wrap">
-  <table id="tbl">
-    <thead><tr>
-      <th class="sc"></th>
-      <th class="nr sticky1">nr</th>
-      <th class="brand sticky2">brand</th>
-      <th class="loc sticky3">loc</th>
-      <th class="klik">Kliki</th>
-    </tr></thead>
-    <tbody id="tbody"></tbody>
-  </table>
+<div id="meta">
+<span>lista: <b id="allCount">0</b></span>
+<span>scan: <b id="scanCount">0</b></span>
+<span>znal.: <b id="hitCount">0</b></span>
+<button id="resetBtn" type="button">reset</button>
 </div>
-
-<textarea id="exportText" readonly style="display:none"></textarea>
-
+<div id="dupWarning">&#9888; DUPLIKAT</div>
+</div>
+<div id="wrap"><table id="tbl"><thead><tr>
+<th class="sc"></th><th class="nr sticky1">nr</th>
+<th class="brand sticky2">brand</th><th class="loc sticky3">loc</th>
+<th class="klik">Kliki</th></tr></thead><tbody id="tb"></tbody></table></div>
+<textarea id="exportText" readonly></textarea>
 <script>
-const DATA=[{"nr": "2064779130", "brand": "CROPP", "loc": "PTO045AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2072371299", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073019380", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073073192", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073244869", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073533807", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073606251", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073630646", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073806696", "brand": "HOUSE", "loc": "PTO035AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073824571", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073877025", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073886938", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2073934671", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074142459", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074164886", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074209092", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074219290", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074221384", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074322681", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074408325", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074408371", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074408493", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074475042", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074505842", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074533739", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074539959", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074540174", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074574632", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074584598", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074584601", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074584606", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074594371", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074594373", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074606065", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "2074606079", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3025973067", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3025985387", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3025996642", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3025998502", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3025998966", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3025999793", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026002450", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026004276", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026004581", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026004848", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026005589", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006169", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006196", "brand": "HOUSE", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006693", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006766", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006812", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006832", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006881", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006935", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006948", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006965", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006972", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026006974", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007006", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007058", "brand": "HOUSE", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007059", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007067", "brand": "HOUSE", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007072", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007166", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007263", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007422", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007573", "brand": "HOUSE", "loc": "PTO035AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007656", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007710", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007824", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026007965", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008151", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008164", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008545", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008576", "brand": "HOUSE", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008652", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008810", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008955", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026008980", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009114", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009126", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009151", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009329", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009634", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009696", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009726", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009821", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026009899", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026010321", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026010501", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026011096", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "3026011297", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506184762", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506185269", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506185368", "brand": "RESERVED", "loc": "PTO035AP00", "prio": "PRIO1", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506188378", "brand": "CROPP", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506188441", "brand": "CROPP", "loc": "PTO001AP00", "prio": "BLOK", "notice": "RSORT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506188486", "brand": "CROPP", "loc": "PTO001AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506188630", "brand": "CROPP", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "4506188715", "brand": "CROPP", "loc": "PTO001AP00", "prio": "BLOK", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "6200194223", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}, {"nr": "6200194224", "brand": "RESERVED", "loc": "PTO001AP00", "prio": "PRIO1", "notice": "MDTPUT", "tsu": "DC", "op_status": "pending", "source_label": "", "source_color": "", "source_bg": "", "source_found": "", "source_rank": 0}];
-const TASK_VERSION="3421bee5";
-const TASK_CODE="6861";
-const SERVER="http://PL_PRU_TL06_38:8765";
-const PUBLIC_SYNC_URL="https://oos-sync.terminaliexcel.workers.dev";
-const PUBLIC_SYNC_TOKEN="Kx82mQaP11xY7AbQw92LmNnP0RtZz81Qwe7AsDf";
-const SHIFT_ID="2026-05-26T20:20:05";
-
-function normNr(v){
-  return String(v||'').trim().replace(/^'+/,'').replace(/\s+/g,'');
-}
-function escH(v){
-  return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-function softColor(hex,a){
-  hex=String(hex||'#7c3aed').replace('#','');
-  if(hex.length===3) hex=hex.split('').map(c=>c+c).join('');
-  const n=parseInt(hex,16);
-  if(isNaN(n)) return 'rgba(124,58,237,'+(a||.22)+')';
-  return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+(a||.22)+')';
-}
-
-const dataMap=new Map(DATA.map(d=>[normNr(d.nr),d]));
-const byNr=new Map();
-DATA.forEach(d=>{
-  const nr=normNr(d.nr);
-  if(!byNr.has(nr)) byNr.set(nr,[]);
-  byNr.get(nr).push(d);
-});
-
-function colorClass(d){
-  if(!d) return '';
-  var p=String(d.prio||'').toUpperCase();
-  var t=String(d.notice||d.tsu||'').toUpperCase();
-  var isPrio=p==='PRIO1'||p==='PRIORYTET 1';
-  if(p==='BLOK'&&t.indexOf('MDTPUT')>=0) return 'green';
-  if(isPrio&&t.indexOf('MDTPUT')>=0) return 'red';
-  if(p==='BLOK'&&t.indexOf('RSORT')>=0) return 'blue';
-  if(isPrio&&t.indexOf('RSORT')>=0) return 'yellow';
-  if(p==='BLOK') return 'blue';
-  if(isPrio) return 'yellow';
-  return '';
-}
-
-const tbody=document.getElementById('tbody');
+const DEFAULT_TASK_VERSION="V_2026-05-27_2154";
+const DEFAULT_TASK_CODE="4319";
+const DATA=[];
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"2074536800","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026008481","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"3026007499","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026006713","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"2073903673","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"3026007067","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026006978","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"3026007368","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"2071366311","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026007047","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"2074318481","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"2074398126","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074574576","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026009891","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074606065","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074539605","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074584601","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3025996244","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072371299","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074539959","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074505842","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026008883","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026009288","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074584606","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074574632","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073606251","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO045AP00","brand":"CROPP","nr":"2064779130","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"2074447108","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"2074474318","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026006268","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"3026006999","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026007138","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"3026007420","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026008016","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3025996642","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026009012","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074222444","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3025998496","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026008451","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026009327","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026009337","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072901127","prio":"PRIORYTET 1","tsu":"RSORT"});
+const tb=document.getElementById('tb');
 const wrap=document.getElementById('wrap');
-let lastClickCell=null;
-function orderedScans(){
-  return scanLog.slice().reverse();
-}
-function rowStripeClass(cls){
-  return cls==='green'?'sg':cls==='red'?'sr':cls==='blue'?'sb':cls==='yellow'?'sy':'';
-}
-function scanCellClass(scan,d){
-  if(!scan) return '';
-  if(scan.dup) return 'dupScan';
-  if(!d) return 'noHit';
-  if(d.source_color) return 'hitSource';
-  var cls=colorClass(d);
-  return cls==='green'?'hitGreen':cls==='red'?'hitRed':cls==='blue'?'hitBlue':cls==='yellow'?'hitYellow':'noHit';
-}
-function markerColor(d){
-  if(!d) return '';
-  if(d.source_color) return d.source_color;
-  var cls=colorClass(d);
-  if(cls==='green') return '#00c853';
-  if(cls==='red') return '#ff1744';
-  if(cls==='blue') return '#2979ff';
-  if(cls==='yellow') return '#ffd600';
-  return '';
-}
-function renderTable(centerLast){
-  const scans=orderedScans();
-  const foundSet=new Set();
-  scans.forEach(s=>{if(byNr.has(normNr(s.nr))) foundSet.add(normNr(s.nr));});
-  const clickCounts=new Map();
-  scans.forEach(s=>{const n=normNr(s.nr);clickCounts.set(n,(clickCounts.get(n)||0)+1);});
-  foundUnique.clear();
-  foundSet.forEach(nr=>foundUnique.add(nr));
-  const rows=Math.max(DATA.length,scans.length,1);
-  let html='';
-  for(let i=0;i<rows;i++){
-    const d=DATA[i]||null;
-    const scan=scans[i]||null;
-    const nr=d?normNr(d.nr):'';
-    const base=d?colorClass(d):'';
-    const rowFound=d&&foundSet.has(nr);
-    const rowMatch=scan&&d&&normNr(scan.nr)===nr;
-    const classes=[];
-    if(base) classes.push(base,rowStripeClass(base));
-    if(d&&d.source_color) classes.push('source-row');
-    if(rowFound) classes.push('found');
-    if(rowMatch) classes.push('match');
-    const styles=[];
-    if(d&&d.source_color){
-      styles.push('--src-color:'+d.source_color);
-      styles.push('--src-bg:'+(d.source_bg||softColor(d.source_color,.24)));
-      styles.push('--src-found:'+(d.source_found||softColor(d.source_color,.48)));
-    }
-    const matchData=scan?(dataMap.get(normNr(scan.nr))||((byNr.get(normNr(scan.nr))||[])[0])):null;
-    const visualDup=scan&&clickCounts.get(normNr(scan.nr))>1;
-    const cellCls=scanCellClass(scan?Object.assign({},scan,{dup:visualDup}):null,matchData);
-    let cellStyle='';
-    if(cellCls==='hitSource'&&matchData&&matchData.source_color){
-      cellStyle=' style="--src-color:'+matchData.source_color+';--src-found:'+(matchData.source_found||softColor(matchData.source_color,.48))+'"';
-    }else if(cellCls==='dupScan'){
-      const dupColor=markerColor(matchData);
-      if(dupColor) cellStyle=' style="--dup-color:'+dupColor+'"';
-    }
-    html+='<tr class="'+classes.join(' ')+'"'+(styles.length?' style="'+styles.join(';')+'"':'')+'>'
-      +'<td class="sc"></td>'
-      +'<td class="nr">'+(d?escH(d.nr):'')+'</td>'
-      +'<td class="brand">'+(d?escH(d.brand||''):'')+'</td>'
-      +'<td class="loc">'+(d?escH(d.loc||'—'):'')+'</td>'
-      +'<td class="klik '+cellCls+'"'+cellStyle+' data-click-idx="'+i+'">'+(scan?escH(scan.nr):'')+'</td>'
-      +'</tr>';
-  }
-  tbody.innerHTML=html;
-  const scannedEl=document.getElementById('scannedCount');
-  if(scannedEl) scannedEl.textContent=scanLog.length;
-  const uniqueEl=document.getElementById('uniqueCount');
-  if(uniqueEl) uniqueEl.textContent=foundUnique.size;
-  lastClickCell=scans.length?tbody.querySelector('[data-click-idx="'+(scans.length-1)+'"]'):null;
-  if(centerLast&&lastClickCell) centerOnClickCell();
-}
-function centerOnClickCell(){
-  if(!lastClickCell) return;
-  const y=lastClickCell.offsetTop-(wrap.clientHeight/2)+(lastClickCell.offsetHeight/2);
-  wrap.scrollTop=Math.max(0,y);
-  setTimeout(()=>scanInput.focus(),10);
-}
-
-const scanLog=[],scannedNrs=new Map(),foundUnique=new Set();
-let _clearTimer=null,_saveTimer=null,_syncTimer=null,_versionTimer=null;
-let deviceId='',employeeName='';
-const OUTBOX_KEY='oos_outbox_all_v1';
-const JOURNAL_KEY='oos_terminal_journal_v1';
+const scanInput=document.getElementById('scanInput');
+const scans=[];
+const counts=new Map();
+const byNr=new Map();
+let terminalId='',employeeName='';
+let taskVersion=DEFAULT_TASK_VERSION,taskCode=DEFAULT_TASK_CODE;
+const JOURNAL_KEY='oos_macro_journal_v1';
 const TIMER_BOOT_ID='boot_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);
 const TIMER_BOOT_START=performance.now();
-let timerSessionId=localStorage.getItem('oos_timer_session_id')||('sess_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8));
-localStorage.setItem('oos_timer_session_id',timerSessionId);
+let timerSessionId=localStorage.getItem('oos_macro_timer_session_id');
+if(!timerSessionId)timerSessionId='sess_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);
+localStorage.setItem('oos_macro_timer_session_id',timerSessionId);
+function norm(v){return String(v||'').trim().replace(/^'+/,'').replace(/\s+/g,'');}
+function esc(v){return String(v==null?'':v).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function person(v){return String(v||'').trim().replace(/\s+/g,' ').toLowerCase();}
 function elapsedMs(){return Math.max(0,Math.round(performance.now()-TIMER_BOOT_START));}
-function makeScanId(){
-  return 'scan_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,10);
-}
-function makeEventId(prefix){
-  return (prefix||'evt')+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,10);
-}
-function normPerson(v){
-  return String(v||'').trim().replace(/\s+/g,' ').toLowerCase();
-}
-function scansStorageKey(){
-  return 'oos_scans_'+TASK_VERSION+'_'+normNr(deviceId||'terminal')+'_'+normPerson(employeeName||'employee');
-}
-function resetVisibleScans(){
-  scanLog.length=0;
-  scannedNrs.clear();
-  foundUnique.clear();
-  document.getElementById('dupWarning').style.display='none';
-  renderTable(false);
-}
-function outboxCutoff(){
-  return Date.now()-7*24*60*60*1000;
-}
-function journalCutoff(){
-  return Date.now()-14*24*60*60*1000;
-}
-function loadOutbox(){
-  try{
-    const rows=JSON.parse(localStorage.getItem(OUTBOX_KEY)||'[]');
-    if(!Array.isArray(rows)) return [];
-    const cutoff=outboxCutoff();
-    return rows.filter(e=>e&&e.nr&&(!e.ts||Date.parse(e.ts)>=cutoff));
-  }catch(_){return [];}
-}
-function saveOutbox(rows){
-  const clean=(rows||[]).filter(e=>e&&e.nr);
-  try{
-    localStorage.setItem(OUTBOX_KEY,JSON.stringify(clean));
-  }catch(_){
-    try{localStorage.setItem(OUTBOX_KEY,JSON.stringify(clean.slice(-3000)));}catch(__){}
-  }
-}
-function loadJournal(){
-  try{
-    const rows=JSON.parse(localStorage.getItem(JOURNAL_KEY)||'[]');
-    if(!Array.isArray(rows)) return [];
-    const cutoff=journalCutoff();
-    return rows.filter(e=>e&&(!e.ts||Date.parse(e.ts)>=cutoff));
-  }catch(_){return [];}
-}
-function saveJournal(rows){
-  const clean=(rows||[]).filter(e=>e&&(e.kind||e.nr||e.event)).slice(-15000);
-  try{
-    localStorage.setItem(JOURNAL_KEY,JSON.stringify(clean));
-  }catch(_){
-    try{localStorage.setItem(JOURNAL_KEY,JSON.stringify(clean.slice(-5000)));}catch(__){}
-  }
-}
-function rememberJournal(row){
-  if(!row) return;
-  const rows=loadJournal();
-  if(!row.id) row.id=makeEventId(row.kind==='scan'?'scan':'evt');
-  rows.push(row);
-  saveJournal(rows);
-}
-function logTerminalEvent(event,details){
-  rememberJournal({
-    kind:'event',
-    id:makeEventId('evt'),
-    event:String(event||'event'),
-    ts:new Date().toISOString(),
-    task_version:TASK_VERSION,
-    task_code:TASK_CODE,
-    device_id:deviceId||'',
-    employee:employeeName||'',
-    timer_session_id:timerSessionId,
-    timer_boot_id:TIMER_BOOT_ID,
-    elapsed_ms:elapsedMs(),
-    details:details||{}
-  });
-}
-function appendOutbox(scan){
-  const rows=loadOutbox();
-  rows.push(scan);
-  saveOutbox(rows);
-  rememberJournal(Object.assign({kind:'scan'},scan));
-}
-function ackOutbox(ids){
-  if(!ids||!ids.length) return;
-  const done=new Set(ids);
-  saveOutbox(loadOutbox().filter(e=>!done.has(e.id)));
-}
-function registerOfflineCache(){
-  if(!SERVER||!('serviceWorker' in navigator)||!('caches' in window)) return;
-  logTerminalEvent('offline_cache_register_start',{href:window.location.href});
-  navigator.serviceWorker.register(SERVER+'/worker-sw.js',{scope:'/'})
-    .then(()=>navigator.serviceWorker.ready)
-    .then(()=>{logTerminalEvent('offline_cache_ready',{href:window.location.href});cacheCurrentWorkerPage();})
-    .catch(()=>{logTerminalEvent('offline_cache_error',{href:window.location.href});});
-}
-function cacheCurrentWorkerPage(){
-  try{
-    fetch(window.location.href,{cache:'reload'}).then(r=>{
-      if(!r||!r.ok) return;
-      caches.open('oos-worker-v1').then(c=>Promise.all([
-        c.put('/worker__last',r.clone()),
-        c.put(window.location.href,r.clone())
-      ])).then(()=>logTerminalEvent('offline_page_cached',{href:window.location.href})).catch(()=>{});
-    }).catch(()=>{});
-  }catch(_){}
-}
-
-// Registration
-const storedDevice=localStorage.getItem('oos_device_id');
-const storedEmployee=localStorage.getItem('oos_employee');
-if(storedDevice&&storedEmployee){
-  deviceId=storedDevice; employeeName=storedEmployee;
-  document.getElementById('regOverlay').style.display='none';
-  updateTermInfo();
-  logTerminalEvent('page_open',{stored_device:true,href:window.location.href,user_agent:navigator.userAgent||''});
-} else {
-  document.getElementById('regOverlay').style.display='flex';
-  logTerminalEvent('page_open',{stored_device:false,href:window.location.href,user_agent:navigator.userAgent||''});
-}
-
-function doRegister(){
-  const d=document.getElementById('regDevice').value.trim();
-  const e=document.getElementById('regEmployee').value.trim();
-  if(!d||!e)return;
-  deviceId=d; employeeName=e;
-  localStorage.setItem('oos_device_id',d);
-  localStorage.setItem('oos_employee',e);
-  logTerminalEvent('register',{device_id:d,employee:e});
-  timerSessionId='sess_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);
-  localStorage.setItem('oos_timer_session_id',timerSessionId);
-  try{localStorage.removeItem('oos_finished_'+deviceId);}catch(_){}
-  document.getElementById('regOverlay').style.display='none';
-  document.getElementById('finishedOverlay').style.display='none';
-  updateTermInfo();
-  resetVisibleScans();
-  loadLocal();
-  sayHello(true);
-  document.getElementById('scanInput').focus();
-}
-
-function startNewSession(){
-  logTerminalEvent('start_new_session',{device_id:deviceId,employee:employeeName});
-  syncToServer();
-  resetVisibleScans();
-  localStorage.removeItem('oos_employee');
-  employeeName='';
-  document.getElementById('finishedOverlay').style.display='none';
-  document.getElementById('regOverlay').style.display='flex';
-}
-
-function updateTermInfo(){
-  const info=document.getElementById('termInfo');
-  if(info) info.textContent=deviceId+' · '+employeeName;
-  document.getElementById('termTitle').textContent=(deviceId||'TERMINAL')+(employeeName?' · '+employeeName:'');
-}
-
-function setSyncStatus(txt,ok){
-  const el=document.getElementById('syncStatus');
-  el.textContent=(ok?'● ':'○ ')+txt;
-  el.style.color=ok?'#007700':'#999';
-}
-
-function showBlocked(status){
-  const isPaused=status==='paused';
-  document.getElementById('blockedTitle').textContent=isPaused?'Pauza':'Sesja zakończona';
-  document.getElementById('blockedText').textContent=isPaused
-    ?'Terminal jest wstrzymany przez operatora OOS. Po wznowieniu odśwież stronę.'
-    :'Ten terminal nie wysyła już wyników. Operator OOS może wznowić go na komputerze.';
-  document.getElementById('finishedOverlay').style.display='flex';
-}
-
-// Say hello to server
-function sayHello(forceActive){
-  if(!SERVER) return;
-  logTerminalEvent('hello_send',{force_active:!!forceActive});
-  fetch(SERVER+'/worker/terminal/hello',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({device_id:deviceId,employee:employeeName,task_version:TASK_VERSION,task_code:TASK_CODE,client_time:new Date().toISOString(),timer_session_id:timerSessionId,timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs(),force_active:!!forceActive})
-  }).then(r=>r.json()).then(d=>{
-    setSyncStatus('online',true);
-    logTerminalEvent('hello_ok',{status:d.status||'active',server_time:d.server_time||'',time_skew_sec:d.time_skew_sec,timer_diff_ms:d.timer_diff_ms});
-    if(d.status==='finished'||d.status==='paused'){
-      if(d.status==='finished'){try{localStorage.setItem('oos_finished_'+deviceId,'1');}catch(_){}}
-      else {try{localStorage.removeItem('oos_finished_'+deviceId);}catch(_){}}
-      showBlocked(d.status);
-      return;
-    }
-    try{localStorage.removeItem('oos_finished_'+deviceId);}catch(_){}
-    document.getElementById('finishedOverlay').style.display='none';
-    if(d.current_version&&d.current_version!==TASK_VERSION){
-      logTerminalEvent('new_task_available',{current_version:d.current_version,current_code:d.task_code||''});
-      document.getElementById('newBanner').style.display='flex';
-    }
-  }).catch(()=>{logTerminalEvent('hello_offline',{});setSyncStatus('offline',false);});
-}
-
-// Scan logic
-function renderLog(){
-  renderTable(false);
-}
-
-function processScan(nr){
-  const key=normNr(nr);
-  if(!key) return;
-  const prev=scannedNrs.get(key)||0;
-  scannedNrs.set(key,prev+1);
-  const d=dataMap.get(key)||null;
-  const isDup=prev>0;
-  const scan={id:makeScanId(),nr:key,data:d,dup:isDup,hit:!!d,ts:new Date().toISOString(),task_version:TASK_VERSION,task_code:TASK_CODE,device_id:deviceId,employee:employeeName,timer_session_id:timerSessionId,timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs()};
-  scanLog.unshift(scan);
-  appendOutbox({id:scan.id,nr:scan.nr,dup:scan.dup,hit:scan.hit,ts:scan.ts,task_version:scan.task_version,task_code:scan.task_code,device_id:deviceId,employee:employeeName,timer_session_id:scan.timer_session_id,timer_boot_id:scan.timer_boot_id,elapsed_ms:scan.elapsed_ms});
-  document.getElementById('dupWarning').style.display=isDup?'block':'none';
-  renderTable(true);
-  scheduleSave();
-  scheduleSync();
-}
-
-const scanInput=document.getElementById('scanInput');
-scanInput.addEventListener('input',()=>{
-  const q=scanInput.value.trim();
-  if(_clearTimer) clearTimeout(_clearTimer);
-  if(q.length>=1){
-    _clearTimer=setTimeout(()=>{
-      const val=scanInput.value.trim();
-      try{if(val) processScan(val);}
-      finally{scanInput.value='';scanInput.focus();}
-    },400);
-  }
-});
-scanInput.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){
-    if(_clearTimer) clearTimeout(_clearTimer);
-    const q=scanInput.value.trim();
-    try{if(q) processScan(q);}
-    finally{scanInput.value='';scanInput.focus();}
-  }
-});
-
-function clearLog(){
-  if(!confirm('Usunąć historię skanowania?')) return;
-  logTerminalEvent('visible_log_reset',{device_id:deviceId,employee:employeeName});
-  scanLog.length=0; scannedNrs.clear(); foundUnique.clear();
-  try{localStorage.removeItem(scansStorageKey());}catch(_){}
-  document.getElementById('scannedCount').textContent='0';
-  document.getElementById('uniqueCount').textContent='0';
-  document.getElementById('dupWarning').style.display='none';
-  renderTable(false);
-  scanInput.focus();
-  scheduleSave();
-}
-
-function applyFilter(){
-  scanInput.focus();
-}
-
-// LocalStorage persistence
-function scheduleSave(){
-  clearTimeout(_saveTimer);
-  _saveTimer=setTimeout(saveLocal,500);
-}
-function saveLocal(){
-  try{localStorage.setItem(scansStorageKey(),JSON.stringify(scanLog));}catch(_){}
-}
-function loadLocal(){
-  try{
-    const seen=new Set();
-    function keyOf(e){return (e&&e.id)||((e&&e.nr||'')+'|'+(e&&e.ts||'')+'|'+(e&&e.task_version||TASK_VERSION)+'|'+(e&&e.task_code||TASK_CODE));}
-    function addScan(e){
-      if(!e||!e.nr) return;
-      if(e.task_version&&e.task_version!==TASK_VERSION) return;
-      if(e.task_code&&e.task_code!==TASK_CODE) return;
-      if(e.device_id&&deviceId&&String(e.device_id)!==String(deviceId)) return;
-      if(e.employee&&employeeName&&normPerson(e.employee)!==normPerson(employeeName)) return;
-      const k=keyOf(e); if(seen.has(k)) return; seen.add(k);
-      const nr=normNr(e.nr);
-      const d=e.data||dataMap.get(nr)||null;
-      scanLog.push(Object.assign({},e,{nr:nr,data:d,hit:!!(e.hit||d),task_version:e.task_version||TASK_VERSION,task_code:e.task_code||TASK_CODE,device_id:e.device_id||deviceId,employee:e.employee||employeeName}));
-    }
-    const s=localStorage.getItem(scansStorageKey());
-    if(s){
-      const saved=JSON.parse(s);
-      saved.forEach(addScan);
-    }
-    loadOutbox().forEach(addScan);
-    scanLog.sort((a,b)=>String(b.ts||'').localeCompare(String(a.ts||'')));
-    scannedNrs.clear();
-    scanLog.forEach(e=>{if(e.nr) scannedNrs.set(e.nr,(scannedNrs.get(e.nr)||0)+1);});
-    renderLog();
-  }catch(_){}
-}
-
-// Sync to server
-function scheduleSync(){
-  clearTimeout(_syncTimer);
-  _syncTimer=setTimeout(syncToServer,8000);
-}
-function syncToServer(){
-  if(!deviceId) return;
-  let pending=loadOutbox();
-  const alreadySynced=localStorage.getItem('oos_synced_'+TASK_VERSION)==='1';
-  if(!pending.length&&scanLog.length&&!alreadySynced){
-    pending=scanLog.slice().reverse().map(e=>({id:e.id||'',nr:e.nr,dup:!!e.dup,hit:!!e.data,ts:e.ts||'',task_version:e.task_version||TASK_VERSION,task_code:e.task_code||TASK_CODE,device_id:e.device_id||deviceId,employee:e.employee||employeeName,timer_session_id:e.timer_session_id||timerSessionId,timer_boot_id:e.timer_boot_id||TIMER_BOOT_ID,elapsed_ms:e.elapsed_ms||elapsedMs()}));
-  }
-  if(!pending.length) return;
-  if(!SERVER){
-    syncToPublic(pending);
-    return;
-  }
-  fetch(SERVER+'/worker/scan-report',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({device_id:deviceId,employee:employeeName,task_version:TASK_VERSION,task_code:TASK_CODE,timer_session_id:timerSessionId,timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs(),source:'local',scans:pending})
-  }).then(r=>r.json()).then(d=>{
-    if(d&&d.ack_ids) ackOutbox(d.ack_ids);
-    setSyncStatus('synced · '+new Date().toLocaleTimeString(),true);
-    logTerminalEvent('sync_ok',{sent:pending.length,accepted:d&&d.accepted,received:d&&d.received,closed:!!(d&&d.closed)});
-    try{localStorage.setItem('oos_synced_'+TASK_VERSION,'1');}catch(_){}
-  }).catch(()=>{
-    logTerminalEvent('sync_offline',{sent:pending.length});
-    syncToPublic(pending);
-  });
-}
-
-function publicSyncEndpoint(path){
-  if(!PUBLIC_SYNC_URL) return '';
-  return String(PUBLIC_SYNC_URL).replace(/\/+$/,'')+'/'+String(path||'').replace(/^\/+/, '');
-}
-function syncToPublic(pending){
-  if(!PUBLIC_SYNC_URL||!pending||!pending.length){
-    setSyncStatus('offline – zapisano lokalnie',false);
-    return;
-  }
-  const payload={
-    token:PUBLIC_SYNC_TOKEN,
-    shift_id:SHIFT_ID,
-    device_id:deviceId,
-    employee:employeeName,
-    task_version:TASK_VERSION,
-    task_code:TASK_CODE,
-    timer_session_id:timerSessionId,
-    timer_boot_id:TIMER_BOOT_ID,
-    elapsed_ms:elapsedMs(),
-    source:'public_sync',
-    scans:pending,
-    events:loadJournal().slice(-2000)
-  };
-  fetch(publicSyncEndpoint('/push'),{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
-  }).then(r=>r.json()).then(d=>{
-    if(d&&d.ok){
-      const ids=(d.ack_ids&&d.ack_ids.length)?d.ack_ids:pending.map(e=>e.id).filter(Boolean);
-      ackOutbox(ids);
-      setSyncStatus('public sync · '+new Date().toLocaleTimeString(),true);
-      logTerminalEvent('public_sync_ok',{sent:pending.length,batch_id:d.batch_id||''});
-      try{localStorage.setItem('oos_synced_'+TASK_VERSION,'1');}catch(_){}
-      return;
-    }
-    throw new Error((d&&d.error)||'public sync rejected');
-  }).catch(err=>{
-    logTerminalEvent('public_sync_offline',{sent:pending.length,error:String(err&&err.message||err||'')});
-    setSyncStatus('offline – zapisano lokalnie',false);
-  });
-}
-
-// Version check
-function checkVersion(){
-  if(!SERVER) return;
-  const url=SERVER+'/worker/version'+(deviceId?'?device_id='+encodeURIComponent(deviceId):'');
-  fetch(url).then(r=>r.json()).then(d=>{
-    setSyncStatus('online',true);
-    logTerminalEvent('version_ok',{status:d.status||'active',task_version:d.task_version||'',task_code:d.task_code||'',server_time:d.server_time||''});
-    if(d.status==='finished'||d.status==='paused'){
-      if(d.status==='finished'){try{localStorage.setItem('oos_finished_'+deviceId,'1');}catch(_){}}
-      showBlocked(d.status);
-      return;
-    }
-    if(d.status==='active'){try{localStorage.removeItem('oos_finished_'+deviceId);}catch(_){}}
-    if(!d.task_version){
-      try{localStorage.setItem('oos_finished_'+deviceId,'1');}catch(_){}
-      showBlocked('finished');
-      return;
-    }
-    if(deviceId&&localStorage.getItem('oos_finished_'+deviceId)==='1'){
-      showBlocked('finished');
-      return;
-    }
-    sayHello(false);
-    if((d.task_version&&d.task_version!==TASK_VERSION)||(d.task_code&&d.task_code!==TASK_CODE)){
-      logTerminalEvent('new_task_available',{current_version:d.task_version||'',current_code:d.task_code||''});
-      document.getElementById('newBanner').style.display='flex';
-    }
-  }).catch(()=>{logTerminalEvent('version_offline',{});setSyncStatus('offline',false);});
-}
-function reloadTask(){
-  logTerminalEvent('reload_task',{from_version:TASK_VERSION,from_code:TASK_CODE});
-  syncToServer();
-  setTimeout(()=>{
-    const url=SERVER+'/worker'+(deviceId?'?device_id='+encodeURIComponent(deviceId):'');
-    window.location.href=url;
-  },1000);
-}
-
-function exportSourceRows(){
-  const byKey=new Map();
-  function add(row){
-    if(!row) return;
-    const kind=row.kind||'scan';
-    const key=row.id?kind+'|'+row.id:kind+'|'+(row.nr||row.event||'')+'|'+(row.ts||'')+'|'+(row.task_version||'')+'|'+(row.task_code||'');
-    if(!byKey.has(key)) byKey.set(key,Object.assign({kind:kind},row));
-  }
-  loadJournal().forEach(add);
-  loadOutbox().forEach(e=>add(Object.assign({kind:'scan'},e)));
-  scanLog.forEach(e=>add({kind:'scan',id:e.id||'',nr:e.nr,dup:!!e.dup,hit:!!e.data,ts:e.ts||'',task_version:e.task_version||TASK_VERSION,task_code:e.task_code||TASK_CODE,device_id:e.device_id||deviceId,employee:e.employee||employeeName,timer_session_id:e.timer_session_id||timerSessionId,timer_boot_id:e.timer_boot_id||TIMER_BOOT_ID,elapsed_ms:e.elapsed_ms||elapsedMs()}));
-  return Array.from(byKey.values()).sort((a,b)=>String(a.ts||'').localeCompare(String(b.ts||'')));
-}
-
-function encodeDetails(v){
-  try{return encodeURIComponent(JSON.stringify(v||{}));}catch(_){return '%7B%7D';}
-}
-
-function requestFullExport(){
-  const pass=prompt('Hasło eksportu: wpisz kod zadania');
-  if(pass===null) return;
-  if(String(pass).trim()!==String(TASK_CODE).trim()){
-    alert('Błędny kod');
-    return;
-  }
-  doExport();
-}
-
-function setupCodeExport(){
-  const box=document.getElementById('taskCodeBox');
-  if(!box) return;
-  let timer=null;
-  let fired=false;
-  function start(e){
-    fired=false;
-    if(e&&e.type==='touchstart') e.preventDefault();
-    clearTimeout(timer);
-    timer=setTimeout(()=>{fired=true;requestFullExport();},1200);
-  }
-  function stop(){
-    clearTimeout(timer);
-  }
-  box.addEventListener('mousedown',start);
-  box.addEventListener('touchstart',start,{passive:false});
-  ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>box.addEventListener(ev,stop));
-  box.addEventListener('click',e=>{if(fired)e.preventDefault();});
-}
-
-// Hidden manual export: long press the task code, then enter the task code again.
-function doExport(){
-  logTerminalEvent('manual_export',{trigger:'task_code_long_press'});
-  let rows=exportSourceRows();
-  if(!rows.length){alert('Brak zapisów do eksportu');return;}
-  const lines=rows.map(e=>{
-    if((e.kind||'scan')==='event'){
-      return '@EVENT|'+(e.event||'event')+'|'+(e.ts||'')+'|'+(e.task_version||TASK_VERSION)+'|'+(e.task_code||TASK_CODE)+'|'+(e.id||'')+'|'+(e.employee||employeeName)+'|'+(e.device_id||deviceId)+'|'+(e.timer_session_id||timerSessionId)+'|'+(e.timer_boot_id||TIMER_BOOT_ID)+'|'+(e.elapsed_ms||0)+'|'+encodeDetails(e.details||{});
-    }
-    return e.nr+'|'+(e.ts||'')+'|'+(e.dup?'DUP':(e.hit?'HIT':'MISS'))+'|'+(e.task_version||TASK_VERSION)+'|'+(e.task_code||TASK_CODE)+'|'+(e.id||'')+'|'+(e.employee||employeeName)+'|'+(e.device_id||deviceId)+'|'+(e.timer_session_id||timerSessionId)+'|'+(e.timer_boot_id||TIMER_BOOT_ID)+'|'+(e.elapsed_ms||0);
-  }).join('\n');
-  const header=deviceId+'|'+employeeName+'|mixed|'+TASK_CODE+'|OOS_EXPORT_V2|'+new Date().toISOString();
-  const txt=header+'\n'+lines;
-  const el=document.getElementById('exportText');
-  el.value=txt; el.style.display='block'; el.select();
-  try{
-    const a=document.createElement('a');
-    a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
-    a.download='oos_terminal_'+(deviceId||'terminal')+'_'+TASK_CODE+'.txt';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-    alert('Eksport offline gotowy: '+rows.length+' zapisów');
-  }catch(_){}
-}
-
-// Init
-setupCodeExport();
-registerOfflineCache();
-loadLocal();
-if(!scanLog.length) renderTable(false);
-if(deviceId&&localStorage.getItem('oos_finished_'+deviceId)==='1'){
-  document.getElementById('finishedOverlay').style.display='flex';
-  sayHello(false);checkVersion();
-} else if(deviceId){sayHello(false);checkVersion();}
-document.body.addEventListener('click',()=>scanInput.focus());
-window.onload=()=>scanInput.focus();
-window.addEventListener('pagehide',()=>logTerminalEvent('page_hide',{}));
-document.addEventListener('visibilitychange',()=>{
-  if(document.hidden){logTerminalEvent('page_hidden',{});}
-  else {logTerminalEvent('page_visible',{});checkVersion();syncToServer();}
-});
-setInterval(checkVersion,15000);
-setInterval(syncToServer,120000);
-</script>
-</body>
-</html>
+function makeId(p){return (p||'id')+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,10);}
+function scanKey(){return 'oos_macro_scans_'+taskVersion+'_'+norm(terminalId||'terminal')+'_'+person(employeeName||'employee');}
+DATA.forEach(d=>{const k=norm(d.nr);if(!byNr.has(k))byNr.set(k,[]);byNr.get(k).push(d);});
+function loadJournal(){try{const r=JSON.parse(localStorage.getItem(JOURNAL_KEY)||'[]');return Array.isArray(r)?r.slice(-15000):[];}catch(_){return [];}}
+function saveJournal(r){try{localStorage.setItem(JOURNAL_KEY,JSON.stringify((r||[]).slice(-15000)));}catch(_){try{localStorage.setItem(JOURNAL_KEY,JSON.stringify((r||[]).slice(-5000)));}catch(__){}}}
+function remember(row){const r=loadJournal();if(!row.id)row.id=makeId(row.kind==='scan'?'scan':'evt');r.push(row);saveJournal(r);}
+function logEvent(ev,details){remember({kind:'event',id:makeId('evt'),event:ev,
+ts:new Date().toISOString(),task_version:taskVersion,task_code:taskCode,
+device_id:terminalId,employee:employeeName,timer_session_id:timerSessionId,
+timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs(),details:details||{}});}
+function updateMeta(){
+document.getElementById('titleMeta').textContent='#'+(terminalId||'�')+(employeeName?' || '+employeeName:'');
+document.getElementById('taskCode').textContent=taskCode||'----';
+document.getElementById('versionMeta').textContent=taskVersion||'�';
+document.title=(terminalId?terminalId+' � ':'')+(employeeName||'')+' � '+(taskCode||'');}
+function openConfig(){
+document.getElementById('regTerminal').value=terminalId||'';
+document.getElementById('regEmployee').value=employeeName||'';
+document.getElementById('regVersion').value=taskVersion||DEFAULT_TASK_VERSION;
+document.getElementById('regCode').value=taskCode||DEFAULT_TASK_CODE;
+document.getElementById('regOverlay').style.display='flex';logEvent('open_config',{});}
+function saveConfig(){
+terminalId=document.getElementById('regTerminal').value.trim();
+employeeName=document.getElementById('regEmployee').value.trim();
+taskVersion=document.getElementById('regVersion').value.trim()||DEFAULT_TASK_VERSION;
+taskCode=document.getElementById('regCode').value.trim()||DEFAULT_TASK_CODE;
+if(!terminalId||!employeeName)return;
+localStorage.setItem('oos_macro_terminal',terminalId);
+document.getElementById('regOverlay').style.display='none';
+updateMeta();logEvent('register',{device_id:terminalId,employee:employeeName});
+loadLocal();render(false);setTimeout(()=>scanInput.focus(),20);}
+function initConfig(){
+document.getElementById('regTerminal').value=localStorage.getItem('oos_macro_terminal')||'';
+document.getElementById('regVersion').value=DEFAULT_TASK_VERSION;
+document.getElementById('regCode').value=DEFAULT_TASK_CODE;
+terminalId=document.getElementById('regTerminal').value.trim();
+employeeName=document.getElementById('regEmployee').value.trim();
+taskVersion=DEFAULT_TASK_VERSION;taskCode=DEFAULT_TASK_CODE;updateMeta();
+logEvent('page_open',{href:location.href,user_agent:navigator.userAgent||''});
+if(terminalId&&employeeName){document.getElementById('regOverlay').style.display='none';loadLocal();}}
+function color(d){if(!d)return '';
+const p=String(d.prio||'').toUpperCase(),t=String(d.tsu||'').toUpperCase();
+const pr=p==='PRIO1'||p==='PRIORYTET 1';
+if(p==='BLOK'&&t.indexOf('MDTPUT')>=0)return 'green';
+if(pr&&t.indexOf('MDTPUT')>=0)return 'red';
+if(p==='BLOK'&&t.indexOf('RSORT')>=0)return 'blue';
+if(pr&&t.indexOf('RSORT')>=0)return 'yellow';
+if(p==='BLOK')return 'blue';if(pr)return 'yellow';return '';}
+function stripe(c){return c==='green'?'sg':c==='red'?'sr':c==='blue'?'sb':c==='yellow'?'sy':'';}
+function hitCls(c){return c==='green'?'hitGreen':c==='red'?'hitRed':c==='blue'?'hitBlue':c==='yellow'?'hitYellow':'noHit';}
+function marker(c){return c==='green'?'#00c853':c==='red'?'#ff1744':c==='blue'?'#2979ff':c==='yellow'?'#ffd600':'';}
+function render(center){const found=new Set(),cc=new Map();
+scans.forEach(s=>{const sn=norm(s.nr);cc.set(sn,(cc.get(sn)||0)+1);if(byNr.has(sn))found.add(sn);});
+let html='',rows=Math.max(DATA.length,scans.length,1),hits=0;for(let i=0;i<rows;i++){const d=DATA[i]||null,s=scans[i]||null,n=d?norm(d.nr):'',c=d?color(d):'',m=s?byNr.get(norm(s.nr)):null,md=m?m[0]:null,vd=s&&cc.get(norm(s.nr))>1,cell=s?(vd?'dupScan':(md?hitCls(color(md)):'noHit')):'',st=s&&vd&&md?(' style="--dup-color:'+marker(color(md))+'"'):'';if(s&&md&&!s.dup)hits++;const cls=[c,stripe(c),d&&found.has(n)?'found':'',s&&d&&norm(s.nr)===n?'match':''].filter(Boolean).join(' ');html+='<tr class="'+cls+'"><td class="sc"></td><td class="nr">'+(d?esc(d.nr):'')+'</td><td class="brand">'+(d?esc(d.brand):'')+'</td><td class="loc">'+(d?esc(d.loc||''):'')+'</td><td class="klik '+cell+'"'+st+' data-i="'+i+'">'+(s?esc(s.nr):'')+'</td></tr>';}tb.innerHTML=html;document.getElementById('allCount').textContent=DATA.length;document.getElementById('scanCount').textContent=scans.length;document.getElementById('hitCount').textContent=hits;if(center&&scans.length){const el=tb.querySelector('[data-i="'+(scans.length-1)+'"]');if(el)el.scrollIntoView({block:'center',inline:'nearest'});}setTimeout(()=>scanInput.focus(),10);}
+function saveLocal(){try{localStorage.setItem(scanKey(),JSON.stringify(scans));}catch(_){}}
+function loadLocal(){try{const saved=JSON.parse(localStorage.getItem(scanKey())||'[]');if(Array.isArray(saved)){scans.length=0;counts.clear();saved.forEach(s=>{if(s&&s.nr){scans.push(s);counts.set(norm(s.nr),(counts.get(norm(s.nr))||0)+1);}});}}catch(_){}}
+function process(){const v=norm(scanInput.value);if(!v)return;scanInput.value='';
+let c=(counts.get(v)||0)+1;counts.set(v,c);
+const d=byNr.has(v)?byNr.get(v)[0]:null;
+const row={kind:'scan',id:makeId('scan'),nr:v,dup:c>1,hit:!!d,
+ts:new Date().toISOString(),task_version:taskVersion,task_code:taskCode,
+device_id:terminalId,employee:employeeName,timer_session_id:timerSessionId,
+timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs()};
+scans.push(row);remember(row);saveLocal();
+document.getElementById('dupWarning').style.display=c>1?'block':'none';render(true);}
+function encodeDetails(v){try{return encodeURIComponent(JSON.stringify(v||{}));}catch(_){return '%7B%7D';}}
+function exportRows(){const m=new Map();
+function add(e){if(!e)return;
+const k=(e.kind||'scan')+'|'+(e.id||((e.nr||e.event||'')+'|'+(e.ts||'')));
+if(!m.has(k))m.set(k,e);}
+loadJournal().forEach(add);scans.forEach(add);
+return Array.from(m.values()).sort((a,b)=>String(a.ts||'').localeCompare(String(b.ts||'')));}
+function doExport(){const rows=exportRows();if(!rows.length){alert('Brak zapis�w');return;}logEvent('manual_export',{trigger:'task_code_long_press'});const rows2=exportRows();
+const lines=rows2.map(e=>{
+if((e.kind||'scan')==='event')return ['@EVENT',e.event||'event',e.ts||'',
+e.task_version||taskVersion,e.task_code||taskCode,e.id||'',e.employee||employeeName,
+e.device_id||terminalId,e.timer_session_id||timerSessionId,e.timer_boot_id||TIMER_BOOT_ID,
+e.elapsed_ms||0,encodeDetails(e.details||{})].join('|');
+return [e.nr,e.ts||'',e.dup?'DUP':(e.hit?'HIT':'MISS'),e.task_version||taskVersion,
+e.task_code||taskCode,e.id||'',e.employee||employeeName,e.device_id||terminalId,
+e.timer_session_id||timerSessionId,e.timer_boot_id||TIMER_BOOT_ID,e.elapsed_ms||0].join('|');
+}).join('\n');
+const txt=terminalId+'|'+employeeName+'|mixed|'+taskCode+'|OOS_EXPORT_V2|'+new Date().toISOString()+'\n'+lines;
+document.getElementById('exportText').value=txt;
+try{const a=document.createElement('a');
+a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+a.download='oos_macro_'+(terminalId||'terminal')+'_'+(taskCode||'code')+'.txt';
+document.body.appendChild(a);a.click();a.remove();
+setTimeout(()=>URL.revokeObjectURL(a.href),1000);alert('Eksport gotowy: '+rows2.length+' zapis�w');
+}catch(_){prompt('Kopiuj:',txt);}}
+function setupCodeExport(){const box=document.getElementById('taskCode');
+let tm=null,fired=false;
+function start(e){fired=false;if(e&&e.type==='touchstart')e.preventDefault();
+clearTimeout(tm);tm=setTimeout(()=>{fired=true;
+const p=prompt('Has�o eksportu: wpisz kod zadania');
+if(p!==null&&String(p).trim()===String(taskCode).trim())doExport();
+else if(p!==null)alert('B��dny kod');},1200);}
+function stop(){clearTimeout(tm);}
+box.addEventListener('mousedown',start);
+box.addEventListener('touchstart',start,{passive:false});
+['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>box.addEventListener(ev,stop));
+box.addEventListener('click',e=>{if(fired)e.preventDefault();});}
+let clearTimer=null;scanInput.addEventListener('input',()=>{clearTimeout(clearTimer);if(scanInput.value.trim())clearTimer=setTimeout(process,250);});
+scanInput.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key==='Tab'){e.preventDefault();clearTimeout(clearTimer);setTimeout(process,10);}});
+function clearAll(){if(!confirm('Reset widocznych klik�w?'))return;logEvent('visible_log_reset',{});scans.length=0;counts.clear();try{localStorage.removeItem(scanKey());}catch(_){}render(false);scanInput.focus();}
+window.addEventListener('pagehide',()=>logEvent('page_hide',{}));
+document.addEventListener('visibilitychange',()=>{logEvent(document.hidden?'page_hidden':'page_visible',{});});
+document.getElementById('startBtn').addEventListener('click',saveConfig);
+document.getElementById('resetBtn').addEventListener('click',clearAll);
+document.getElementById('titleMeta').addEventListener('click',openConfig);
+document.addEventListener('click',e=>{if(e.target.closest('#regOverlay'))return;scanInput.focus();});
+setupCodeExport();initConfig();render(false);setTimeout(()=>scanInput.focus(),30);
+</script></body></html>
