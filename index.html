@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>2026-06-08_0703</title>
+<title>2026-06-09_1345</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -63,16 +63,16 @@ td.noHit{background:#f5f5f5;color:#555;}
 <h2>Konfiguracja terminala</h2>
 <input id="regTerminal" placeholder="nr terminala">
 <input id="regEmployee" placeholder="pracownik">
-<input id="regVersion" placeholder="wersja zadania" value="V_2026-06-08_0703">
-<input id="regCode" placeholder="kod zadania" value="9434">
+<input id="regVersion" placeholder="wersja zadania" value="V_2026-06-09_1345">
+<input id="regCode" placeholder="kod zadania" value="4719">
 <button id="startBtn" type="button">start</button></div></div>
 <div id="hdr">
 <div class="termLine">
 <div>
 <div class="termMain" id="titleMeta" title="Zmien terminal / pracownika">terminal · —</div>
-<div class="termMeta">wersja: <b id="versionMeta">V_2026-06-08_0703</b></div>
+<div class="termMeta">wersja: <b id="versionMeta">V_2026-06-09_1345</b></div>
 </div>
-<div id="taskCode" title="Przytrzymaj, zeby eksportowac">9434</div>
+<div id="taskCode" title="Przytrzymaj, zeby eksportowac">4719</div>
 </div>
 <div id="top">
 <input id="scanInput" type="text" autocomplete="off" autofocus placeholder="Skanuj karton...">
@@ -91,41 +91,160 @@ td.noHit{background:#f5f5f5;color:#555;}
 <th class="klik">Kliki</th></tr></thead><tbody id="tb"></tbody></table></div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION="V_2026-06-08_0703";
-const DEFAULT_TASK_CODE="9434";
+const DEFAULT_TASK_VERSION="V_2026-06-09_1345";
+const DEFAULT_TASK_CODE="4719";
 const DATA=[];
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074683960","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074673613","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074709573","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072454538","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026087506","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073545093","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506234474","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506229273","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026108906","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073178047","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026102794","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026111377","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074002099","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073182817","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026105199","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229156","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026107381","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073397064","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074372637","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026103980","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506229946","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2072137030","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026111757","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026096159","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072700671","prio":"PRIORYTET 1","tsu":"MDTPUT"});
 DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073406831","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074716189","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074684811","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074716245","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074675979","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074674669","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074709602","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072975208","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026083906","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074684262","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074726708","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074684445","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074684386","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074673605","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074715687","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074674752","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074716558","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074675498","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026090759","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074711709","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074727215","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074709612","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026089343","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074683431","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074673614","prio":"PRIORYTET 1","tsu":"MDTPUT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026081657","prio":"PRIORYTET 1","tsu":"RSORT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026083728","prio":"PRIORYTET 1","tsu":"RSORT"});
-DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506227543","prio":"PRIORYTET 1","tsu":"RSORT"});
-DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026092593","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074686049","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072943940","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074696978","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026084626","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074647143","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074729664","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026090453","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074686068","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074709790","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074696987","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506234886","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074089435","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073758156","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506234425","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074014023","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506234663","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073268921","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229180","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026109572","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073195784","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026103616","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026111306","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506235260","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506228851","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072147921","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506233909","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074624869","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506228845","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229207","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026103225","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074699257","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229233","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074696975","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074678660","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506235618","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506235634","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074344272","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026098722","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074729616","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074684119","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026112963","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026105377","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026103055","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026110926","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026111291","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074424183","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506235083","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026093046","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506195048","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074269315","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073240515","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2072336536","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229102","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073808584","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026102551","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506234443","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2070936446","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026102653","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074686101","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074255150","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026098688","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506235876","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026102573","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026103668","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229147","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229725","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074447796","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074114101","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026112850","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506235075","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074686043","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074647301","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073539085","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026104600","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506234927","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506228850","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026110941","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026111413","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026111355","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506232287","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026087174","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506233477","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2061164436","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026106370","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229179","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506228855","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026111440","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026104424","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026098263","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026105430","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506231932","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506229122","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026105872","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026089373","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026096970","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073702816","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026111317","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506235623","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2070983215","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026102123","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026108294","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026083382","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026101569","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506230306","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073317231","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026109714","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026105211","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026110757","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073419234","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026101618","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2070414413","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074599529","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026100173","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073710148","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026101764","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074472059","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026089858","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506232388","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026101079","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506234876","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506229610","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506234543","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506234995","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074610070","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026091459","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2983528462","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506231774","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026104370","prio":"PRIORYTET 1","tsu":"RSORT"});
 const tb=document.getElementById('tb');
 const wrap=document.getElementById('wrap');
 const scanInput=document.getElementById('scanInput');
