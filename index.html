@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>2026-06-09_1847</title>
+<title>2026-06-09_1849</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -11,8 +11,9 @@ body{background:#fff;color:#111;overflow:hidden;display:flex;flex-direction:colu
 .termMain{font-size:26px;font-weight:900;color:#111;letter-spacing:-0.03em;}
 .termMeta{font-size:11px;color:#777;margin-top:2px;}
 #taskCode{background:#111!important;color:#fff!important;font-size:26px!important;font-weight:900!important;letter-spacing:.08em;padding:4px 10px!important;border-radius:7px;cursor:pointer;}
-.scanLine{display:flex;gap:8px;align-items:center;}
-#scanInput{flex:1;height:38px;border:2px solid #111;background:#f7fbff;padding:0 10px;font-size:18px;font-weight:bold;outline:none;}
+#titleMeta{cursor:pointer;}
+#top{margin-top:8px;display:flex;gap:4px;align-items:center;}
+#scanInput{width:100%;height:30px;border:2px solid #111;background:#f7fbff;padding:0 8px;font-size:14px;font-weight:bold;outline:none;}
 #scanInput:focus{outline:none;border-color:#000;background:#f7fbff;}
 #meta{margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
 #meta span{background:#f3f3f3;padding:3px 7px;border-radius:4px;border:1px solid #ddd;font-size:11px;font-weight:bold;}
@@ -51,12 +52,30 @@ td.hitBlue{background:#2979ff;color:#fff;font-weight:bold;}
 td.hitYellow{background:#ffd600;color:#000;font-weight:bold;}
 td.dupScan{background:#fce4ec!important;color:#880e4f;font-weight:bold;box-shadow:inset 8px 0 0 var(--dup-color,transparent);}
 td.noHit{background:#f5f5f5;color:#555;}
+#regOverlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:999;display:flex;align-items:center;justify-content:center;padding:18px;}
+#regCard{background:#fff;border-radius:12px;padding:18px;max-width:360px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+#regCard h2{font-size:18px;margin-bottom:12px;}
+#regCard input{width:100%;height:38px;margin-bottom:8px;padding:0 10px;border:2px solid #ccc;border-radius:7px;font-size:16px;}
+#startBtn{width:100%;height:40px;border:none;border-radius:8px;background:#111;color:#fff;font-size:16px;font-weight:bold;}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
 </style></head><body>
+<div id="regOverlay"><div id="regCard">
+<h2>Konfiguracja terminala</h2>
+<input id="regTerminal" placeholder="nr terminala">
+<input id="regEmployee" placeholder="pracownik">
+<input id="regVersion" placeholder="wersja zadania" value="V_2026-06-09_1849">
+<input id="regCode" placeholder="kod zadania" value="9910">
+<button id="startBtn" type="button">start</button></div></div>
 <div id="hdr">
-<div class="scanLine">
+<div class="termLine">
+<div>
+<div class="termMain" id="titleMeta" title="Zmien terminal / pracownika">terminal · —</div>
+<div class="termMeta">wersja: <b id="versionMeta">V_2026-06-09_1849</b></div>
+</div>
+<div id="taskCode" title="Przytrzymaj, zeby eksportowac">9910</div>
+</div>
+<div id="top">
 <input id="scanInput" type="text" autocomplete="off" autofocus placeholder="Skanuj karton...">
-<div id="taskCode" title="Przytrzymaj, zeby eksportowac">8569</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -72,8 +91,8 @@ td.noHit{background:#f5f5f5;color:#555;}
 <th class="klik">Kliki</th></tr></thead><tbody id="tb"></tbody></table></div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION="V_2026-06-09_1847";
-const DEFAULT_TASK_CODE="8569";
+const DEFAULT_TASK_VERSION="V_2026-06-09_1849";
+const DEFAULT_TASK_CODE="9910";
 const DATA=[];
 DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072454538","prio":"PRIORYTET 1","tsu":"MDTPUT"});
 DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2073545093","prio":"PRIORYTET 1","tsu":"MDTPUT"});
@@ -169,7 +188,7 @@ const scanInput=document.getElementById('scanInput');
 const scans=[];
 const counts=new Map();
 const byNr=new Map();
-let terminalId='terminal',employeeName='';
+let terminalId='',employeeName='';
 let taskVersion=DEFAULT_TASK_VERSION,taskCode=DEFAULT_TASK_CODE;
 const JOURNAL_KEY='oos_macro_journal_v1';
 const TIMER_BOOT_ID='boot_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);
@@ -182,7 +201,7 @@ function esc(v){return String(v==null?'':v).replace(/[&<>]/g,c=>({'&':'&amp;','<
 function person(v){return String(v||'').trim().replace(/\s+/g,' ').toLowerCase();}
 function elapsedMs(){return Math.max(0,Math.round(performance.now()-TIMER_BOOT_START));}
 function makeId(p){return (p||'id')+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,10);}
-function scanKey(){return 'oos_macro_scans_'+taskVersion+'_terminal';}
+function scanKey(){return 'oos_macro_scans_'+taskVersion+'_'+norm(terminalId||'terminal')+'_'+person(employeeName||'employee');}
 DATA.forEach(d=>{const k=norm(d.nr);if(!byNr.has(k))byNr.set(k,[]);byNr.get(k).push(d);});
 function loadJournal(){try{const r=JSON.parse(localStorage.getItem(JOURNAL_KEY)||'[]');return Array.isArray(r)?r.slice(-15000):[];}catch(_){return [];}}
 function saveJournal(r){try{localStorage.setItem(JOURNAL_KEY,JSON.stringify((r||[]).slice(-15000)));}catch(_){try{localStorage.setItem(JOURNAL_KEY,JSON.stringify((r||[]).slice(-5000)));}catch(__){}}}
@@ -192,13 +211,35 @@ ts:new Date().toISOString(),task_version:taskVersion,task_code:taskCode,
 device_id:terminalId,employee:employeeName,timer_session_id:timerSessionId,
 timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs(),details:details||{}});}
 function updateMeta(){
+document.getElementById('titleMeta').textContent='#'+(terminalId||'—')+(employeeName?' || '+employeeName:'');
 document.getElementById('taskCode').textContent=taskCode||'----';
-document.title='OOS Terminal Â· '+(taskCode||'');}
+document.getElementById('versionMeta').textContent=taskVersion||'—';
+document.title=(terminalId?terminalId+' · ':'')+(employeeName||'')+' · '+(taskCode||'');}
+function openConfig(){
+document.getElementById('regTerminal').value=terminalId||'';
+document.getElementById('regEmployee').value=employeeName||'';
+document.getElementById('regVersion').value=taskVersion||DEFAULT_TASK_VERSION;
+document.getElementById('regCode').value=taskCode||DEFAULT_TASK_CODE;
+document.getElementById('regOverlay').style.display='flex';logEvent('open_config',{});}
+function saveConfig(){
+terminalId=document.getElementById('regTerminal').value.trim();
+employeeName=document.getElementById('regEmployee').value.trim();
+taskVersion=document.getElementById('regVersion').value.trim()||DEFAULT_TASK_VERSION;
+taskCode=document.getElementById('regCode').value.trim()||DEFAULT_TASK_CODE;
+if(!terminalId||!employeeName)return;
+localStorage.setItem('oos_macro_terminal',terminalId);
+document.getElementById('regOverlay').style.display='none';
+updateMeta();logEvent('register',{device_id:terminalId,employee:employeeName});
+loadLocal();render(false);setTimeout(()=>scanInput.focus(),20);}
 function initConfig(){
-taskVersion=DEFAULT_TASK_VERSION;taskCode=DEFAULT_TASK_CODE;
-updateMeta();
+document.getElementById('regTerminal').value=localStorage.getItem('oos_macro_terminal')||'';
+document.getElementById('regVersion').value=DEFAULT_TASK_VERSION;
+document.getElementById('regCode').value=DEFAULT_TASK_CODE;
+terminalId=document.getElementById('regTerminal').value.trim();
+employeeName=document.getElementById('regEmployee').value.trim();
+taskVersion=DEFAULT_TASK_VERSION;taskCode=DEFAULT_TASK_CODE;updateMeta();
 logEvent('page_open',{href:location.href,user_agent:navigator.userAgent||''});
-loadLocal();}
+if(terminalId&&employeeName){document.getElementById('regOverlay').style.display='none';loadLocal();}}
 function color(d){if(!d)return '';
 const p=String(d.prio||'').toUpperCase(),t=String(d.tsu||'').toUpperCase();
 const pr=p==='PRIO1'||p==='PRIORYTET 1';
@@ -212,7 +253,7 @@ function hitCls(c){return c==='green'?'hitGreen':c==='red'?'hitRed':c==='blue'?'
 function marker(c){return c==='green'?'#00c853':c==='red'?'#ff1744':c==='blue'?'#2979ff':c==='yellow'?'#ffd600':'';}
 function render(center){const found=new Set(),cc=new Map();
 scans.forEach(s=>{const sn=norm(s.nr);cc.set(sn,(cc.get(sn)||0)+1);if(byNr.has(sn))found.add(sn);});
-let html='',rows=Math.max(DATA.length,scans.length,1),hits=0;for(let i=0;i<rows;i++){const d=DATA[i]||null,s=scans[i]||null,n=d?norm(d.nr):'',c=d?color(d):'',m=s?byNr.get(norm(s.nr)):null,md=m?m[0]:null,vd=s&&cc.get(norm(s.nr))>1,cell=s?(vd?'dupScan':(md?hitCls(color(md)):'noHit')):'',st=s&&vd&&md?(' style="--dup-color:'+marker(color(md))+'"'):'';if(s&&md&&!s.dup)hits++;const cls=[c,stripe(c),d&&found.has(n)?'found':'',s&&d&&norm(s.nr)===n?'match':''].filter(Boolean).join(' ');html+='<tr class="'+cls+'"'><td class="sc"></td><td class="nr">'+(d?esc(d.nr):'')+'</td><td class="brand">'+(d?esc(d.brand):'')+'</td><td class="loc">'+(d?esc(d.loc||''):'')+'</td><td class="klik '+cell+'"'+st+' data-i="'+i+'"'>+(s?esc(s.nr):'')+'</td></tr>';}tb.innerHTML=html;document.getElementById('allCount').textContent=DATA.length;document.getElementById('scanCount').textContent=scans.length;document.getElementById('hitCount').textContent=hits;if(center&&scans.length){const el=tb.querySelector('[data-i="'+(scans.length-1)+'"]');if(el)el.scrollIntoView({block:'center',inline:'nearest'});}setTimeout(()=>scanInput.focus(),10);}
+let html='',rows=Math.max(DATA.length,scans.length,1),hits=0;for(let i=0;i<rows;i++){const d=DATA[i]||null,s=scans[i]||null,n=d?norm(d.nr):'',c=d?color(d):'',m=s?byNr.get(norm(s.nr)):null,md=m?m[0]:null,vd=s&&cc.get(norm(s.nr))>1,cell=s?(vd?'dupScan':(md?hitCls(color(md)):'noHit')):'',st=s&&vd&&md?(' style="--dup-color:'+marker(color(md))+'"'):'';if(s&&md&&!s.dup)hits++;const cls=[c,stripe(c),d&&found.has(n)?'found':'',s&&d&&norm(s.nr)===n?'match':''].filter(Boolean).join(' ');html+='<tr class="'+cls+'"><td class="sc"></td><td class="nr">'+(d?esc(d.nr):'')+'</td><td class="brand">'+(d?esc(d.brand):'')+'</td><td class="loc">'+(d?esc(d.loc||''):'')+'</td><td class="klik '+cell+'"'+st+' data-i="'+i+'">'+(s?esc(s.nr):'')+'</td></tr>';}tb.innerHTML=html;document.getElementById('allCount').textContent=DATA.length;document.getElementById('scanCount').textContent=scans.length;document.getElementById('hitCount').textContent=hits;if(center&&scans.length){const el=tb.querySelector('[data-i="'+(scans.length-1)+'"]');if(el)el.scrollIntoView({block:'center',inline:'nearest'});}setTimeout(()=>scanInput.focus(),10);}
 function saveLocal(){try{localStorage.setItem(scanKey(),JSON.stringify(scans));}catch(_){}}
 function loadLocal(){try{const saved=JSON.parse(localStorage.getItem(scanKey())||'[]');if(Array.isArray(saved)){scans.length=0;counts.clear();saved.forEach(s=>{if(s&&s.nr){scans.push(s);counts.set(norm(s.nr),(counts.get(norm(s.nr))||0)+1);}});}}catch(_){}}
 function process(){const v=norm(scanInput.value);if(!v)return;scanInput.value='';
@@ -231,7 +272,7 @@ const k=(e.kind||'scan')+'|'+(e.id||((e.nr||e.event||'')+'|'+(e.ts||'')));
 if(!m.has(k))m.set(k,e);}
 loadJournal().forEach(add);scans.forEach(add);
 return Array.from(m.values()).sort((a,b)=>String(a.ts||'').localeCompare(String(b.ts||'')));}
-function doExport(){const rows=exportRows();if(!rows.length){alert('Brak zapisÃ³w');return;}logEvent('manual_export',{trigger:'task_code_long_press'});const rows2=exportRows();
+function doExport(){const rows=exportRows();if(!rows.length){alert('Brak zapisów');return;}logEvent('manual_export',{trigger:'task_code_long_press'});const rows2=exportRows();
 const lines=rows2.map(e=>{
 if((e.kind||'scan')==='event')return ['@EVENT',e.event||'event',e.ts||'',
 e.task_version||taskVersion,e.task_code||taskCode,e.id||'',e.employee||employeeName,
@@ -247,15 +288,15 @@ try{const a=document.createElement('a');
 a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
 a.download='oos_macro_'+(terminalId||'terminal')+'_'+(taskCode||'code')+'.txt';
 document.body.appendChild(a);a.click();a.remove();
-setTimeout(()=>URL.revokeObjectURL(a.href),1000);alert('Eksport gotowy: '+rows2.length+' zapisÃ³w');
+setTimeout(()=>URL.revokeObjectURL(a.href),1000);alert('Eksport gotowy: '+rows2.length+' zapisów');
 }catch(_){prompt('Kopiuj:',txt);}}
 function setupCodeExport(){const box=document.getElementById('taskCode');
 let tm=null,fired=false;
 function start(e){fired=false;if(e&&e.type==='touchstart')e.preventDefault();
 clearTimeout(tm);tm=setTimeout(()=>{fired=true;
-const p=prompt('HasÅ‚o eksportu: wpisz kod zadania');
+const p=prompt('Has³o eksportu: wpisz kod zadania');
 if(p!==null&&String(p).trim()===String(taskCode).trim())doExport();
-else if(p!==null)alert('BÅ‚Ä™dny kod');},1200);}
+else if(p!==null)alert('B³êdny kod');},1200);}
 function stop(){clearTimeout(tm);}
 box.addEventListener('mousedown',start);
 box.addEventListener('touchstart',start,{passive:false});
@@ -263,10 +304,12 @@ box.addEventListener('touchstart',start,{passive:false});
 box.addEventListener('click',e=>{if(fired)e.preventDefault();});}
 let clearTimer=null;scanInput.addEventListener('input',()=>{clearTimeout(clearTimer);if(scanInput.value.trim())clearTimer=setTimeout(process,250);});
 scanInput.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key==='Tab'){e.preventDefault();clearTimeout(clearTimer);setTimeout(process,10);}});
-function clearAll(){if(!confirm('Reset widocznych klikÃ³w?'))return;logEvent('visible_log_reset',{});scans.length=0;counts.clear();try{localStorage.removeItem(scanKey());}catch(_){}render(false);scanInput.focus();}
+function clearAll(){if(!confirm('Reset widocznych klików?'))return;logEvent('visible_log_reset',{});scans.length=0;counts.clear();try{localStorage.removeItem(scanKey());}catch(_){}render(false);scanInput.focus();}
 window.addEventListener('pagehide',()=>logEvent('page_hide',{}));
 document.addEventListener('visibilitychange',()=>{logEvent(document.hidden?'page_hidden':'page_visible',{});});
+document.getElementById('startBtn').addEventListener('click',saveConfig);
 document.getElementById('resetBtn').addEventListener('click',clearAll);
-document.addEventListener('click',()=>scanInput.focus());
+document.getElementById('titleMeta').addEventListener('click',openConfig);
+document.addEventListener('click',e=>{if(e.target.closest('#regOverlay'))return;scanInput.focus();});
 setupCodeExport();initConfig();render(false);setTimeout(()=>scanInput.focus(),30);
 </script></body></html>
