@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 4717</title>
+<title>OOS 5011</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -30,28 +30,18 @@ color:#a10000;padding:4px 7px;border-radius:4px;
 font-size:13px;font-weight:900;}
 #wrap{position:absolute;left:0;right:0;top:86px;bottom:0;
 overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;}
-table{border-collapse:collapse;width:max-content;min-width:100%;
+table{border-collapse:collapse;width:100%;table-layout:fixed;
 background:#fff;}
 thead th{position:sticky;top:0;z-index:30;}
-th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 4px;
-font-size:13px;height:26px;white-space:nowrap;text-align:left;}
-td{border:1px solid #e1e1e1;padding:1px 4px;font-size:21px;
-height:38px;white-space:nowrap;}
-th.sc,td.sc{width:7px;min-width:7px;max-width:7px;padding:0;border:0;}
-th.nr,td.nr{width:106px;min-width:106px;max-width:106px;
-font-weight:900;overflow:hidden;text-overflow:ellipsis;}
-th.brand,td.brand{width:132px;min-width:132px;max-width:132px;
-overflow:hidden;text-overflow:ellipsis;}
-th.loc,td.loc{width:122px;min-width:122px;max-width:122px;
-overflow:hidden;text-overflow:ellipsis;}
-th.klik,td.klik{width:130px;min-width:130px;text-align:center;
-font-weight:900;}
-.sticky1{position:sticky;left:7px;z-index:35;background:#f1f1f1;}
-.sticky2{position:sticky;left:113px;z-index:35;background:#f1f1f1;}
-.sticky3{position:sticky;left:245px;z-index:35;background:#f1f1f1;}
-td.nr{position:sticky;left:7px;background:#fff;z-index:10;}
-td.brand{position:sticky;left:113px;background:#fff;z-index:10;}
-td.loc{position:sticky;left:245px;background:#fff;z-index:10;}
+th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 3px;
+font-size:12px;height:24px;white-space:nowrap;text-align:left;}
+td{border:1px solid #e1e1e1;padding:1px 3px;font-size:17px;
+height:36px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+th.sc,td.sc{width:6px;padding:0;border:0;}
+th.nr,td.nr{width:28%;font-weight:900;}
+th.brand,td.brand{width:20%;}
+th.loc,td.loc{width:24%;}
+th.klik,td.klik{width:28%;text-align:center;font-weight:900;}
 tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
 tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
 tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
@@ -87,8 +77,8 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <div id="topLine">
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
-<div id="taskCode" title="Przytrzymaj, ¿eby eksportowaæ">
-4717</div>
+<div id="taskCode" title="Przytrzymaj, Å¼eby eksportowaÄ‡">
+5011</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -96,15 +86,15 @@ placeholder="Skanuj karton...">
 <span>znal.: <b id="hitCount">0</b></span>
 <button id="resetBtn" type="button">reset</button>
 </div>
-<div id="dupWarning">DUPLIKAT — karton ju¿ by³ skanowany!</div>
+<div id="dupWarning">DUPLIKAT â€” karton juÅ¼ byÅ‚ skanowany!</div>
 </div>
 <div id="wrap">
 <table id="tbl">
 <thead><tr>
 <th class="sc"></th>
-<th class="nr sticky1">nr</th>
-<th class="brand sticky2">brand</th>
-<th class="loc sticky3">loc</th>
+<th class="nr">nr</th>
+<th class="brand">brand</th>
+<th class="loc">loc</th>
 <th class="klik">Klikaj tutaj</th>
 </tr></thead>
 <tbody id="tb"></tbody>
@@ -112,8 +102,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-10_1538";
-const DEFAULT_TASK_CODE = "4717";
+const DEFAULT_TASK_VERSION = "macro_2026-06-10_1552";
+const DEFAULT_TASK_CODE = "5011";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -1021,7 +1011,7 @@ function doExport() {
   logEvent('manual_export', {trigger: 'task_code_long_press'});
   const rows = exportRows();
   if (!rows.length) {
-    alert('Brak zapisów');
+    alert('Brak zapisÃ³w');
     return;
   }
   const lines = rows.map(e => {
@@ -1056,7 +1046,7 @@ function doExport() {
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    alert('Eksport gotowy: ' + rows.length + ' zapisów');
+    alert('Eksport gotowy: ' + rows.length + ' zapisÃ³w');
   } catch (_) {
     prompt('Kopiuj:', txt);
   }
@@ -1070,11 +1060,11 @@ function setupCodeExport() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fired = true;
-      const p = prompt('Has³o eksportu: wpisz kod zadania');
+      const p = prompt('HasÅ‚o eksportu: wpisz kod zadania');
       if (p !== null && String(p).trim() === String(taskCode).trim()) {
         doExport();
       } else if (p !== null) {
-        alert('B³êdny kod');
+        alert('BÅ‚Ä™dny kod');
       }
     }, 1200);
   }
@@ -1090,7 +1080,7 @@ function setupCodeExport() {
   });
 }
 function clearAll() {
-  if (!confirm('Reset widocznych klików?')) return;
+  if (!confirm('Reset widocznych klikÃ³w?')) return;
   logEvent('visible_log_reset', {});
   scans.length = 0;
   counts.clear();
