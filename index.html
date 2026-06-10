@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 5011</title>
+<title>OOS 8000</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -34,14 +34,14 @@ table{border-collapse:collapse;width:100%;table-layout:fixed;
 background:#fff;}
 thead th{position:sticky;top:0;z-index:30;}
 th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 3px;
-font-size:12px;height:24px;white-space:nowrap;text-align:left;}
-td{border:1px solid #e1e1e1;padding:1px 3px;font-size:17px;
-height:36px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-th.sc,td.sc{width:6px;padding:0;border:0;}
-th.nr,td.nr{width:28%;font-weight:900;}
-th.brand,td.brand{width:20%;}
-th.loc,td.loc{width:24%;}
-th.klik,td.klik{width:28%;text-align:center;font-weight:900;}
+font-size:11px;height:22px;white-space:nowrap;text-align:left;}
+td{border:1px solid #e1e1e1;padding:1px 3px;font-size:13px;
+height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+th.sc,td.sc{width:5px;padding:0;border:0;}
+th.nr,td.nr{width:30%;font-weight:900;}
+th.brand,td.brand{width:17%;}
+th.loc,td.loc{width:27%;}
+th.klik,td.klik{width:26%;text-align:center;font-weight:900;}
 tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
 tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
 tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
@@ -78,7 +78,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-5011</div>
+8000</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -102,8 +102,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-10_1552";
-const DEFAULT_TASK_CODE = "5011";
+const DEFAULT_TASK_VERSION = "macro_2026-06-10_1556";
+const DEFAULT_TASK_CODE = "8000";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
