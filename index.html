@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 8000</title>
+<title>OOS 8120</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -38,7 +38,7 @@ font-size:11px;height:22px;white-space:nowrap;text-align:left;}
 td{border:1px solid #e1e1e1;padding:1px 3px;font-size:13px;
 height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 th.sc,td.sc{width:5px;padding:0;border:0;}
-th.nr,td.nr{width:30%;font-weight:900;}
+th.nr,td.nr{font-weight:900;white-space:nowrap;}
 th.brand,td.brand{width:17%;}
 th.loc,td.loc{width:27%;}
 th.klik,td.klik{width:26%;text-align:center;font-weight:900;}
@@ -78,7 +78,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-8000</div>
+8120</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -102,8 +102,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-10_1556";
-const DEFAULT_TASK_CODE = "8000";
+const DEFAULT_TASK_VERSION = "macro_2026-06-10_1605";
+const DEFAULT_TASK_CODE = "8120";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
