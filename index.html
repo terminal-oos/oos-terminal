@@ -1,85 +1,81 @@
-<!doctype html>
-<html lang="pl">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="pl"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 5577</title>
+<title>2026-06-18_5382</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
-body{background:#fff;color:#111;overflow:hidden;}
-#hdr{position:fixed;top:0;left:0;right:0;z-index:100;
-background:#f4f4f4;border-bottom:1px solid #d7d7d7;
-padding:5px 7px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
-#topLine{display:flex;gap:7px;align-items:center;}
-#scanInput{flex:1 1 auto;height:38px;border:2px solid #111;
-background:#f7fbff;padding:0 10px;font-size:20px;font-weight:700;
-outline:none;border-radius:3px;min-width:0;}
-#taskCode{flex:0 0 auto;background:#111;color:#fff;font-size:28px;
-font-weight:900;letter-spacing:.08em;padding:3px 10px;
-border-radius:7px;cursor:pointer;line-height:32px;}
-#meta{margin-top:5px;display:flex;gap:5px;align-items:center;
-flex-wrap:wrap;}
-#meta span{background:#f3f3f3;padding:3px 7px;border-radius:5px;
-border:1px solid #ddd;font-size:14px;font-weight:800;}
-#meta b{color:#0055cc;font-size:18px;}
-#resetBtn{height:28px;padding:0 10px;border:1px solid #aaa;
-background:#eee;font-size:14px;border-radius:5px;font-weight:800;}
-#dupWarning{display:none;margin-top:4px;background:#ffdddd;
-color:#a10000;padding:4px 7px;border-radius:4px;
-font-size:13px;font-weight:900;}
-#wrap{position:absolute;left:0;right:0;top:86px;bottom:0;
-overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;}
-table{border-collapse:collapse;width:100%;table-layout:fixed;
-background:#fff;}
-thead th{position:sticky;top:0;z-index:30;}
-th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 3px;
-font-size:11px;height:22px;white-space:nowrap;text-align:left;}
-td{border:1px solid #e1e1e1;padding:1px 3px;font-size:13px;
-height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-table{border-collapse:collapse;width:auto;}
-th.sc,td.sc{width:5px;padding:0;border:0;}
-th.nr,td.nr{font-weight:900;white-space:nowrap;width:1%;}
-th.brand,td.brand{white-space:nowrap;width:1%;}
-th.loc,td.loc{white-space:nowrap;width:1%;}
-th.klik,td.klik{width:90px;text-align:center;font-weight:900;}
+body{background:#fff;color:#111;overflow:hidden;display:flex;flex-direction:column;}
+#hdr{position:sticky;top:0;z-index:100;flex:0 0 auto;background:#f4f4f4;border-bottom:1px solid #d7d7d7;padding:8px 10px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.termLine{display:flex;justify-content:space-between;align-items:center;}
+.termMain{font-size:26px;font-weight:900;color:#111;letter-spacing:-0.03em;}
+.termMeta{font-size:11px;color:#777;margin-top:2px;}
+#taskCode{background:#111!important;color:#fff!important;font-size:26px!important;font-weight:900!important;letter-spacing:.08em;padding:4px 10px!important;border-radius:7px;cursor:pointer;}
+#titleMeta{cursor:pointer;}
+#top{margin-top:8px;display:flex;gap:4px;align-items:center;}
+#scanInput{width:100%;height:30px;border:2px solid #111;background:#f7fbff;padding:0 8px;font-size:14px;font-weight:bold;outline:none;}
+#scanInput:focus{outline:none;border-color:#000;background:#f7fbff;}
+#meta{margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+#meta span{background:#f3f3f3;padding:3px 7px;border-radius:4px;border:1px solid #ddd;font-size:11px;font-weight:bold;}
+#meta b{color:#0055cc;}
+#resetBtn{height:24px;padding:0 8px;border:1px solid #bbb;background:#eee;font-size:11px;border-radius:4px;}
+#dupWarning{display:none;margin-top:4px;background:#ffdddd;color:#a10000;padding:4px 7px;border-radius:4px;font-size:11px;font-weight:bold;}
+#wrap{overflow:auto;flex:1 1 auto;min-height:0;height:auto;-webkit-overflow-scrolling:touch;}
+table{border-collapse:collapse;width:max-content;background:#fff;}
+thead th{position:sticky;top:0;z-index:20;}
+th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 4px;font-size:10px;height:22px;white-space:nowrap;text-align:left;}
+td{border:1px solid #e1e1e1;padding:1px 4px;font-size:11px;height:22px;white-space:nowrap;}
+th.sc,td.sc{width:6px;padding:0;border:none;}
+th.nr,td.nr{width:72px;max-width:76px;font-weight:bold;overflow:hidden;text-overflow:clip;}
+th.brand,td.brand{width:56px;max-width:64px;overflow:hidden;text-overflow:clip;}
+th.loc,td.loc{width:72px;max-width:78px;overflow:hidden;text-overflow:clip;}
+th.klik,td.klik{min-width:104px;text-align:center;font-weight:bold;}
+.sticky1{position:sticky;left:6px;z-index:25;background:#f1f1f1;}
+.sticky2{position:sticky;left:78px;z-index:25;background:#f1f1f1;}
+.sticky3{position:sticky;left:134px;z-index:25;background:#f1f1f1;}
+td.nr{position:sticky;left:6px;background:#fff;z-index:5;}
+td.brand{position:sticky;left:78px;background:#fff;z-index:5;}
+td.loc{position:sticky;left:134px;background:#fff;z-index:5;}
 tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
 tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
 tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
 tr.yellow>td:not(.klik):not(.sc){background:#fff9c4;}
-tr.sg>.sc{background:#00c853;}
-tr.sr>.sc{background:#ff1744;}
-tr.sb>.sc{background:#2979ff;}
-tr.sy>.sc{background:#ffd600;}
-tr.green.found>td:not(.klik):not(.sc),
-tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;
-color:#fff;font-weight:900;}
-tr.red.found>td:not(.klik):not(.sc),
-tr.red.match>td:not(.klik):not(.sc){background:#ff1744!important;
-color:#fff;font-weight:900;}
-tr.blue.found>td:not(.klik):not(.sc),
-tr.blue.match>td:not(.klik):not(.sc){background:#2979ff!important;
-color:#fff;font-weight:900;}
-tr.yellow.found>td:not(.klik):not(.sc),
-tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;
-color:#000;font-weight:900;}
-td.hitGreen{background:#00c853;color:#fff;font-weight:900;}
-td.hitRed{background:#ff1744;color:#fff;font-weight:900;}
-td.hitBlue{background:#2979ff;color:#fff;font-weight:900;}
-td.hitYellow{background:#ffd600;color:#000;font-weight:900;}
+tr.sg>.sc{background:#00c853;} tr.sr>.sc{background:#ff1744;}
+tr.sb>.sc{background:#2979ff;} tr.sy>.sc{background:#ffd600;}
+tr.green.found>td:not(.klik):not(.sc),tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;color:#fff;font-weight:bold;}
+tr.red.found>td:not(.klik):not(.sc),tr.red.match>td:not(.klik):not(.sc){background:#ff1744!important;color:#fff;font-weight:bold;}
+tr.blue.found>td:not(.klik):not(.sc),tr.blue.match>td:not(.klik):not(.sc){background:#2979ff!important;color:#fff;font-weight:bold;}
+tr.yellow.found>td:not(.klik):not(.sc),tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;color:#000;font-weight:bold;}
+td.hitGreen{background:#00c853;color:#fff;font-weight:bold;}
+td.hitRed{background:#ff1744;color:#fff;font-weight:bold;}
+td.hitBlue{background:#2979ff;color:#fff;font-weight:bold;}
+td.hitYellow{background:#ffd600;color:#000;font-weight:bold;}
+td.dupScan{background:#fce4ec!important;color:#880e4f;font-weight:bold;box-shadow:inset 8px 0 0 var(--dup-color,transparent);}
 td.noHit{background:#f5f5f5;color:#555;}
-td.dupScan{background:#fce4ec!important;color:#880e4f;
-font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
+#regOverlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:999;display:flex;align-items:center;justify-content:center;padding:18px;}
+#regCard{background:#fff;border-radius:12px;padding:18px;max-width:360px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,.25);}
+#regCard h2{font-size:18px;margin-bottom:12px;}
+#regCard input{width:100%;height:38px;margin-bottom:8px;padding:0 10px;border:2px solid #ccc;border-radius:7px;font-size:16px;}
+#startBtn{width:100%;height:40px;border:none;border-radius:8px;background:#111;color:#fff;font-size:16px;font-weight:bold;}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
-</style>
-</head>
-<body>
+</style></head><body>
+<div id="regOverlay"><div id="regCard">
+<h2>Konfiguracja terminala</h2>
+<input id="regTerminal" placeholder="nr terminala">
+<input id="regEmployee" placeholder="pracownik">
+<input id="regVersion" placeholder="wersja zadania" value="macro_2026-06-18_1052">
+<input id="regCode" placeholder="kod zadania" value="5382">
+<button id="startBtn" type="button">start</button></div></div>
 <div id="hdr">
-<div id="topLine">
-<input id="scanInput" type="text" autocomplete="off" autofocus
-placeholder="Skanuj karton...">
-<div id="taskCode" title="Przytrzymaj, żeby eksportować">
-5577</div>
+<div class="termLine">
+<div>
+<div class="termMain" id="titleMeta" title="Zmien terminal / pracownika">terminal  </div>
+<div class="termMeta">wersja: <b id="versionMeta">macro_2026-06-18_1052</b></div>
+</div>
+<div id="taskCode" title="Przytrzymaj, zeby eksportowac">5382</div>
+</div>
+<div id="top">
+<input id="scanInput" type="text" autocomplete="off" autofocus placeholder="Skanuj karton...">
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -87,799 +83,213 @@ placeholder="Skanuj karton...">
 <span>znal.: <b id="hitCount">0</b></span>
 <button id="resetBtn" type="button">reset</button>
 </div>
-<div id="dupWarning">DUPLIKAT — karton już był skanowany!</div>
+<div id="dupWarning">&#9888; DUPLIKAT</div>
 </div>
-<div id="wrap">
-<table id="tbl">
-<thead><tr>
-<th class="sc"></th>
-<th class="nr">nr</th>
-<th class="brand">brand</th>
-<th class="loc">loc</th>
-<th class="klik">Klikaj tutaj</th>
-</tr></thead>
-<tbody id="tb"></tbody>
-</table>
-</div>
+<div id="wrap"><table id="tbl"><thead><tr>
+<th class="sc"></th><th class="nr sticky1">nr</th>
+<th class="brand sticky2">brand</th><th class="loc sticky3">loc</th>
+<th class="klik">Kliki</th></tr></thead><tbody id="tb"></tbody></table></div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-18_1049";
-const DEFAULT_TASK_CODE = "5577";
-const DATA = [];
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188890",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026191472",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188710",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026190368",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074622178",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074867331",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026192524",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026190963",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074823302",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026191535",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026193793",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074327374",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506266841",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026187913",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074623371",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2072875107",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026192059",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506265921",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188956",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074875527",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2073182815",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"4506265820",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"HOUSE",
-nr:"3026188928",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074875655",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"2074412475",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026189210",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026189439",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026192382",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026191083",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026190464",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026187331",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506262614",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026180342",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"2074094489",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026188616",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO045AP00",
-brand:"CROPP",
-nr:"3026187755",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074211694",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026198661",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074963419",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026192575",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074882767",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026191196",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026190931",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188955",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2073448241",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026192453",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074132416",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2073805990",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074842916",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026197300",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506266074",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"2074458363",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026192608",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026189048",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2072539487",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026181363",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074646026",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026185139",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"HOUSE",
-nr:"3026185155",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026194235",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026175705",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026191892",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-const tb = document.getElementById('tb');
-const wrap = document.getElementById('wrap');
-const scanInput = document.getElementById('scanInput');
-const taskCodeBox = document.getElementById('taskCode');
-const scans = [];
-const counts = new Map();
-const byNr = new Map();
-const taskVersion = DEFAULT_TASK_VERSION;
-const taskCode = DEFAULT_TASK_CODE;
-const terminalId = 'macro';
-const employeeName = 'macro';
-const JOURNAL_KEY = 'oos_macro_journal_v2';
-const TIMER_BOOT_ID = 'boot_' + Date.now().toString(36) +
-  Math.random().toString(36).slice(2, 8);
-const TIMER_BOOT_START = performance.now();
-let timerSessionId = localStorage.getItem('oos_macro_timer_session_id');
-if (!timerSessionId) {
-  timerSessionId = 'sess_' + Date.now().toString(36) +
-    Math.random().toString(36).slice(2, 8);
-}
-localStorage.setItem('oos_macro_timer_session_id', timerSessionId);
-function norm(v){let s=String(v||'').toUpperCase().trim();s=s.replace(/^'+/,'');s=s.replace(/^K/,'');s=s.replace(/\D/g,'');return s;}
-function esc(v) {
-  return String(v == null ? '' : v).replace(/[&<>]/g, c =>
-    ({'&':'&amp;', '<':'&lt;', '>':'&gt;'}[c]));
-}
-function elapsedMs() {
-  return Math.max(0, Math.round(performance.now() - TIMER_BOOT_START));
-}
-function makeId(prefix) {
-  return (prefix || 'id') + '_' + Date.now().toString(36) +
-    '_' + Math.random().toString(36).slice(2, 10);
-}
-function scanKey() {
-  return 'oos_macro_scans_' + taskVersion;
-}
-DATA.forEach(d => {
-  const k = norm(d.nr);
-  if (!byNr.has(k)) byNr.set(k, []);
-  byNr.get(k).push(d);
-});
-function loadJournal() {
-  try {
-    const rows = JSON.parse(localStorage.getItem(JOURNAL_KEY) || '[]');
-    return Array.isArray(rows) ? rows.slice(-15000) : [];
-  } catch (_) {
-    return [];
-  }
-}
-function saveJournal(rows) {
-  try {
-    localStorage.setItem(JOURNAL_KEY, JSON.stringify((rows || []).slice(-15000)));
-  } catch (_) {
-    try {
-      localStorage.setItem(JOURNAL_KEY, JSON.stringify((rows || []).slice(-5000)));
-    } catch (__) {}
-  }
-}
-function remember(row) {
-  const rows = loadJournal();
-  if (!row.id) row.id = makeId(row.kind === 'scan' ? 'scan' : 'evt');
-  rows.push(row);
-  saveJournal(rows);
-}
-function logEvent(event, details) {
-  remember({
-    kind: 'event',
-    id: makeId('evt'),
-    event,
-    ts: new Date().toISOString(),
-    task_version: taskVersion,
-    task_code: taskCode,
-    device_id: terminalId,
-    employee: employeeName,
-    timer_session_id: timerSessionId,
-    timer_boot_id: TIMER_BOOT_ID,
-    elapsed_ms: elapsedMs(),
-    details: details || {}
-  });
-}
-function color(d) {
-  if (!d) return '';
-  const p = String(d.prio || '').toUpperCase();
-  const t = String(d.tsu || '').toUpperCase();
-  const prio = p === 'PRIO1' || p === 'PRIORYTET 1';
-  if (p === 'BLOK' && t.indexOf('MDTPUT') >= 0) return 'green';
-  if (prio && t.indexOf('MDTPUT') >= 0) return 'red';
-  if (p === 'BLOK' && t.indexOf('RSORT') >= 0) return 'blue';
-  if (prio && t.indexOf('RSORT') >= 0) return 'yellow';
-  if (p === 'BLOK') return 'blue';
-  if (prio) return 'yellow';
-  return '';
-}
-function stripe(c) {
-  return c === 'green' ? 'sg' :
-    c === 'red' ? 'sr' :
-    c === 'blue' ? 'sb' :
-    c === 'yellow' ? 'sy' : '';
-}
-function hitCls(c) {
-  return c === 'green' ? 'hitGreen' :
-    c === 'red' ? 'hitRed' :
-    c === 'blue' ? 'hitBlue' :
-    c === 'yellow' ? 'hitYellow' : 'noHit';
-}
-function marker(c) {
-  return c === 'green' ? '#00c853' :
-    c === 'red' ? '#ff1744' :
-    c === 'blue' ? '#2979ff' :
-    c === 'yellow' ? '#ffd600' : '';
-}
-function render(center) {
-  wrap.style.top = document.getElementById('dupWarning').style.display ===
-    'block' ? '112px' : '86px';
-  const found = new Set();
-  const clickCounts = new Map();
-  scans.forEach(s => {
-    const sn = norm(s.nr);
-    clickCounts.set(sn, (clickCounts.get(sn) || 0) + 1);
-    if (byNr.has(sn)) found.add(sn);
-  });
-  let html = '';
-  let hits = 0;
-  const rows = Math.max(DATA.length, scans.length, 1);
-  for (let i = 0; i < rows; i++) {
-    const d = DATA[i] || null;
-    const s = scans[i] || null;
-    const n = d ? norm(d.nr) : '';
-    const c = d ? color(d) : '';
-    const matches = s ? byNr.get(norm(s.nr)) : null;
-    const match = matches ? matches[0] : null;
-    const isDup = s && clickCounts.get(norm(s.nr)) > 1;
-    const cellClass = s ? (isDup ? 'dupScan' :
-      (match ? hitCls(color(match)) : 'noHit')) : '';
-    const style = s && isDup && match ?
-      ' style="--dup-color:' + marker(color(match)) + '"' : '';
-    if (s && match && !s.dup) hits++;
-    const cls = [c, stripe(c), d && found.has(n) ? 'found' : '',
-      s && d && norm(s.nr) === n ? 'match' : '']
-      .filter(Boolean).join(' ');
-    html += '<tr class="' + cls + '">' +
-      '<td class="sc"></td>' +
-      '<td class="nr">' + (d ? esc(d.nr) : '') + '</td>' +
-      '<td class="brand">' + (d ? esc(d.brand) : '') + '</td>' +
-      '<td class="loc">' + (d ? esc(d.loc || '') : '') + '</td>' +
-      '<td class="klik ' + cellClass + '"' + style +
-      ' data-i="' + i + '">' + (s ? esc(s.nr) : '') + '</td>' +
-      '</tr>';
-  }
-  tb.innerHTML = html;
-  document.getElementById('allCount').textContent = DATA.length;
-  document.getElementById('scanCount').textContent = scans.length;
-  document.getElementById('hitCount').textContent = hits;
-  if (center && scans.length) {
-    const el = tb.querySelector('[data-i="' + (scans.length - 1) + '"]');
-    if (el) el.scrollIntoView({block: 'center', inline: 'nearest'});
-  }
-  setTimeout(() => scanInput.focus(), 10);
-}
-function saveLocal() {
-  try {
-    localStorage.setItem(scanKey(), JSON.stringify(scans));
-  } catch (_) {}
-}
-function loadLocal() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(scanKey()) || '[]');
-    if (Array.isArray(saved)) {
-      scans.length = 0;
-      counts.clear();
-      saved.forEach(s => {
-        if (s && s.nr) {
-          scans.push(s);
-          counts.set(norm(s.nr), (counts.get(norm(s.nr)) || 0) + 1);
-        }
-      });
-    }
-  } catch (_) {}
-}
-function processScan() {
-  const v = norm(scanInput.value);
-  if (!v) return;
-  scanInput.value = '';
-  const count = (counts.get(v) || 0) + 1;
-  counts.set(v, count);
-  const hit = byNr.has(v);
-  const row = {
-    kind: 'scan',
-    id: makeId('scan'),
-    nr: v,
-    dup: count > 1,
-    hit,
-    ts: new Date().toISOString(),
-    task_version: taskVersion,
-    task_code: taskCode,
-    device_id: terminalId,
-    employee: employeeName,
-    timer_session_id: timerSessionId,
-    timer_boot_id: TIMER_BOOT_ID,
-    elapsed_ms: elapsedMs()
-  };
-  scans.push(row);
-  remember(row);
-  saveLocal();
-  document.getElementById('dupWarning').style.display =
-    count > 1 ? 'block' : 'none';
-  render(true);
-}
-function encodeDetails(v) {
-  try {
-    return encodeURIComponent(JSON.stringify(v || {}));
-  } catch (_) {
-    return '%7B%7D';
-  }
-}
-function exportRows() {
-  const m = new Map();
-  function add(e) {
-    if (!e) return;
-    const k = (e.kind || 'scan') + '|' +
-      (e.id || ((e.nr || e.event || '') + '|' + (e.ts || '')));
-    if (!m.has(k)) m.set(k, e);
-  }
-  loadJournal().forEach(add);
-  scans.forEach(add);
-  return Array.from(m.values()).sort((a, b) =>
-    String(a.ts || '').localeCompare(String(b.ts || '')));
-}
-function doExport() {
-  logEvent('manual_export', {trigger: 'task_code_long_press'});
-  const rows = exportRows();
-  if (!rows.length) {
-    alert('Brak zapisów');
-    return;
-  }
-  const lines = rows.map(e => {
-    if ((e.kind || 'scan') === 'event') {
-      return [
-        '@EVENT', e.event || 'event', e.ts || '',
-        e.task_version || taskVersion, e.task_code || taskCode,
-        e.id || '', e.employee || employeeName, e.device_id || terminalId,
-        e.timer_session_id || timerSessionId,
-        e.timer_boot_id || TIMER_BOOT_ID,
-        e.elapsed_ms || 0, encodeDetails(e.details || {})
-      ].join('|');
-    }
-    return [
-      e.nr, e.ts || '', e.dup ? 'DUP' : (e.hit ? 'HIT' : 'MISS'),
-      e.task_version || taskVersion, e.task_code || taskCode,
-      e.id || '', e.employee || employeeName, e.device_id || terminalId,
-      e.timer_session_id || timerSessionId,
-      e.timer_boot_id || TIMER_BOOT_ID, e.elapsed_ms || 0
-    ].join('|');
-  }).join('\n');
-  const txt = terminalId + '|' + employeeName + '|mixed|' + taskCode +
-    '|OOS_EXPORT_V2|' + new Date().toISOString() + '\n' + lines;
-  document.getElementById('exportText').value = txt;
-  try {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([txt], {
-      type: 'text/plain;charset=utf-8'
-    }));
-    a.download = 'oos_macro_' + taskCode + '.txt';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    alert('Eksport gotowy: ' + rows.length + ' zapisów');
-  } catch (_) {
-    prompt('Kopiuj:', txt);
-  }
-}
-function setupCodeExport() {
-  let timer = null;
-  let fired = false;
-  function start(e) {
-    fired = false;
-    if (e && e.type === 'touchstart') e.preventDefault();
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      fired = true;
-      const p = prompt('Hasło eksportu: wpisz kod zadania');
-      if (p !== null && String(p).trim() === String(taskCode).trim()) {
-        doExport();
-      } else if (p !== null) {
-        alert('Błędny kod');
-      }
-    }, 1200);
-  }
-  function stop() {
-    clearTimeout(timer);
-  }
-  taskCodeBox.addEventListener('mousedown', start);
-  taskCodeBox.addEventListener('touchstart', start, {passive: false});
-  ['mouseup', 'mouseleave', 'touchend', 'touchcancel']
-    .forEach(ev => taskCodeBox.addEventListener(ev, stop));
-  taskCodeBox.addEventListener('click', e => {
-    if (fired) e.preventDefault();
-  });
-}
-function clearAll() {
-  if (!confirm('Reset widocznych klików?')) return;
-  logEvent('visible_log_reset', {});
-  scans.length = 0;
-  counts.clear();
-  document.getElementById('dupWarning').style.display = 'none';
-  try {
-    localStorage.removeItem(scanKey());
-  } catch (_) {}
-  render(false);
-  scanInput.focus();
-}
-let clearTimer = null;
-scanInput.addEventListener('input', () => {
-  clearTimeout(clearTimer);
-  if (scanInput.value.trim()) {
-    clearTimer = setTimeout(processScan, 220);
-  }
-});
-scanInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === 'Tab') {
-    e.preventDefault();
-    clearTimeout(clearTimer);
-    setTimeout(processScan, 10);
-  }
-});
-window.addEventListener('pagehide', () => logEvent('page_hide', {}));
-document.addEventListener('visibilitychange', () => {
-  logEvent(document.hidden ? 'page_hidden' : 'page_visible', {});
-});
-document.getElementById('resetBtn').addEventListener('click', clearAll);
-document.addEventListener('click', e => {
-  if (e.target.closest('#taskCode') || e.target.closest('#resetBtn')) return;
-  scanInput.focus();
-});
-setupCodeExport();
-loadLocal();
-logEvent('page_open', {href: location.href, ua: navigator.userAgent || ''});
-render(false);
-setTimeout(() => scanInput.focus(), 30);
-</script>
-</body>
-</html>
+const DEFAULT_TASK_VERSION="macro_2026-06-18_1052";
+const DEFAULT_TASK_CODE="5382";
+const DATA=[];
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026188890","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026191472","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026188710","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026190368","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074622178","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074867331","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026192524","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026190963","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074823302","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026191535","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026193793","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074327374","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506266841","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026187913","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074623371","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2072875107","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026192059","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506265921","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026188956","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074875527","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073182815","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"4506265820","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"3026188928","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074875655","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"2074412475","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026189210","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026189439","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026192382","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026191083","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026190464","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026187331","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506262614","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026180342","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"2074094489","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026188616","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO045AP00","brand":"CROPP","nr":"3026187755","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074211694","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026198661","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074963419","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026192575","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074882767","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026191196","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026190931","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026188955","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073448241","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026192453","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074132416","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2073805990","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2074842916","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026197300","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"4506266074","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"2074458363","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026192608","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"HOUSE","nr":"3026189048","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"2072539487","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026181363","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"2074646026","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026185139","prio":"PRIORYTET 1","tsu":"MDTPUT"});
+DATA.push({"loc":"PTO035AP00","brand":"HOUSE","nr":"3026185155","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026194235","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO035AP00","brand":"RESERVED","nr":"3026175705","prio":"PRIORYTET 1","tsu":"RSORT"});
+DATA.push({"loc":"PTO001AP00","brand":"RESERVED","nr":"3026191892","prio":"PRIORYTET 1","tsu":"RSORT"});
+const tb=document.getElementById('tb');
+const wrap=document.getElementById('wrap');
+const scanInput=document.getElementById('scanInput');
+const scans=[];
+const counts=new Map();
+const byNr=new Map();
+let terminalId='',employeeName='';
+let taskVersion=DEFAULT_TASK_VERSION,taskCode=DEFAULT_TASK_CODE;
+const JOURNAL_KEY='oos_macro_journal_v1';
+const TIMER_BOOT_ID='boot_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);
+const TIMER_BOOT_START=performance.now();
+let timerSessionId=localStorage.getItem('oos_macro_timer_session_id');
+if(!timerSessionId)timerSessionId='sess_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);
+localStorage.setItem('oos_macro_timer_session_id',timerSessionId);
+function norm(v){return String(v||'').trim().replace(/^'+/,'').replace(/\s+/g,'');}
+function esc(v){return String(v==null?'':v).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function person(v){return String(v||'').trim().replace(/\s+/g,' ').toLowerCase();}
+function elapsedMs(){return Math.max(0,Math.round(performance.now()-TIMER_BOOT_START));}
+function makeId(p){return (p||'id')+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,10);}
+function scanKey(){return 'oos_macro_scans_'+taskVersion+'_'+norm(terminalId||'terminal')+'_'+person(employeeName||'employee');}
+DATA.forEach(d=>{const k=norm(d.nr);if(!byNr.has(k))byNr.set(k,[]);byNr.get(k).push(d);});
+function loadJournal(){try{const r=JSON.parse(localStorage.getItem(JOURNAL_KEY)||'[]');return Array.isArray(r)?r.slice(-15000):[];}catch(_){return [];}}
+function saveJournal(r){try{localStorage.setItem(JOURNAL_KEY,JSON.stringify((r||[]).slice(-15000)));}catch(_){try{localStorage.setItem(JOURNAL_KEY,JSON.stringify((r||[]).slice(-5000)));}catch(__){}}}
+let journalCache=loadJournal();
+let journalSaveTimer=null;
+let journalDirty=false;
+function trimJournalCache(){if(journalCache.length>15000)journalCache=journalCache.slice(-15000);}
+function flushJournal(){if(journalSaveTimer){clearTimeout(journalSaveTimer);journalSaveTimer=null;}if(journalDirty){trimJournalCache();saveJournal(journalCache);journalDirty=false;}}
+function scheduleJournalSave(){journalDirty=true;clearTimeout(journalSaveTimer);journalSaveTimer=setTimeout(flushJournal,300);}
+function remember(row){if(!row.id)row.id=makeId(row.kind==='scan'?'scan':'evt');journalCache.push(row);trimJournalCache();scheduleJournalSave();}
+function logEvent(ev,details){remember({kind:'event',id:makeId('evt'),event:ev,
+ts:new Date().toISOString(),task_version:taskVersion,task_code:taskCode,
+device_id:terminalId,employee:employeeName,timer_session_id:timerSessionId,
+timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs(),details:details||{}});}
+function updateMeta(){
+document.getElementById('titleMeta').textContent='#'+(terminalId||'')+(employeeName?' || '+employeeName:'');
+document.getElementById('taskCode').textContent=taskCode||'----';
+document.getElementById('versionMeta').textContent=taskVersion||'';
+document.title=(terminalId?terminalId+'  ':'')+(employeeName||'')+'  '+(taskCode||'');}
+function openConfig(){
+document.getElementById('regTerminal').value=terminalId||'';
+document.getElementById('regEmployee').value=employeeName||'';
+document.getElementById('regVersion').value=taskVersion||DEFAULT_TASK_VERSION;
+document.getElementById('regCode').value=taskCode||DEFAULT_TASK_CODE;
+document.getElementById('regOverlay').style.display='flex';logEvent('open_config',{});}
+function saveConfig(){
+terminalId=document.getElementById('regTerminal').value.trim();
+employeeName=document.getElementById('regEmployee').value.trim();
+taskVersion=document.getElementById('regVersion').value.trim()||DEFAULT_TASK_VERSION;
+taskCode=document.getElementById('regCode').value.trim()||DEFAULT_TASK_CODE;
+if(!terminalId||!employeeName)return;
+localStorage.setItem('oos_macro_terminal',terminalId);
+document.getElementById('regOverlay').style.display='none';
+updateMeta();logEvent('register',{device_id:terminalId,employee:employeeName});
+loadLocal();render(false);setTimeout(()=>scanInput.focus(),20);}
+function initConfig(){
+document.getElementById('regTerminal').value=localStorage.getItem('oos_macro_terminal')||'';
+document.getElementById('regVersion').value=DEFAULT_TASK_VERSION;
+document.getElementById('regCode').value=DEFAULT_TASK_CODE;
+terminalId=document.getElementById('regTerminal').value.trim();
+employeeName=document.getElementById('regEmployee').value.trim();
+taskVersion=DEFAULT_TASK_VERSION;taskCode=DEFAULT_TASK_CODE;updateMeta();
+logEvent('page_open',{href:location.href,user_agent:navigator.userAgent||''});
+if(terminalId&&employeeName){document.getElementById('regOverlay').style.display='none';loadLocal();}}
+function color(d){if(!d)return '';
+const p=String(d.prio||'').toUpperCase(),t=String(d.tsu||'').toUpperCase();
+const pr=p==='PRIO1'||p==='PRIORYTET 1';
+if(p==='BLOK'&&t.indexOf('MDTPUT')>=0)return 'green';
+if(pr&&t.indexOf('MDTPUT')>=0)return 'red';
+if(p==='BLOK'&&t.indexOf('RSORT')>=0)return 'blue';
+if(pr&&t.indexOf('RSORT')>=0)return 'yellow';
+if(p==='BLOK')return 'blue';if(pr)return 'yellow';return '';}
+function stripe(c){return c==='green'?'sg':c==='red'?'sr':c==='blue'?'sb':c==='yellow'?'sy':'';}
+function hitCls(c){return c==='green'?'hitGreen':c==='red'?'hitRed':c==='blue'?'hitBlue':c==='yellow'?'hitYellow':'noHit';}
+function marker(c){return c==='green'?'#00c853':c==='red'?'#ff1744':c==='blue'?'#2979ff':c==='yellow'?'#ffd600':'';}
+function render(center){const found=new Set(),cc=new Map();
+scans.forEach(s=>{const sn=norm(s.nr);cc.set(sn,(cc.get(sn)||0)+1);if(byNr.has(sn))found.add(sn);});
+let html='',rows=Math.max(DATA.length,scans.length,1),hits=0;for(let i=0;i<rows;i++){const d=DATA[i]||null,s=scans[i]||null,n=d?norm(d.nr):'',c=d?color(d):'',m=s?byNr.get(norm(s.nr)):null,md=m?m[0]:null,vd=s&&cc.get(norm(s.nr))>1,cell=s?(vd?'dupScan':(md?hitCls(color(md)):'noHit')):'',st=s&&vd&&md?(' style="--dup-color:'+marker(color(md))+'"'):'';if(s&&md&&!s.dup)hits++;const cls=[c,stripe(c),d&&found.has(n)?'found':'',s&&d&&norm(s.nr)===n?'match':''].filter(Boolean).join(' ');html+='<tr class="'+cls+'"><td class="sc"></td><td class="nr">'+(d?esc(d.nr):'')+'</td><td class="brand">'+(d?esc(d.brand):'')+'</td><td class="loc">'+(d?esc(d.loc||''):'')+'</td><td class="klik '+cell+'"'+st+' data-i="'+i+'">'+(s?esc(s.nr):'')+'</td></tr>';}tb.innerHTML=html;document.getElementById('allCount').textContent=DATA.length;document.getElementById('scanCount').textContent=scans.length;document.getElementById('hitCount').textContent=hits;if(center&&scans.length){const el=tb.querySelector('[data-i="'+(scans.length-1)+'"]');if(el)el.scrollIntoView({block:'center',inline:'nearest'});}setTimeout(()=>scanInput.focus(),10);}
+function saveLocal(){try{localStorage.setItem(scanKey(),JSON.stringify(scans));}catch(_){}}
+function loadLocal(){try{const saved=JSON.parse(localStorage.getItem(scanKey())||'[]');if(Array.isArray(saved)){scans.length=0;counts.clear();saved.forEach(s=>{if(s&&s.nr){scans.push(s);counts.set(norm(s.nr),(counts.get(norm(s.nr))||0)+1);}});}}catch(_){}}
+function process(){const v=norm(scanInput.value);if(!v)return;scanInput.value='';
+let c=(counts.get(v)||0)+1;counts.set(v,c);
+const d=byNr.has(v)?byNr.get(v)[0]:null;
+const row={kind:'scan',id:makeId('scan'),nr:v,dup:c>1,hit:!!d,
+ts:new Date().toISOString(),task_version:taskVersion,task_code:taskCode,
+device_id:terminalId,employee:employeeName,timer_session_id:timerSessionId,
+timer_boot_id:TIMER_BOOT_ID,elapsed_ms:elapsedMs()};
+scans.push(row);remember(row);saveLocal();
+document.getElementById('dupWarning').style.display=c>1?'block':'none';render(true);}
+function encodeDetails(v){try{return encodeURIComponent(JSON.stringify(v||{}));}catch(_){return '%7B%7D';}}
+function exportRows(){flushJournal();const m=new Map();
+function add(e){if(!e)return;
+const k=(e.kind||'scan')+'|'+(e.id||((e.nr||e.event||'')+'|'+(e.ts||'')));
+if(!m.has(k))m.set(k,e);}
+loadJournal().forEach(add);scans.forEach(add);
+return Array.from(m.values()).sort((a,b)=>String(a.ts||'').localeCompare(String(b.ts||'')));}
+function doExport(){const rows=exportRows();if(!rows.length){alert('Brak zapisw');return;}logEvent('manual_export',{trigger:'task_code_long_press'});const rows2=exportRows();
+const lines=rows2.map(e=>{
+if((e.kind||'scan')==='event')return ['@EVENT',e.event||'event',e.ts||'',
+e.task_version||taskVersion,e.task_code||taskCode,e.id||'',e.employee||employeeName,
+e.device_id||terminalId,e.timer_session_id||timerSessionId,e.timer_boot_id||TIMER_BOOT_ID,
+e.elapsed_ms||0,encodeDetails(e.details||{})].join('|');
+return [e.nr,e.ts||'',e.dup?'DUP':(e.hit?'HIT':'MISS'),e.task_version||taskVersion,
+e.task_code||taskCode,e.id||'',e.employee||employeeName,e.device_id||terminalId,
+e.timer_session_id||timerSessionId,e.timer_boot_id||TIMER_BOOT_ID,e.elapsed_ms||0].join('|');
+}).join('\n');
+const txt=terminalId+'|'+employeeName+'|mixed|'+taskCode+'|OOS_EXPORT_V2|'+new Date().toISOString()+'\n'+lines;
+document.getElementById('exportText').value=txt;
+try{const a=document.createElement('a');
+a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+a.download='oos_macro_'+(terminalId||'terminal')+'_'+(taskCode||'code')+'.txt';
+document.body.appendChild(a);a.click();a.remove();
+setTimeout(()=>URL.revokeObjectURL(a.href),1000);alert('Eksport gotowy: '+rows2.length+' zapisw');
+}catch(_){prompt('Kopiuj:',txt);}}
+function setupCodeExport(){const box=document.getElementById('taskCode');
+let tm=null,fired=false;
+function start(e){fired=false;if(e&&e.type==='touchstart')e.preventDefault();
+clearTimeout(tm);tm=setTimeout(()=>{fired=true;
+const p=prompt('Haso eksportu: wpisz kod zadania');
+if(p!==null&&String(p).trim()===String(taskCode).trim())doExport();
+else if(p!==null)alert('Bdny kod');},1200);}
+function stop(){clearTimeout(tm);}
+box.addEventListener('mousedown',start);
+box.addEventListener('touchstart',start,{passive:false});
+['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>box.addEventListener(ev,stop));
+box.addEventListener('click',e=>{if(fired)e.preventDefault();});}
+let clearTimer=null;scanInput.addEventListener('input',()=>{clearTimeout(clearTimer);if(scanInput.value.trim())clearTimer=setTimeout(process,250);});
+scanInput.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key==='Tab'){e.preventDefault();clearTimeout(clearTimer);setTimeout(process,10);}});
+function clearAll(){if(!confirm('Reset widocznych klikw?'))return;logEvent('visible_log_reset',{});scans.length=0;counts.clear();try{localStorage.removeItem(scanKey());}catch(_){}render(false);scanInput.focus();}
+window.addEventListener('pagehide',()=>{logEvent('page_hide',{});flushJournal();});
+document.addEventListener('visibilitychange',()=>{logEvent(document.hidden?'page_hidden':'page_visible',{});});
+document.getElementById('startBtn').addEventListener('click',saveConfig);
+document.getElementById('resetBtn').addEventListener('click',clearAll);
+document.getElementById('titleMeta').addEventListener('click',openConfig);
+document.addEventListener('click',e=>{if(e.target.closest('#regOverlay'))return;scanInput.focus();});
+setupCodeExport();initConfig();render(false);setTimeout(()=>scanInput.focus(),30);
+</script></body></html>
