@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 6415</title>
+<title>OOS 9357</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -78,8 +78,8 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <div id="topLine">
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
-<div id="taskCode" title="Przytrzymaj, żeby eksportować">
-6415</div>
+<div id="taskCode" title="Przytrzymaj, Ејeby eksportowaД‡">
+9357</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -87,7 +87,7 @@ placeholder="Skanuj karton...">
 <span>znal.: <b id="hitCount">0</b></span>
 <button id="resetBtn" type="button">reset</button>
 </div>
-<div id="dupWarning">DUPLIKAT — karton już był skanowany!</div>
+<div id="dupWarning">DUPLIKAT вЂ” karton juЕј byЕ‚ skanowany!</div>
 </div>
 <div id="wrap">
 <table id="tbl">
@@ -103,223 +103,230 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-18_1106";
-const DEFAULT_TASK_CODE = "6415";
+const DEFAULT_TASK_VERSION = "macro_2026-06-18_1646";
+const DEFAULT_TASK_CODE = "9357";
 const DATA = [];
 DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188890",
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026193933",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026191472",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188710",
+nr:"3026186096",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026190368",
+nr:"2074963393",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074622178",
+nr:"2072364048",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074867331",
+nr:"3026193430",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026192524",
+nr:"2074871158",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026190963",
+nr:"2074898675",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074823302",
+nr:"2073757501",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026191535",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026193793",
+nr:"3026193658",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074327374",
+nr:"3026190575",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"4506266841",
+nr:"2073879073",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026187913",
+nr:"3026193243",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074623371",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2072875107",
+nr:"3026194071",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026192059",
+nr:"4506265446",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"4506265921",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188956",
+nr:"3026189093",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074875527",
+nr:"3026192040",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2073182815",
+nr:"3026191743",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026191692",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026192171",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"4506265820",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"HOUSE",
-nr:"3026188928",
+nr:"3026189602",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074875655",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"2074412475",
+nr:"2074576074",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026189210",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026189439",
+nr:"2072891821",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026192382",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026191083",
+nr:"2070412685",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026190464",
+nr:"2074848390",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026187331",
+nr:"2074073831",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074212538",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074851359",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2072769632",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074907772",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074848565",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026193638",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026188853",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -333,189 +340,119 @@ tsu:"MDTPUT"
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"3026180342",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"2074094489",
+nr:"3026191799",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026188616",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO045AP00",
-brand:"CROPP",
-nr:"3026187755",
+nr:"2074295075",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074211694",
+nr:"3026194817",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026198661",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074963419",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026192575",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074882767",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026191196",
+nr:"2074823268",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026190931",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026188955",
+nr:"3026191180",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2073448241",
+nr:"3026192852",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026192453",
+nr:"2074906217",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074132416",
+nr:"3026191012",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2073805990",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2074842916",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026197300",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506266074",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"2074458363",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026192608",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"HOUSE",
-nr:"3026189048",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2072539487",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3026181363",
+nr:"4506265683",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"2074646026",
+nr:"3026192051",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026185139",
+nr:"3026191390",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
-brand:"HOUSE",
-nr:"3026185155",
+brand:"RESERVED",
+nr:"2073484821",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2071053307",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"3026191890",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026194836",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026190052",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026191162",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
@@ -529,14 +466,28 @@ tsu:"RSORT"
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026175705",
+nr:"3026193145",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
-loc:"PTO001AP00",
+loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026191892",
+nr:"2074295017",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026194032",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"4506265383",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
@@ -552,6 +503,8 @@ const taskCode = DEFAULT_TASK_CODE;
 const terminalId = 'macro';
 const employeeName = 'macro';
 const JOURNAL_KEY = 'oos_macro_journal_v2';
+let journalCache = null;
+let journalSaveTimer = null;
 const TIMER_BOOT_ID = 'boot_' + Date.now().toString(36) +
   Math.random().toString(36).slice(2, 8);
 const TIMER_BOOT_START = performance.now();
@@ -598,11 +551,27 @@ function saveJournal(rows) {
     } catch (__) {}
   }
 }
+function getJournalCache() {
+  if (!Array.isArray(journalCache)) journalCache = loadJournal();
+  return journalCache;
+}
+function flushJournal() {
+  if (journalSaveTimer) {
+    clearTimeout(journalSaveTimer);
+    journalSaveTimer = null;
+  }
+  saveJournal(getJournalCache());
+}
+function scheduleJournalSave() {
+  clearTimeout(journalSaveTimer);
+  journalSaveTimer = setTimeout(flushJournal, 300);
+}
 function remember(row) {
-  const rows = loadJournal();
+  const rows = getJournalCache();
   if (!row.id) row.id = makeId(row.kind === 'scan' ? 'scan' : 'evt');
   rows.push(row);
-  saveJournal(rows);
+  if (rows.length > 15000) rows.splice(0, rows.length - 15000);
+  scheduleJournalSave();
 }
 function logEvent(event, details) {
   remember({
@@ -680,7 +649,7 @@ function render(center) {
     const cls = [c, stripe(c), d && found.has(n) ? 'found' : '',
       s && d && norm(s.nr) === n ? 'match' : '']
       .filter(Boolean).join(' ');
-    html += '<tr class="' + cls + '">' +
+    html += '<tr class="' + cls + '" data-n="' + n + '">' +
       '<td class="sc"></td>' +
       '<td class="nr">' + (d ? esc(d.nr) : '') + '</td>' +
       '<td class="brand">' + (d ? esc(d.brand) : '') + '</td>' +
@@ -697,6 +666,69 @@ function render(center) {
     const el = tb.querySelector('[data-i="' + (scans.length - 1) + '"]');
     if (el) el.scrollIntoView({block: 'center', inline: 'nearest'});
   }
+  setTimeout(() => scanInput.focus(), 10);
+}
+function findFirstMatch(v) {
+  const matches = byNr.get(norm(v));
+  return matches && matches.length ? matches[0] : null;
+}
+function scanDupCount(v) {
+  const k = norm(v);
+  let n = 0;
+  scans.forEach(s => { if (norm(s.nr) === k) n++; });
+  return n;
+}
+function updateCountersFast() {
+  let hits = 0;
+  scans.forEach(s => { if (s && s.hit && !s.dup) hits++; });
+  document.getElementById('allCount').textContent = DATA.length;
+  document.getElementById('scanCount').textContent = scans.length;
+  document.getElementById('hitCount').textContent = hits;
+}
+function ensureScanRow(i) {
+  let cell = tb.querySelector('[data-i="' + i + '"]');
+  if (cell) return cell;
+  const tr = document.createElement('tr');
+  tr.innerHTML = '<td class="sc"></td>' +
+    '<td class="nr"></td>' +
+    '<td class="brand"></td>' +
+    '<td class="loc"></td>' +
+    '<td class="klik" data-i="' + i + '"></td>';
+  tb.appendChild(tr);
+  return tr.querySelector('[data-i="' + i + '"]');
+}
+function updateScanCell(i) {
+  const s = scans[i];
+  if (!s) return;
+  const cell = ensureScanRow(i);
+  const match = findFirstMatch(s.nr);
+  const isDup = scanDupCount(s.nr) > 1;
+  let cls = 'klik ';
+  if (isDup) cls += 'dupScan';
+  else cls += match ? hitCls(color(match)) : 'noHit';
+  cell.className = cls;
+  if (isDup && match) cell.style.setProperty('--dup-color', marker(color(match)));
+  else cell.style.removeProperty('--dup-color');
+  cell.textContent = s.nr || '';
+}
+function updateSameScanCells(v) {
+  const k = norm(v);
+  scans.forEach((s, i) => { if (norm(s.nr) === k) updateScanCell(i); });
+}
+function markFoundRows(v) {
+  const k = norm(v);
+  tb.querySelectorAll('tr[data-n="' + k + '"]').forEach(tr => {
+    tr.classList.add('found');
+  });
+}
+function updateAfterScan(v) {
+  wrap.style.top = document.getElementById('dupWarning').style.display ===
+    'block' ? '112px' : '86px';
+  markFoundRows(v);
+  updateSameScanCells(v);
+  updateCountersFast();
+  const el = tb.querySelector('[data-i="' + (scans.length - 1) + '"]');
+  if (el) el.scrollIntoView({block: 'center', inline: 'nearest'});
   setTimeout(() => scanInput.focus(), 10);
 }
 function saveLocal() {
@@ -746,7 +778,7 @@ function processScan() {
   saveLocal();
   document.getElementById('dupWarning').style.display =
     count > 1 ? 'block' : 'none';
-  render(true);
+  updateAfterScan(v);
 }
 function encodeDetails(v) {
   try {
@@ -763,7 +795,8 @@ function exportRows() {
       (e.id || ((e.nr || e.event || '') + '|' + (e.ts || '')));
     if (!m.has(k)) m.set(k, e);
   }
-  loadJournal().forEach(add);
+  flushJournal();
+  getJournalCache().forEach(add);
   scans.forEach(add);
   return Array.from(m.values()).sort((a, b) =>
     String(a.ts || '').localeCompare(String(b.ts || '')));
@@ -772,7 +805,7 @@ function doExport() {
   logEvent('manual_export', {trigger: 'task_code_long_press'});
   const rows = exportRows();
   if (!rows.length) {
-    alert('Brak zapisów');
+    alert('Brak zapisГіw');
     return;
   }
   const lines = rows.map(e => {
@@ -807,7 +840,7 @@ function doExport() {
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    alert('Eksport gotowy: ' + rows.length + ' zapisów');
+    alert('Eksport gotowy: ' + rows.length + ' zapisГіw');
   } catch (_) {
     prompt('Kopiuj:', txt);
   }
@@ -821,11 +854,11 @@ function setupCodeExport() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fired = true;
-      const p = prompt('Hasło eksportu: wpisz kod zadania');
+      const p = prompt('HasЕ‚o eksportu: wpisz kod zadania');
       if (p !== null && String(p).trim() === String(taskCode).trim()) {
         doExport();
       } else if (p !== null) {
-        alert('Błędny kod');
+        alert('BЕ‚Д™dny kod');
       }
     }, 1200);
   }
@@ -841,7 +874,7 @@ function setupCodeExport() {
   });
 }
 function clearAll() {
-  if (!confirm('Reset widocznych klików?')) return;
+  if (!confirm('Reset widocznych klikГіw?')) return;
   logEvent('visible_log_reset', {});
   scans.length = 0;
   counts.clear();
@@ -866,9 +899,13 @@ scanInput.addEventListener('keydown', e => {
     setTimeout(processScan, 10);
   }
 });
-window.addEventListener('pagehide', () => logEvent('page_hide', {}));
+window.addEventListener('pagehide', () => {
+  logEvent('page_hide', {});
+  flushJournal();
+});
 document.addEventListener('visibilitychange', () => {
   logEvent(document.hidden ? 'page_hidden' : 'page_visible', {});
+  if (document.hidden) flushJournal();
 });
 document.getElementById('resetBtn').addEventListener('click', clearAll);
 document.addEventListener('click', e => {
