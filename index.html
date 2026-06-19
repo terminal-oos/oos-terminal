@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 9435</title>
+<title>OOS 9248</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -79,7 +79,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, Ејeby eksportowaД‡">
-9435</div>
+9248</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -103,8 +103,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-19_0620";
-const DEFAULT_TASK_CODE = "9435";
+const DEFAULT_TASK_VERSION = "macro_2026-06-19_1104";
+const DEFAULT_TASK_CODE = "9248";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -379,6 +379,7 @@ const employeeName = 'macro';
 const JOURNAL_KEY = 'oos_macro_journal_v2';
 let journalCache = null;
 let journalSaveTimer = null;
+let hitAudioCtx = null;
 const TIMER_BOOT_ID = 'boot_' + Date.now().toString(36) +
   Math.random().toString(36).slice(2, 8);
 const TIMER_BOOT_START = performance.now();
@@ -493,6 +494,32 @@ function marker(c) {
     c === 'red' ? '#ff1744' :
     c === 'blue' ? '#2979ff' :
     c === 'yellow' ? '#ffd600' : '';
+}
+function playHitSound() {
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (!hitAudioCtx) hitAudioCtx = new AC();
+    if (hitAudioCtx.state === 'suspended') hitAudioCtx.resume();
+    const now = hitAudioCtx.currentTime;
+    const master = hitAudioCtx.createGain();
+    master.gain.setValueAtTime(0.0001, now);
+    master.gain.exponentialRampToValueAtTime(0.22, now + 0.02);
+    master.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
+    master.connect(hitAudioCtx.destination);
+    [740, 980, 1240].forEach((freq, idx) => {
+      const osc = hitAudioCtx.createOscillator();
+      const gain = hitAudioCtx.createGain();
+      osc.type = idx === 1 ? 'square' : 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.72, now + 0.9);
+      gain.gain.setValueAtTime(idx === 1 ? 0.10 : 0.07, now);
+      osc.connect(gain);
+      gain.connect(master);
+      osc.start(now + idx * 0.08);
+      osc.stop(now + 1.0);
+    });
+  } catch (_) {}
 }
 function render(center) {
   wrap.style.top = document.getElementById('dupWarning').style.display ===
@@ -650,6 +677,7 @@ function processScan() {
   scans.push(row);
   remember(row);
   saveLocal();
+  if (hit) playHitSound();
   document.getElementById('dupWarning').style.display =
     count > 1 ? 'block' : 'none';
   updateAfterScan(v);
