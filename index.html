@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 1536</title>
+<title>OOS 2132</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -79,7 +79,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, Ејeby eksportowaД‡">
-1536</div>
+2132</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -87,7 +87,7 @@ placeholder="Skanuj karton...">
 <span>znal.: <b id="hitCount">0</b></span>
 <button id="resetBtn" type="button">reset</button>
 </div>
-<div id="dupWarning">DUPLIKAT вЂ” karton juЕј byЕ‚ skanowany!</div>
+<div id="dupWarning">!!!DUPLIKAT!!!</div>
 </div>
 <div id="wrap">
 <table id="tbl">
@@ -103,8 +103,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-19_1112";
-const DEFAULT_TASK_CODE = "1536";
+const DEFAULT_TASK_VERSION = "macro_2026-06-19_1129";
+const DEFAULT_TASK_CODE = "2132";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -769,11 +769,11 @@ function setupCodeExport() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fired = true;
-      const p = prompt('HasЕ‚o eksportu: wpisz kod zadania');
+      const p = prompt('na�mi cansel i ne liz' siudy');
       if (p !== null && String(p).trim() === String(taskCode).trim()) {
         doExport();
       } else if (p !== null) {
-        alert('BЕ‚Д™dny kod');
+        alert('zapraszam do spm');
       }
     }, 1200);
   }
@@ -789,7 +789,7 @@ function setupCodeExport() {
   });
 }
 function clearAll() {
-  if (!confirm('Reset widocznych klikГіw?')) return;
+  if (!confirm('vsio udalit'?')) return;
   logEvent('visible_log_reset', {});
   scans.length = 0;
   counts.clear();
