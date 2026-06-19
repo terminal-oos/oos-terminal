@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 1644</title>
+<title>OOS</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -79,12 +79,12 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, Ејeby eksportowaД‡">
-1644</div>
+6623</div>
 </div>
 <div id="meta">
-<span>lista: <b id="allCount">0</b></span>
-<span>scan: <b id="scanCount">0</b></span>
-<span>znal.: <b id="hitCount">0</b></span>
+<span>k poisku: <b id="allCount">0</b></span>
+<span>skanov: <b id="scanCount">0</b></span>
+<span>naszel: <b id="hitCount">0</b></span>
 <button id="resetBtn" type="button">reset</button>
 </div>
 <div id="dupWarning">!!!DUPLIKAT!!!</div>
@@ -103,8 +103,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-19_1140";
-const DEFAULT_TASK_CODE = "1644";
+const DEFAULT_TASK_VERSION = "macro_2026-06-19_1153";
+const DEFAULT_TASK_CODE = "6623";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -769,7 +769,7 @@ function setupCodeExport() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fired = true;
-      const p = prompt('na�mi cansel i ne liz siudy');
+      const p = prompt('nazmi cancel i ne liz siudy');
       if (p !== null && String(p).trim() === String(taskCode).trim()) {
         doExport();
       } else if (p !== null) {
