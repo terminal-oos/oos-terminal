@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 9248</title>
+<title>OOS 1536</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -79,7 +79,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, Ејeby eksportowaД‡">
-9248</div>
+1536</div>
 </div>
 <div id="meta">
 <span>lista: <b id="allCount">0</b></span>
@@ -103,8 +103,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-19_1104";
-const DEFAULT_TASK_CODE = "9248";
+const DEFAULT_TASK_VERSION = "macro_2026-06-19_1112";
+const DEFAULT_TASK_CODE = "1536";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -495,29 +495,42 @@ function marker(c) {
     c === 'blue' ? '#2979ff' :
     c === 'yellow' ? '#ffd600' : '';
 }
-function playHitSound() {
+function initHitAudio() {
   try {
     const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
+    if (!AC) return Promise.resolve(false);
     if (!hitAudioCtx) hitAudioCtx = new AC();
-    if (hitAudioCtx.state === 'suspended') hitAudioCtx.resume();
-    const now = hitAudioCtx.currentTime;
-    const master = hitAudioCtx.createGain();
-    master.gain.setValueAtTime(0.0001, now);
-    master.gain.exponentialRampToValueAtTime(0.22, now + 0.02);
-    master.gain.exponentialRampToValueAtTime(0.0001, now + 0.95);
-    master.connect(hitAudioCtx.destination);
-    [740, 980, 1240].forEach((freq, idx) => {
-      const osc = hitAudioCtx.createOscillator();
-      const gain = hitAudioCtx.createGain();
-      osc.type = idx === 1 ? 'square' : 'triangle';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-      osc.frequency.exponentialRampToValueAtTime(freq * 0.72, now + 0.9);
-      gain.gain.setValueAtTime(idx === 1 ? 0.10 : 0.07, now);
-      osc.connect(gain);
-      gain.connect(master);
-      osc.start(now + idx * 0.08);
-      osc.stop(now + 1.0);
+    if (hitAudioCtx.state === 'suspended') {
+      return hitAudioCtx.resume().then(() => true).catch(() => false);
+    }
+    return Promise.resolve(true);
+  } catch (_) {
+    return Promise.resolve(false);
+  }
+}
+function playHitSound() {
+  try {
+    initHitAudio().then(ok => {
+      if (!ok || !hitAudioCtx) return;
+      const now = hitAudioCtx.currentTime;
+      const master = hitAudioCtx.createGain();
+      master.gain.setValueAtTime(0.0001, now);
+      master.gain.exponentialRampToValueAtTime(0.28, now + 0.02);
+      master.gain.exponentialRampToValueAtTime(0.0001, now + 0.55);
+      master.connect(hitAudioCtx.destination);
+      [520, 780, 430].forEach((freq, idx) => {
+        const osc = hitAudioCtx.createOscillator();
+        const gain = hitAudioCtx.createGain();
+        osc.type = idx === 1 ? 'square' : 'triangle';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.06);
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.65, now + 0.48);
+        gain.gain.setValueAtTime(idx === 1 ? 0.11 : 0.08, now);
+        osc.connect(gain);
+        gain.connect(master);
+        osc.start(now + idx * 0.06);
+        osc.stop(now + 0.58);
+      });
+      if (navigator.vibrate) navigator.vibrate(70);
     });
   } catch (_) {}
 }
@@ -814,6 +827,9 @@ document.addEventListener('click', e => {
   if (e.target.closest('#taskCode') || e.target.closest('#resetBtn')) return;
   scanInput.focus();
 });
+document.addEventListener('pointerdown', initHitAudio, {once:true});
+document.addEventListener('keydown', initHitAudio, {once:true});
+scanInput.addEventListener('keydown', initHitAudio, {once:true});
 setupCodeExport();
 loadLocal();
 logEvent('page_open', {href: location.href, ua: navigator.userAgent || ''});
