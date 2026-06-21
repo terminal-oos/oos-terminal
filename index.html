@@ -79,10 +79,10 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, Ејeby eksportowaД‡">
-6623</div>
+5339</div>
 </div>
 <div id="meta">
-<span>k poisku: <b id="allCount">0</b></span>
+<span>iskat: <b id="allCount">0</b></span>
 <span>skanov: <b id="scanCount">0</b></span>
 <span>naszel: <b id="hitCount">0</b></span>
 <button id="resetBtn" type="button">reset</button>
@@ -103,265 +103,384 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-19_1153";
-const DEFAULT_TASK_CODE = "6623";
+const DEFAULT_TASK_VERSION = "macro_2026-06-21_0626";
+const DEFAULT_TASK_CODE = "5339";
 const DATA = [];
 DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2073191918",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2070836096",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026202580",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2073480503",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026202514",
+loc:"PTO035AP00",
+brand:"HOUSE",
+nr:"2074935133",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026202363",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2073589238",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"4506265467",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074999732",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026205950",
+nr:"2074952812",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026193452",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074974253",
+nr:"3026212570",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074999714",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026199218",
+nr:"3026212360",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026199012",
+nr:"3026212542",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075007246",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026212100",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"3026205494",
+nr:"2074050704",
 prio:"PRIORYTET 1",
-tsu:"RSORT"
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026212032",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2073755444",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026212372",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074982001",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"4506263226",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075000284",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074987747",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074988069",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026211901",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075001901",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026202657",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074988846",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074987731",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074967046",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"HOUSE",
+nr:"2074935167",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2073894385",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074955787",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"2074037672",
+nr:"3026212518",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074984749",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026201708",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"HOUSE",
+nr:"2074938383",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074299523",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074988088",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026212353",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026212499",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"HOUSE",
+nr:"2074935687",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075000544",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074915298",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026192049",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2074989068",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"HOUSE",
+nr:"2074935657",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026199516",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"4506264112",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074938364",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074149024",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026204609",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2072591606",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026198990",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2072287893",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026202051",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074894844",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026203201",
+nr:"3026201900",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026179794",
+nr:"3026206633",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2067727007",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026193976",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026212171",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026202562",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026197845",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"2074800624",
+nr:"4506267864",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026187180",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"HOUSE",
+nr:"2074969233",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026212214",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"3026199549",
+nr:"3026201897",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
-loc:"PTO001AP00",
+loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3026200530",
+nr:"2073885829",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074999842",
+loc:"PTO035AP00",
+brand:"HOUSE",
+nr:"2074980366",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
-loc:"PTO001AP00",
+loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2074871349",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2070857703",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2074849456",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3026203465",
+nr:"3026205284",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
