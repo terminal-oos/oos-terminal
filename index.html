@@ -79,7 +79,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-7798</div>
+2137</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -103,8 +103,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-06-26_0106";
-const DEFAULT_TASK_CODE = "7798";
+const DEFAULT_TASK_VERSION = "macro_2026-06-26_0111";
+const DEFAULT_TASK_CODE = "2137";
 const DATA = [];
 DATA.push({
 loc:"PTO035AP00",
@@ -558,7 +558,7 @@ function marker(c) {
     c === 'yellow' ? '#ffd600' : '';
 }
 function vibrateHit() {
-  if (navigator.vibrate) navigator.vibrate(70);
+  if (navigator.vibrate) navigator.vibrate(100);
 }
 function vibrateDup() {
   if (navigator.vibrate) navigator.vibrate([40, 60, 40, 60, 40]);
