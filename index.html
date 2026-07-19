@@ -88,6 +88,7 @@ td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
 td.hitPink{background:#ff1493;color:#fff;font-weight:900;}
 td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
 td.noHit{background:#f5f5f5;color:#555;}
+td.klik{border-bottom:4px solid var(--dest-color,transparent);}
 td.dupScan{background:#fce4ec!important;color:#880e4f;
 font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
@@ -99,7 +100,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-6096</div>
+6585</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -123,8 +124,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-07-19_1144";
-const DEFAULT_TASK_CODE = "6096";
+const DEFAULT_TASK_VERSION = "macro_2026-07-19_1152";
+const DEFAULT_TASK_CODE = "6585";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -1046,6 +1047,9 @@ function destStripe(d) {
   if (t.indexOf('RSORT') >= 0) return 'dY';
   return '';
 }
+function destHex(ds) {
+  return ds === 'dR' ? '#ff1744' : ds === 'dY' ? '#ffd600' : '';
+}
 function vibrateHit() {
   if (navigator.vibrate) navigator.vibrate(100);
 }
@@ -1075,8 +1079,12 @@ function render(center) {
     const isDup = s && clickCounts.get(norm(s.nr)) > 1;
     const cellClass = s ? (isDup ? 'dupScan' :
       (match ? hitCls(color(match)) : 'noHit')) : '';
-    const style = s && isDup && match ?
-      ' style="--dup-color:' + marker(color(match)) + '"' : '';
+    const destHexVal = s && match ? destHex(destStripe(match)) : '';
+    const styleParts = [];
+    if (s && isDup && match) styleParts.push('--dup-color:' + marker(color(match)));
+    if (destHexVal) styleParts.push('--dest-color:' + destHexVal);
+    const style = styleParts.length ?
+      ' style="' + styleParts.join(';') + '"' : '';
     if (s && match && !s.dup) hits++;
     const cls = [c, stripe(c), d ? destStripe(d) : '',
       d && found.has(n) ? 'found' : '',
@@ -1142,6 +1150,9 @@ function updateScanCell(i) {
   cell.className = cls;
   if (isDup && match) cell.style.setProperty('--dup-color', marker(color(match)));
   else cell.style.removeProperty('--dup-color');
+  const destHexVal = match ? destHex(destStripe(match)) : '';
+  if (destHexVal) cell.style.setProperty('--dest-color', destHexVal);
+  else cell.style.removeProperty('--dest-color');
   cell.textContent = s.nr || '';
 }
 function updateSameScanCells(v) {
