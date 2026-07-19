@@ -47,10 +47,16 @@ tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
 tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
 tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
 tr.yellow>td:not(.klik):not(.sc){background:#fff9c4;}
+tr.turquoise>td:not(.klik):not(.sc){background:#b2ebf2;}
+tr.pink>td:not(.klik):not(.sc){background:#f8bbd0;}
+tr.purple>td:not(.klik):not(.sc){background:#d1c4e9;}
 tr.sg>.sc{background:#00c853;}
 tr.sr>.sc{background:#ff1744;}
 tr.sb>.sc{background:#2979ff;}
 tr.sy>.sc{background:#ffd600;}
+tr.st>.sc{background:#00bcd4;}
+tr.sp>.sc{background:#ff4081;}
+tr.sv>.sc{background:#7c4dff;}
 tr.green.found>td:not(.klik):not(.sc),
 tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;
 color:#fff;font-weight:900;}
@@ -63,10 +69,22 @@ color:#fff;font-weight:900;}
 tr.yellow.found>td:not(.klik):not(.sc),
 tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;
 color:#000;font-weight:900;}
+tr.turquoise.found>td:not(.klik):not(.sc),
+tr.turquoise.match>td:not(.klik):not(.sc){background:#00bcd4!important;
+color:#fff;font-weight:900;}
+tr.pink.found>td:not(.klik):not(.sc),
+tr.pink.match>td:not(.klik):not(.sc){background:#ff4081!important;
+color:#fff;font-weight:900;}
+tr.purple.found>td:not(.klik):not(.sc),
+tr.purple.match>td:not(.klik):not(.sc){background:#7c4dff!important;
+color:#fff;font-weight:900;}
 td.hitGreen{background:#00c853;color:#fff;font-weight:900;}
 td.hitRed{background:#ff1744;color:#fff;font-weight:900;}
 td.hitBlue{background:#2979ff;color:#fff;font-weight:900;}
 td.hitYellow{background:#ffd600;color:#000;font-weight:900;}
+td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
+td.hitPink{background:#ff4081;color:#fff;font-weight:900;}
+td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
 td.noHit{background:#f5f5f5;color:#555;}
 td.dupScan{background:#fce4ec!important;color:#880e4f;
 font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
@@ -79,7 +97,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-4815</div>
+1478</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -103,8 +121,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-07-19_1121";
-const DEFAULT_TASK_CODE = "4815";
+const DEFAULT_TASK_VERSION = "macro_2026-07-19_1123";
+const DEFAULT_TASK_CODE = "1478";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -976,7 +994,7 @@ function logEvent(event, details) {
 }
 function color(d) {
   if (!d) return '';
-  const p = String(d.prio || '').toUpperCase();
+  const p = String(d.prio || '').toUpperCase().trim();
   const t = String(d.tsu || '').toUpperCase();
   const prio = p === 'PRIO1' || p === 'PRIORYTET 1';
   if (p === 'BLOK' && t.indexOf('MDTPUT') >= 0) return 'green';
@@ -985,25 +1003,37 @@ function color(d) {
   if (prio && t.indexOf('RSORT') >= 0) return 'yellow';
   if (p === 'BLOK') return 'blue';
   if (prio) return 'yellow';
+  if (p === 'BRASTORN') return 'turquoise';
+  if (p === 'SERED') return 'pink';
+  if (p !== '') return 'purple';
   return '';
 }
 function stripe(c) {
   return c === 'green' ? 'sg' :
     c === 'red' ? 'sr' :
     c === 'blue' ? 'sb' :
-    c === 'yellow' ? 'sy' : '';
+    c === 'yellow' ? 'sy' :
+    c === 'turquoise' ? 'st' :
+    c === 'pink' ? 'sp' :
+    c === 'purple' ? 'sv' : '';
 }
 function hitCls(c) {
   return c === 'green' ? 'hitGreen' :
     c === 'red' ? 'hitRed' :
     c === 'blue' ? 'hitBlue' :
-    c === 'yellow' ? 'hitYellow' : 'noHit';
+    c === 'yellow' ? 'hitYellow' :
+    c === 'turquoise' ? 'hitTurquoise' :
+    c === 'pink' ? 'hitPink' :
+    c === 'purple' ? 'hitPurple' : 'noHit';
 }
 function marker(c) {
   return c === 'green' ? '#00c853' :
     c === 'red' ? '#ff1744' :
     c === 'blue' ? '#2979ff' :
-    c === 'yellow' ? '#ffd600' : '';
+    c === 'yellow' ? '#ffd600' :
+    c === 'turquoise' ? '#00bcd4' :
+    c === 'pink' ? '#ff4081' :
+    c === 'purple' ? '#7c4dff' : '';
 }
 function vibrateHit() {
   if (navigator.vibrate) navigator.vibrate(100);
