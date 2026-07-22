@@ -88,6 +88,7 @@ td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
 td.hitPink{background:#ff1493;color:#fff;font-weight:900;}
 td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
 td.noHit{background:#f5f5f5;color:#555;}
+td.klik{border-bottom:4px solid var(--dest-color,transparent);}
 td.dupScan{background:#fce4ec!important;color:#880e4f;
 font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
@@ -99,7 +100,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-9396</div>
+8894</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -123,49 +124,210 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-07-22_1438";
-const DEFAULT_TASK_CODE = "9396";
+const DEFAULT_TASK_VERSION = "macro_2026-07-22_1457";
+const DEFAULT_TASK_CODE = "8894";
 const DATA = [];
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"123",
-prio:"BRASTORN",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"1234",
-prio:"BRASTORN",
+nr:"2076002727",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"12345",
-prio:"SERED",
+nr:"4506389301",
+prio:"BLOK",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"123456",
-prio:"SERED",
+nr:"2076079328",
+prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
-loc:"hz",
-brand:"sinsay",
-nr:"121212",
-prio:"pidor",
-tsu:""
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"2075912676",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
 });
 DATA.push({
-loc:"hala bi",
-brand:"mohito",
-nr:"131313",
-prio:"traditsionnye tsennosti",
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"3026528302",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2076079454",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2073615610",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075996587",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"2075996564",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075996533",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"4506388487",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2076079234",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075996624",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"3026524730",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075176683",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"2074080315",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2072853650",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"3026521403",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075885815",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2076036229",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2076079371",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"2075996529",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075838136",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2075827984",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"2075673564",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"3026519880",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"2075673579",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"3026510126",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"3026522374",
+prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 const tb = document.getElementById('tb');
@@ -318,6 +480,9 @@ function destStripe(d) {
   if (t.indexOf('RSORT') >= 0) return 'dY';
   return '';
 }
+function destHex(ds) {
+  return ds === 'dR' ? '#ff1744' : ds === 'dY' ? '#ffd600' : '';
+}
 function vibrateHit() {
   if (navigator.vibrate) navigator.vibrate(100);
 }
@@ -347,8 +512,12 @@ function render(center) {
     const isDup = s && clickCounts.get(norm(s.nr)) > 1;
     const cellClass = s ? (isDup ? 'dupScan' :
       (match ? hitCls(color(match)) : 'noHit')) : '';
-    const style = s && isDup && match ?
-      ' style="--dup-color:' + marker(color(match)) + '"' : '';
+    const destHexVal = s && match ? destHex(destStripe(match)) : '';
+    const styleParts = [];
+    if (s && isDup && match) styleParts.push('--dup-color:' + marker(color(match)));
+    if (destHexVal) styleParts.push('--dest-color:' + destHexVal);
+    const style = styleParts.length ?
+      ' style="' + styleParts.join(';') + '"' : '';
     if (s && match && !s.dup) hits++;
     const cls = [c, stripe(c), d ? destStripe(d) : '',
       d && found.has(n) ? 'found' : '',
@@ -414,6 +583,9 @@ function updateScanCell(i) {
   cell.className = cls;
   if (isDup && match) cell.style.setProperty('--dup-color', marker(color(match)));
   else cell.style.removeProperty('--dup-color');
+  const destHexVal = match ? destHex(destStripe(match)) : '';
+  if (destHexVal) cell.style.setProperty('--dest-color', destHexVal);
+  else cell.style.removeProperty('--dest-color');
   cell.textContent = s.nr || '';
 }
 function updateSameScanCells(v) {
