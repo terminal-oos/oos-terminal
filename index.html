@@ -88,13 +88,9 @@ td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
 td.hitPink{background:#ff1493;color:#fff;font-weight:900;}
 td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
 td.noHit{background:#f5f5f5;color:#555;}
-td.klik{position:relative;}
-td.klik::before{content:'';position:absolute;left:0;top:0;bottom:0;
-width:8px;background:var(--dup-color,transparent);}
-td.klik::after{content:'';position:absolute;left:8px;top:0;bottom:0;
-width:8px;background:var(--dest-color,transparent);}
+td.klik{border-bottom:4px solid var(--dest-color,transparent);}
 td.dupScan{background:#fce4ec!important;color:#880e4f;
-font-weight:900;}
+font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
 </style>
 </head>
@@ -104,7 +100,7 @@ font-weight:900;}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-5718</div>
+7664</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -128,8 +124,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-07-22_1430";
-const DEFAULT_TASK_CODE = "5718";
+const DEFAULT_TASK_VERSION = "macro_2026-07-22_1434";
+const DEFAULT_TASK_CODE = "7664";
 const DATA = [];
 DATA.push({
 loc:"PTO035AP00",
