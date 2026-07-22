@@ -47,18 +47,10 @@ tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
 tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
 tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
 tr.yellow>td:not(.klik):not(.sc){background:#fff9c4;}
-tr.turquoise>td:not(.klik):not(.sc){background:#b2ebf2;}
-tr.pink>td:not(.klik):not(.sc){background:#ffd1ec;}
-tr.purple>td:not(.klik):not(.sc){background:#d1c4e9;}
 tr.sg>.sc{background:#00c853;}
 tr.sr>.sc{background:#ff1744;}
 tr.sb>.sc{background:#2979ff;}
 tr.sy>.sc{background:#ffd600;}
-tr.st>.sc{background:#00bcd4;}
-tr.sp>.sc{background:#ff1493;}
-tr.sv>.sc{background:#7c4dff;}
-tr.dR>.sc{border-bottom:4px solid #ff1744;}
-tr.dY>.sc{border-bottom:4px solid #ffd600;}
 tr.green.found>td:not(.klik):not(.sc),
 tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;
 color:#fff;font-weight:900;}
@@ -71,24 +63,11 @@ color:#fff;font-weight:900;}
 tr.yellow.found>td:not(.klik):not(.sc),
 tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;
 color:#000;font-weight:900;}
-tr.turquoise.found>td:not(.klik):not(.sc),
-tr.turquoise.match>td:not(.klik):not(.sc){background:#00bcd4!important;
-color:#fff;font-weight:900;}
-tr.pink.found>td:not(.klik):not(.sc),
-tr.pink.match>td:not(.klik):not(.sc){background:#ff1493!important;
-color:#fff;font-weight:900;}
-tr.purple.found>td:not(.klik):not(.sc),
-tr.purple.match>td:not(.klik):not(.sc){background:#7c4dff!important;
-color:#fff;font-weight:900;}
 td.hitGreen{background:#00c853;color:#fff;font-weight:900;}
 td.hitRed{background:#ff1744;color:#fff;font-weight:900;}
 td.hitBlue{background:#2979ff;color:#fff;font-weight:900;}
 td.hitYellow{background:#ffd600;color:#000;font-weight:900;}
-td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
-td.hitPink{background:#ff1493;color:#fff;font-weight:900;}
-td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
 td.noHit{background:#f5f5f5;color:#555;}
-td.klik{border-bottom:4px solid var(--dest-color,transparent);}
 td.dupScan{background:#fce4ec!important;color:#880e4f;
 font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
@@ -100,7 +79,7 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-8894</div>
+1891</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -124,8 +103,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-07-22_1457";
-const DEFAULT_TASK_CODE = "8894";
+const DEFAULT_TASK_VERSION = "macro_2026-07-22_1458";
+const DEFAULT_TASK_CODE = "1891";
 const DATA = [];
 DATA.push({
 loc:"PTO035AP00",
@@ -430,7 +409,7 @@ function logEvent(event, details) {
 }
 function color(d) {
   if (!d) return '';
-  const p = String(d.prio || '').toUpperCase().trim();
+  const p = String(d.prio || '').toUpperCase();
   const t = String(d.tsu || '').toUpperCase();
   const prio = p === 'PRIO1' || p === 'PRIORYTET 1';
   if (p === 'BLOK' && t.indexOf('MDTPUT') >= 0) return 'green';
@@ -439,49 +418,25 @@ function color(d) {
   if (prio && t.indexOf('RSORT') >= 0) return 'yellow';
   if (p === 'BLOK') return 'blue';
   if (prio) return 'yellow';
-  if (p === 'BRASTORN') return 'turquoise';
-  if (p === 'SERED') return 'pink';
-  if (p !== '') return 'purple';
   return '';
 }
 function stripe(c) {
   return c === 'green' ? 'sg' :
     c === 'red' ? 'sr' :
     c === 'blue' ? 'sb' :
-    c === 'yellow' ? 'sy' :
-    c === 'turquoise' ? 'st' :
-    c === 'pink' ? 'sp' :
-    c === 'purple' ? 'sv' : '';
+    c === 'yellow' ? 'sy' : '';
 }
 function hitCls(c) {
   return c === 'green' ? 'hitGreen' :
     c === 'red' ? 'hitRed' :
     c === 'blue' ? 'hitBlue' :
-    c === 'yellow' ? 'hitYellow' :
-    c === 'turquoise' ? 'hitTurquoise' :
-    c === 'pink' ? 'hitPink' :
-    c === 'purple' ? 'hitPurple' : 'noHit';
+    c === 'yellow' ? 'hitYellow' : 'noHit';
 }
 function marker(c) {
   return c === 'green' ? '#00c853' :
     c === 'red' ? '#ff1744' :
     c === 'blue' ? '#2979ff' :
-    c === 'yellow' ? '#ffd600' :
-    c === 'turquoise' ? '#00bcd4' :
-    c === 'pink' ? '#ff1493' :
-    c === 'purple' ? '#7c4dff' : '';
-}
-function destStripe(d) {
-  if (!d) return '';
-  const c = color(d);
-  if (c !== 'turquoise' && c !== 'pink' && c !== 'purple') return '';
-  const t = String(d.tsu || '').toUpperCase();
-  if (t.indexOf('MDTPUT') >= 0) return 'dR';
-  if (t.indexOf('RSORT') >= 0) return 'dY';
-  return '';
-}
-function destHex(ds) {
-  return ds === 'dR' ? '#ff1744' : ds === 'dY' ? '#ffd600' : '';
+    c === 'yellow' ? '#ffd600' : '';
 }
 function vibrateHit() {
   if (navigator.vibrate) navigator.vibrate(100);
@@ -512,15 +467,10 @@ function render(center) {
     const isDup = s && clickCounts.get(norm(s.nr)) > 1;
     const cellClass = s ? (isDup ? 'dupScan' :
       (match ? hitCls(color(match)) : 'noHit')) : '';
-    const destHexVal = s && match ? destHex(destStripe(match)) : '';
-    const styleParts = [];
-    if (s && isDup && match) styleParts.push('--dup-color:' + marker(color(match)));
-    if (destHexVal) styleParts.push('--dest-color:' + destHexVal);
-    const style = styleParts.length ?
-      ' style="' + styleParts.join(';') + '"' : '';
+    const style = s && isDup && match ?
+      ' style="--dup-color:' + marker(color(match)) + '"' : '';
     if (s && match && !s.dup) hits++;
-    const cls = [c, stripe(c), d ? destStripe(d) : '',
-      d && found.has(n) ? 'found' : '',
+    const cls = [c, stripe(c), d && found.has(n) ? 'found' : '',
       s && d && norm(s.nr) === n ? 'match' : '']
       .filter(Boolean).join(' ');
     html += '<tr class="' + cls + '" data-n="' + n + '">' +
@@ -583,9 +533,6 @@ function updateScanCell(i) {
   cell.className = cls;
   if (isDup && match) cell.style.setProperty('--dup-color', marker(color(match)));
   else cell.style.removeProperty('--dup-color');
-  const destHexVal = match ? destHex(destStripe(match)) : '';
-  if (destHexVal) cell.style.setProperty('--dest-color', destHexVal);
-  else cell.style.removeProperty('--dest-color');
   cell.textContent = s.nr || '';
 }
 function updateSameScanCells(v) {
