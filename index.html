@@ -48,7 +48,7 @@ tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
 tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
 tr.yellow>td:not(.klik):not(.sc){background:#fff9c4;}
 tr.turquoise>td:not(.klik):not(.sc){background:#b2ebf2;}
-tr.pink>td:not(.klik):not(.sc){background:#ffd1ec;}
+tr.orange>td:not(.klik):not(.sc){background:#f6be94;}
 tr.purple>td:not(.klik):not(.sc){background:#d1c4e9;}
 tr.sg>.sc{background:#00c853;}
 tr.sr>.sc{background:#ff1744;}
@@ -74,8 +74,8 @@ color:#000;font-weight:900;}
 tr.turquoise.found>td:not(.klik):not(.sc),
 tr.turquoise.match>td:not(.klik):not(.sc){background:#00bcd4!important;
 color:#fff;font-weight:900;}
-tr.pink.found>td:not(.klik):not(.sc),
-tr.pink.match>td:not(.klik):not(.sc){background:#f59780!important;
+tr.orange.found>td:not(.klik):not(.sc),
+tr.orange.match>td:not(.klik):not(.sc){background:#f59780!important;
 color:#fff;font-weight:900;}
 tr.purple.found>td:not(.klik):not(.sc),
 tr.purple.match>td:not(.klik):not(.sc){background:#7c4dff!important;
@@ -85,7 +85,7 @@ td.hitRed{background:#ff1744;color:#fff;font-weight:900;}
 td.hitBlue{background:#2979ff;color:#fff;font-weight:900;}
 td.hitYellow{background:#ffd600;color:#000;font-weight:900;}
 td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
-td.hitPink{background:#f59780;color:#fff;font-weight:900;}
+td.hitOrange{background:#f59780;color:#fff;font-weight:900;}
 td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
 td.noHit{background:#f5f5f5;color:#555;}
 td.klik{position:relative;}
@@ -104,7 +104,7 @@ font-weight:900;}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-7422</div>
+5911</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -128,8 +128,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-07-29_2037";
-const DEFAULT_TASK_CODE = "7422";
+const DEFAULT_TASK_VERSION = "macro_2026-07-29_2048";
+const DEFAULT_TASK_CODE = "5911";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -479,7 +479,7 @@ function color(d) {
   if (p === 'BLOK') return 'blue';
   if (prio) return 'yellow';
   if (p === 'BRASTORN') return 'turquoise';
-  if (p === 'SERED') return 'pink';
+  if (p === 'SERED') return 'orange';
   if (p !== '') return 'purple';
   return '';
 }
@@ -489,7 +489,7 @@ function stripe(c) {
     c === 'blue' ? 'sb' :
     c === 'yellow' ? 'sy' :
     c === 'turquoise' ? 'st' :
-    c === 'pink' ? 'sp' :
+    c === 'orange' ? 'sp' :
     c === 'purple' ? 'sv' : '';
 }
 function hitCls(c) {
@@ -498,7 +498,7 @@ function hitCls(c) {
     c === 'blue' ? 'hitBlue' :
     c === 'yellow' ? 'hitYellow' :
     c === 'turquoise' ? 'hitTurquoise' :
-    c === 'pink' ? 'hitPink' :
+    c === 'orange' ? 'hitOrange' :
     c === 'purple' ? 'hitPurple' : 'noHit';
 }
 function marker(c) {
@@ -507,13 +507,13 @@ function marker(c) {
     c === 'blue' ? '#2979ff' :
     c === 'yellow' ? '#ffd600' :
     c === 'turquoise' ? '#00bcd4' :
-    c === 'pink' ? '#f59780' :
+    c === 'orange' ? '#f59780' :
     c === 'purple' ? '#7c4dff' : '';
 }
 function destStripe(d) {
   if (!d) return '';
   const c = color(d);
-  if (c !== 'turquoise' && c !== 'pink' && c !== 'purple') return '';
+  if (c !== 'turquoise' && c !== 'orange' && c !== 'purple') return '';
   const t = String(d.tsu || '').toUpperCase();
   if (t.indexOf('MDTPUT') >= 0) return 'dR';
   if (t.indexOf('RSORT') >= 0) return 'dY';
