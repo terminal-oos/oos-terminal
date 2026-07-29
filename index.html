@@ -104,7 +104,7 @@ font-weight:900;}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-5989</div>
+7422</div>
 </div>
 <div id="meta">
 <span>iskat: <b id="allCount">0</b></span>
@@ -128,8 +128,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-07-29_2036";
-const DEFAULT_TASK_CODE = "5989";
+const DEFAULT_TASK_VERSION = "macro_2026-07-29_2037";
+const DEFAULT_TASK_CODE = "7422";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -353,6 +353,20 @@ loc:"PTO001AP00",
 brand:"RESERVED",
 nr:"4506426251",
 prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"4506426252",
+prio:"SERED",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"4506426253",
+prio:"SERED",
 tsu:"MDTPUT"
 });
 const tb = document.getElementById('tb');
