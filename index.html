@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>OOS 9651</title>
+<title>OOS</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 html,body{height:100%;}
@@ -30,36 +30,35 @@ color:#a10000;padding:4px 7px;border-radius:4px;
 font-size:13px;font-weight:900;}
 #wrap{position:absolute;left:0;right:0;top:86px;bottom:0;
 overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;}
-table{border-collapse:collapse;width:max-content;min-width:100%;
+table{border-collapse:collapse;width:100%;table-layout:fixed;
 background:#fff;}
 thead th{position:sticky;top:0;z-index:30;}
-th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 4px;
-font-size:13px;height:26px;white-space:nowrap;text-align:left;}
-td{border:1px solid #e1e1e1;padding:1px 4px;font-size:21px;
-height:38px;white-space:nowrap;}
-th.sc,td.sc{width:7px;min-width:7px;max-width:7px;padding:0;border:0;}
-th.nr,td.nr{width:106px;min-width:106px;max-width:106px;
-font-weight:900;overflow:hidden;text-overflow:ellipsis;}
-th.brand,td.brand{width:132px;min-width:132px;max-width:132px;
-overflow:hidden;text-overflow:ellipsis;}
-th.loc,td.loc{width:122px;min-width:122px;max-width:122px;
-overflow:hidden;text-overflow:ellipsis;}
-th.klik,td.klik{width:130px;min-width:130px;text-align:center;
-font-weight:900;}
-.sticky1{position:sticky;left:7px;z-index:35;background:#f1f1f1;}
-.sticky2{position:sticky;left:113px;z-index:35;background:#f1f1f1;}
-.sticky3{position:sticky;left:245px;z-index:35;background:#f1f1f1;}
-td.nr{position:sticky;left:7px;background:#fff;z-index:10;}
-td.brand{position:sticky;left:113px;background:#fff;z-index:10;}
-td.loc{position:sticky;left:245px;background:#fff;z-index:10;}
+th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 3px;
+font-size:11px;height:22px;white-space:nowrap;text-align:left;}
+td{border:1px solid #e1e1e1;padding:1px 3px;font-size:13px;
+height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+table{border-collapse:collapse;width:auto;}
+th.sc,td.sc{width:5px;padding:0;border:0;}
+th.nr,td.nr{font-weight:900;white-space:nowrap;width:1%;}
+th.brand,td.brand{white-space:nowrap;width:1%;}
+th.loc,td.loc{white-space:nowrap;width:1%;}
+th.klik,td.klik{width:90px;text-align:center;font-weight:900;}
 tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
 tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
 tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
 tr.yellow>td:not(.klik):not(.sc){background:#fff9c4;}
+tr.turquoise>td:not(.klik):not(.sc){background:#b2ebf2;}
+tr.orange>td:not(.klik):not(.sc){background:#f6be94;}
+tr.purple>td:not(.klik):not(.sc){background:#d1c4e9;}
 tr.sg>.sc{background:#00c853;}
 tr.sr>.sc{background:#ff1744;}
 tr.sb>.sc{background:#2979ff;}
 tr.sy>.sc{background:#ffd600;}
+tr.st>.sc{background:#00bcd4;}
+tr.sp>.sc{background:#f59780;}
+tr.sv>.sc{background:#7c4dff;}
+tr.dR>.sc{border-bottom:4px solid #ff1744;}
+tr.dY>.sc{border-bottom:4px solid #ffd600;}
 tr.green.found>td:not(.klik):not(.sc),
 tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;
 color:#fff;font-weight:900;}
@@ -72,13 +71,30 @@ color:#fff;font-weight:900;}
 tr.yellow.found>td:not(.klik):not(.sc),
 tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;
 color:#000;font-weight:900;}
+tr.turquoise.found>td:not(.klik):not(.sc),
+tr.turquoise.match>td:not(.klik):not(.sc){background:#00bcd4!important;
+color:#fff;font-weight:900;}
+tr.orange.found>td:not(.klik):not(.sc),
+tr.orange.match>td:not(.klik):not(.sc){background:#f59780!important;
+color:#fff;font-weight:900;}
+tr.purple.found>td:not(.klik):not(.sc),
+tr.purple.match>td:not(.klik):not(.sc){background:#7c4dff!important;
+color:#fff;font-weight:900;}
 td.hitGreen{background:#00c853;color:#fff;font-weight:900;}
 td.hitRed{background:#ff1744;color:#fff;font-weight:900;}
 td.hitBlue{background:#2979ff;color:#fff;font-weight:900;}
 td.hitYellow{background:#ffd600;color:#000;font-weight:900;}
+td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
+td.hitOrange{background:#f59780;color:#fff;font-weight:900;}
+td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
 td.noHit{background:#f5f5f5;color:#555;}
+td.klik{position:relative;}
+td.klik::before{content:'';position:absolute;left:0;top:0;bottom:0;
+width:8px;background:var(--dup-color,transparent);}
+td.klik::after{content:'';position:absolute;left:8px;top:0;bottom:0;
+width:8px;background:var(--dest-color,transparent);}
 td.dupScan{background:#fce4ec!important;color:#880e4f;
-font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
+font-weight:900;}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
 </style>
 </head>
@@ -88,23 +104,23 @@ font-weight:900;box-shadow:inset 9px 0 0 var(--dup-color,transparent);}
 <input id="scanInput" type="text" autocomplete="off" autofocus
 placeholder="Skanuj karton...">
 <div id="taskCode" title="Przytrzymaj, żeby eksportować">
-9651</div>
+8132</div>
 </div>
 <div id="meta">
-<span>lista: <b id="allCount">0</b></span>
-<span>scan: <b id="scanCount">0</b></span>
-<span>znal.: <b id="hitCount">0</b></span>
+<span>iskat: <b id="allCount">0</b></span>
+<span>skanov: <b id="scanCount">0</b></span>
+<span>naszel: <b id="hitCount">0</b></span>
 <button id="resetBtn" type="button">reset</button>
 </div>
-<div id="dupWarning">DUPLIKAT — karton już był skanowany!</div>
+<div id="dupWarning">!!!DUPLIKAT!!!</div>
 </div>
 <div id="wrap">
 <table id="tbl">
 <thead><tr>
 <th class="sc"></th>
-<th class="nr sticky1">nr</th>
-<th class="brand sticky2">brand</th>
-<th class="loc sticky3">loc</th>
+<th class="nr">nr</th>
+<th class="brand">brand</th>
+<th class="loc">loc</th>
 <th class="klik">Klikaj tutaj</th>
 </tr></thead>
 <tbody id="tb"></tbody>
@@ -112,8 +128,8 @@ placeholder="Skanuj karton...">
 </div>
 <textarea id="exportText" readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-08-19_1238";
-const DEFAULT_TASK_CODE = "9651";
+const DEFAULT_TASK_VERSION = "macro_2026-08-19_1243";
+const DEFAULT_TASK_CODE = "8132";
 const DATA = [];
 DATA.push({
 loc:"PTO001AP00",
@@ -946,6 +962,8 @@ const taskCode = DEFAULT_TASK_CODE;
 const terminalId = 'macro';
 const employeeName = 'macro';
 const JOURNAL_KEY = 'oos_macro_journal_v2';
+let journalCache = null;
+let journalSaveTimer = null;
 const TIMER_BOOT_ID = 'boot_' + Date.now().toString(36) +
   Math.random().toString(36).slice(2, 8);
 const TIMER_BOOT_START = performance.now();
@@ -955,9 +973,7 @@ if (!timerSessionId) {
     Math.random().toString(36).slice(2, 8);
 }
 localStorage.setItem('oos_macro_timer_session_id', timerSessionId);
-function norm(v) {
-  return String(v || '').trim().replace(/^'+/, '').replace(/\s+/g, '');
-}
+function norm(v){let s=String(v||'').toUpperCase().trim();s=s.replace(/^'+/,'');s=s.replace(/^K/,'');s=s.replace(/\D/g,'');return s;}
 function esc(v) {
   return String(v == null ? '' : v).replace(/[&<>]/g, c =>
     ({'&':'&amp;', '<':'&lt;', '>':'&gt;'}[c]));
@@ -994,11 +1010,27 @@ function saveJournal(rows) {
     } catch (__) {}
   }
 }
+function getJournalCache() {
+  if (!Array.isArray(journalCache)) journalCache = loadJournal();
+  return journalCache;
+}
+function flushJournal() {
+  if (journalSaveTimer) {
+    clearTimeout(journalSaveTimer);
+    journalSaveTimer = null;
+  }
+  saveJournal(getJournalCache());
+}
+function scheduleJournalSave() {
+  clearTimeout(journalSaveTimer);
+  journalSaveTimer = setTimeout(flushJournal, 300);
+}
 function remember(row) {
-  const rows = loadJournal();
+  const rows = getJournalCache();
   if (!row.id) row.id = makeId(row.kind === 'scan' ? 'scan' : 'evt');
   rows.push(row);
-  saveJournal(rows);
+  if (rows.length > 15000) rows.splice(0, rows.length - 15000);
+  scheduleJournalSave();
 }
 function logEvent(event, details) {
   remember({
@@ -1018,7 +1050,7 @@ function logEvent(event, details) {
 }
 function color(d) {
   if (!d) return '';
-  const p = String(d.prio || '').toUpperCase();
+  const p = String(d.prio || '').toUpperCase().trim();
   const t = String(d.tsu || '').toUpperCase();
   const prio = p === 'PRIO1' || p === 'PRIORYTET 1';
   if (p === 'BLOK' && t.indexOf('MDTPUT') >= 0) return 'green';
@@ -1027,25 +1059,55 @@ function color(d) {
   if (prio && t.indexOf('RSORT') >= 0) return 'yellow';
   if (p === 'BLOK') return 'blue';
   if (prio) return 'yellow';
+  if (p === 'BRASTORN') return 'turquoise';
+  if (p === 'SERED') return 'orange';
+  if (p !== '') return 'purple';
   return '';
 }
 function stripe(c) {
   return c === 'green' ? 'sg' :
     c === 'red' ? 'sr' :
     c === 'blue' ? 'sb' :
-    c === 'yellow' ? 'sy' : '';
+    c === 'yellow' ? 'sy' :
+    c === 'turquoise' ? 'st' :
+    c === 'orange' ? 'sp' :
+    c === 'purple' ? 'sv' : '';
 }
 function hitCls(c) {
   return c === 'green' ? 'hitGreen' :
     c === 'red' ? 'hitRed' :
     c === 'blue' ? 'hitBlue' :
-    c === 'yellow' ? 'hitYellow' : 'noHit';
+    c === 'yellow' ? 'hitYellow' :
+    c === 'turquoise' ? 'hitTurquoise' :
+    c === 'orange' ? 'hitOrange' :
+    c === 'purple' ? 'hitPurple' : 'noHit';
 }
 function marker(c) {
   return c === 'green' ? '#00c853' :
     c === 'red' ? '#ff1744' :
     c === 'blue' ? '#2979ff' :
-    c === 'yellow' ? '#ffd600' : '';
+    c === 'yellow' ? '#ffd600' :
+    c === 'turquoise' ? '#00bcd4' :
+    c === 'orange' ? '#f59780' :
+    c === 'purple' ? '#7c4dff' : '';
+}
+function destStripe(d) {
+  if (!d) return '';
+  const c = color(d);
+  if (c !== 'turquoise' && c !== 'orange' && c !== 'purple') return '';
+  const t = String(d.tsu || '').toUpperCase();
+  if (t.indexOf('MDTPUT') >= 0) return 'dR';
+  if (t.indexOf('RSORT') >= 0) return 'dY';
+  return '';
+}
+function destHex(ds) {
+  return ds === 'dR' ? '#ff1744' : ds === 'dY' ? '#ffd600' : '';
+}
+function vibrateHit() {
+  if (navigator.vibrate) navigator.vibrate(100);
+}
+function vibrateDup() {
+  if (navigator.vibrate) navigator.vibrate([40, 60, 40, 60, 40]);
 }
 function render(center) {
   wrap.style.top = document.getElementById('dupWarning').style.display ===
@@ -1070,13 +1132,18 @@ function render(center) {
     const isDup = s && clickCounts.get(norm(s.nr)) > 1;
     const cellClass = s ? (isDup ? 'dupScan' :
       (match ? hitCls(color(match)) : 'noHit')) : '';
-    const style = s && isDup && match ?
-      ' style="--dup-color:' + marker(color(match)) + '"' : '';
+    const destHexVal = s && match ? destHex(destStripe(match)) : '';
+    const styleParts = [];
+    if (s && isDup && match) styleParts.push('--dup-color:' + marker(color(match)));
+    if (destHexVal) styleParts.push('--dest-color:' + destHexVal);
+    const style = styleParts.length ?
+      ' style="' + styleParts.join(';') + '"' : '';
     if (s && match && !s.dup) hits++;
-    const cls = [c, stripe(c), d && found.has(n) ? 'found' : '',
+    const cls = [c, stripe(c), d ? destStripe(d) : '',
+      d && found.has(n) ? 'found' : '',
       s && d && norm(s.nr) === n ? 'match' : '']
       .filter(Boolean).join(' ');
-    html += '<tr class="' + cls + '">' +
+    html += '<tr class="' + cls + '" data-n="' + n + '">' +
       '<td class="sc"></td>' +
       '<td class="nr">' + (d ? esc(d.nr) : '') + '</td>' +
       '<td class="brand">' + (d ? esc(d.brand) : '') + '</td>' +
@@ -1093,6 +1160,72 @@ function render(center) {
     const el = tb.querySelector('[data-i="' + (scans.length - 1) + '"]');
     if (el) el.scrollIntoView({block: 'center', inline: 'nearest'});
   }
+  setTimeout(() => scanInput.focus(), 10);
+}
+function findFirstMatch(v) {
+  const matches = byNr.get(norm(v));
+  return matches && matches.length ? matches[0] : null;
+}
+function scanDupCount(v) {
+  const k = norm(v);
+  let n = 0;
+  scans.forEach(s => { if (norm(s.nr) === k) n++; });
+  return n;
+}
+function updateCountersFast() {
+  let hits = 0;
+  scans.forEach(s => { if (s && s.hit && !s.dup) hits++; });
+  document.getElementById('allCount').textContent = DATA.length;
+  document.getElementById('scanCount').textContent = scans.length;
+  document.getElementById('hitCount').textContent = hits;
+}
+function ensureScanRow(i) {
+  let cell = tb.querySelector('[data-i="' + i + '"]');
+  if (cell) return cell;
+  const tr = document.createElement('tr');
+  tr.innerHTML = '<td class="sc"></td>' +
+    '<td class="nr"></td>' +
+    '<td class="brand"></td>' +
+    '<td class="loc"></td>' +
+    '<td class="klik" data-i="' + i + '"></td>';
+  tb.appendChild(tr);
+  return tr.querySelector('[data-i="' + i + '"]');
+}
+function updateScanCell(i) {
+  const s = scans[i];
+  if (!s) return;
+  const cell = ensureScanRow(i);
+  const match = findFirstMatch(s.nr);
+  const isDup = scanDupCount(s.nr) > 1;
+  let cls = 'klik ';
+  if (isDup) cls += 'dupScan';
+  else cls += match ? hitCls(color(match)) : 'noHit';
+  cell.className = cls;
+  if (isDup && match) cell.style.setProperty('--dup-color', marker(color(match)));
+  else cell.style.removeProperty('--dup-color');
+  const destHexVal = match ? destHex(destStripe(match)) : '';
+  if (destHexVal) cell.style.setProperty('--dest-color', destHexVal);
+  else cell.style.removeProperty('--dest-color');
+  cell.textContent = s.nr || '';
+}
+function updateSameScanCells(v) {
+  const k = norm(v);
+  scans.forEach((s, i) => { if (norm(s.nr) === k) updateScanCell(i); });
+}
+function markFoundRows(v) {
+  const k = norm(v);
+  tb.querySelectorAll('tr[data-n="' + k + '"]').forEach(tr => {
+    tr.classList.add('found');
+  });
+}
+function updateAfterScan(v) {
+  wrap.style.top = document.getElementById('dupWarning').style.display ===
+    'block' ? '112px' : '86px';
+  markFoundRows(v);
+  updateSameScanCells(v);
+  updateCountersFast();
+  const el = tb.querySelector('[data-i="' + (scans.length - 1) + '"]');
+  if (el) el.scrollIntoView({block: 'center', inline: 'nearest'});
   setTimeout(() => scanInput.focus(), 10);
 }
 function saveLocal() {
@@ -1122,11 +1255,12 @@ function processScan() {
   const count = (counts.get(v) || 0) + 1;
   counts.set(v, count);
   const hit = byNr.has(v);
+  const isDup = count > 1;
   const row = {
     kind: 'scan',
     id: makeId('scan'),
     nr: v,
-    dup: count > 1,
+    dup: isDup,
     hit,
     ts: new Date().toISOString(),
     task_version: taskVersion,
@@ -1140,9 +1274,11 @@ function processScan() {
   scans.push(row);
   remember(row);
   saveLocal();
+  if (isDup && hit) vibrateDup();
+  else if (hit) vibrateHit();
   document.getElementById('dupWarning').style.display =
-    count > 1 ? 'block' : 'none';
-  render(true);
+    isDup ? 'block' : 'none';
+  updateAfterScan(v);
 }
 function encodeDetails(v) {
   try {
@@ -1159,7 +1295,8 @@ function exportRows() {
       (e.id || ((e.nr || e.event || '') + '|' + (e.ts || '')));
     if (!m.has(k)) m.set(k, e);
   }
-  loadJournal().forEach(add);
+  flushJournal();
+  getJournalCache().forEach(add);
   scans.forEach(add);
   return Array.from(m.values()).sort((a, b) =>
     String(a.ts || '').localeCompare(String(b.ts || '')));
@@ -1168,7 +1305,7 @@ function doExport() {
   logEvent('manual_export', {trigger: 'task_code_long_press'});
   const rows = exportRows();
   if (!rows.length) {
-    alert('Brak zapisów');
+    alert('empty');
     return;
   }
   const lines = rows.map(e => {
@@ -1217,11 +1354,11 @@ function setupCodeExport() {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fired = true;
-      const p = prompt('Hasło eksportu: wpisz kod zadania');
+      const p = prompt('nazmi cancel i ne liz siudy');
       if (p !== null && String(p).trim() === String(taskCode).trim()) {
         doExport();
       } else if (p !== null) {
-        alert('Błędny kod');
+        alert('zapraszam do spm');
       }
     }, 1200);
   }
@@ -1237,7 +1374,7 @@ function setupCodeExport() {
   });
 }
 function clearAll() {
-  if (!confirm('Reset widocznych klików?')) return;
+  if (!confirm('vsio udalit?')) return;
   logEvent('visible_log_reset', {});
   scans.length = 0;
   counts.clear();
@@ -1262,9 +1399,13 @@ scanInput.addEventListener('keydown', e => {
     setTimeout(processScan, 10);
   }
 });
-window.addEventListener('pagehide', () => logEvent('page_hide', {}));
+window.addEventListener('pagehide', () => {
+  logEvent('page_hide', {});
+  flushJournal();
+});
 document.addEventListener('visibilitychange', () => {
   logEvent(document.hidden ? 'page_hidden' : 'page_visible', {});
+  if (document.hidden) flushJournal();
 });
 document.getElementById('resetBtn').addEventListener('click', clearAll);
 document.addEventListener('click', e => {
@@ -1274,6 +1415,7 @@ document.addEventListener('click', e => {
 setupCodeExport();
 loadLocal();
 logEvent('page_open', {href: location.href, ua: navigator.userAgent || ''});
+logEvent('task_loaded', {total: DATA.length, unique: byNr.size});
 render(false);
 setTimeout(() => scanInput.focus(), 30);
 </script>
