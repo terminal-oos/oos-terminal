@@ -1,1902 +1,382 @@
 <!doctype html>
-<html lang="pl">
+<html lang='pl'>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no'>
 <title>OOS</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
-html,body{height:100%;}
-body{background:#fff;color:#111;overflow:hidden;}
-#hdr{position:fixed;top:0;left:0;right:0;z-index:100;
-background:#f4f4f4;border-bottom:1px solid #d7d7d7;
-padding:5px 7px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
-#topLine{display:flex;gap:7px;align-items:center;}
-#scanInput{flex:1 1 auto;height:38px;border:2px solid #111;
-background:#f7fbff;padding:0 10px;font-size:20px;font-weight:700;
-outline:none;border-radius:3px;min-width:0;}
-#taskCode{flex:0 0 auto;background:#111;color:#fff;font-size:28px;
-font-weight:900;letter-spacing:.08em;padding:3px 10px;
-border-radius:7px;cursor:pointer;line-height:32px;}
-#meta{margin-top:5px;display:flex;gap:5px;align-items:center;
-flex-wrap:wrap;}
-#meta span{background:#f3f3f3;padding:3px 7px;border-radius:5px;
-border:1px solid #ddd;font-size:14px;font-weight:800;}
-#meta b{color:#0055cc;font-size:18px;}
-#resetBtn{height:28px;padding:0 10px;border:1px solid #aaa;
-background:#eee;font-size:14px;border-radius:5px;font-weight:800;}
-#dupWarning{display:none;margin-top:4px;background:#ffdddd;
-color:#a10000;padding:4px 7px;border-radius:4px;
-font-size:13px;font-weight:900;}
-#wrap{position:absolute;left:0;right:0;top:86px;bottom:0;
-overflow:auto;-webkit-overflow-scrolling:touch;background:#fff;}
-table{border-collapse:collapse;width:100%;table-layout:fixed;
-background:#fff;}
-thead th{position:sticky;top:0;z-index:30;}
-th{background:#f1f1f1;border:1px solid #d0d0d0;padding:2px 3px;
-font-size:11px;height:22px;white-space:nowrap;text-align:left;}
-td{border:1px solid #e1e1e1;padding:1px 3px;font-size:13px;
-height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-table{border-collapse:collapse;width:auto;}
-th.sc,td.sc{width:5px;padding:0;border:0;}
-th.nr,td.nr{font-weight:900;white-space:nowrap;width:1%;}
-th.brand,td.brand{white-space:nowrap;width:1%;}
-th.loc,td.loc{white-space:nowrap;width:1%;}
-th.klik,td.klik{width:90px;text-align:center;font-weight:900;}
-tr.green>td:not(.klik):not(.sc){background:#b9f6ca;}
-tr.red>td:not(.klik):not(.sc){background:#ffcdd2;}
-tr.blue>td:not(.klik):not(.sc){background:#bbdefb;}
-tr.yellow>td:not(.klik):not(.sc){background:#fff9c4;}
-tr.turquoise>td:not(.klik):not(.sc){background:#b2ebf2;}
-tr.orange>td:not(.klik):not(.sc){background:#f6be94;}
-tr.purple>td:not(.klik):not(.sc){background:#d1c4e9;}
-tr.sg>.sc{background:#00c853;}
-tr.sr>.sc{background:#ff1744;}
-tr.sb>.sc{background:#2979ff;}
-tr.sy>.sc{background:#ffd600;}
-tr.st>.sc{background:#00bcd4;}
-tr.sp>.sc{background:#f59780;}
-tr.sv>.sc{background:#7c4dff;}
-tr.dR>.sc{border-bottom:4px solid #ff1744;}
-tr.dY>.sc{border-bottom:4px solid #ffd600;}
-tr.green.found>td:not(.klik):not(.sc),
-tr.green.match>td:not(.klik):not(.sc){background:#00c853!important;
-color:#fff;font-weight:900;}
-tr.red.found>td:not(.klik):not(.sc),
-tr.red.match>td:not(.klik):not(.sc){background:#ff1744!important;
-color:#fff;font-weight:900;}
-tr.blue.found>td:not(.klik):not(.sc),
-tr.blue.match>td:not(.klik):not(.sc){background:#2979ff!important;
-color:#fff;font-weight:900;}
-tr.yellow.found>td:not(.klik):not(.sc),
-tr.yellow.match>td:not(.klik):not(.sc){background:#ffd600!important;
-color:#000;font-weight:900;}
-tr.turquoise.found>td:not(.klik):not(.sc),
-tr.turquoise.match>td:not(.klik):not(.sc){background:#00bcd4!important;
-color:#fff;font-weight:900;}
-tr.orange.found>td:not(.klik):not(.sc),
-tr.orange.match>td:not(.klik):not(.sc){background:#f59780!important;
-color:#fff;font-weight:900;}
-tr.purple.found>td:not(.klik):not(.sc),
-tr.purple.match>td:not(.klik):not(.sc){background:#7c4dff!important;
-color:#fff;font-weight:900;}
-td.hitGreen{background:#00c853;color:#fff;font-weight:900;}
-td.hitRed{background:#ff1744;color:#fff;font-weight:900;}
-td.hitBlue{background:#2979ff;color:#fff;font-weight:900;}
-td.hitYellow{background:#ffd600;color:#000;font-weight:900;}
-td.hitTurquoise{background:#00bcd4;color:#fff;font-weight:900;}
-td.hitOrange{background:#f59780;color:#fff;font-weight:900;}
-td.hitPurple{background:#7c4dff;color:#fff;font-weight:900;}
-td.noHit{background:#f5f5f5;color:#555;}
-td.klik{position:relative;}
-td.klik::before{content:'';position:absolute;left:0;top:0;bottom:0;
-width:8px;background:var(--dup-color,transparent);}
-td.klik::after{content:'';position:absolute;left:8px;top:0;bottom:0;
-width:8px;background:var(--dest-color,transparent);}
-td.dupScan{background:#fce4ec!important;color:#880e4f;
-font-weight:900;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;}
+html,body{height:100%;overflow:hidden;background:#0b0f14;color:#fff;touch-action:manipulation;}
+#app{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;flex-direction:column;background:var(--bg,#0b0f14);color:var(--fg,#fff);transition:background .1s;}
+#app.s-dup{background:repeating-linear-gradient(45deg,var(--d1,#f8bbd0) 0,var(--d1,#f8bbd0) 26px,var(--d2,#fce4ec) 26px,var(--d2,#fce4ec) 52px);}
+#app.s-dupPink #top,#app.s-dupPink #foot{background:rgba(136,14,79,.85);color:#fff;}
+#app.s-miss{background:#37474f;}
+#top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:rgba(0,0,0,.28);}
+#taskCode{font-size:30px;font-weight:900;letter-spacing:.08em;background:rgba(0,0,0,.45);padding:2px 12px;border-radius:10px;line-height:38px;}
+#prog{text-align:center;flex:1;}
+#progNum{font-size:34px;font-weight:900;line-height:36px;}
+#progNum i{font-style:normal;opacity:.55;margin:0 3px;}
+#progNum span{opacity:.8;}
+#progLbl{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:.06em;}
+#user{text-align:right;font-size:13px;font-weight:700;line-height:17px;opacity:.85;max-width:95px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+#bar{height:6px;background:rgba(0,0,0,.35);}
+#barFill{height:100%;width:0;background:rgba(255,255,255,.9);transition:width .25s;}
+#card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 10px;min-height:0;}
+#icon{font-size:84px;line-height:90px;font-weight:900;height:90px;}
+#big{font-size:54px;font-weight:900;letter-spacing:.03em;word-break:break-all;line-height:58px;margin-top:4px;}
+#label{font-size:24px;font-weight:900;margin-top:10px;letter-spacing:.05em;}
+#info{font-size:24px;font-weight:800;margin-top:8px;}
+#tags{margin-top:10px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+#tags span{background:rgba(0,0,0,.28);padding:3px 12px;border-radius:14px;font-size:16px;font-weight:800;}
+#app.s-idle #icon{opacity:.4;animation:idle 1.6s ease-in-out infinite;}
+#app.s-idle #big{opacity:.4;font-size:34px;}
+#hist{display:flex;gap:6px;justify-content:center;padding:6px;min-height:38px;}
+#hist span{font-size:12px;font-weight:800;padding:3px 7px;border-radius:6px;border:2px solid rgba(255,255,255,.7);}
+#foot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 10px;background:rgba(0,0,0,.28);font-size:13px;font-weight:700;}
+#net{font-weight:900;}
+#net.off{color:#ffab40;}
+#resetBtn{height:30px;padding:0 12px;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.3);color:#fff;border-radius:6px;font-size:13px;font-weight:800;}
+#app.anim.s-hit{animation:flash .45s ease-out;}
+#app.anim #icon,#app.anim #big{animation:pop .28s ease-out;}
+#app.anim.s-miss #card,#app.anim.s-dup #card{animation:shake .4s;}
+#foundCnt.bump{display:inline-block;animation:bump .35s ease-out;}
+@keyframes pop{0%{transform:scale(.55);opacity:.2}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-18px)}40%{transform:translateX(16px)}60%{transform:translateX(-12px)}80%{transform:translateX(8px)}}
+@keyframes flash{0%{box-shadow:inset 0 0 0 60px rgba(255,255,255,.7)}100%{box-shadow:inset 0 0 0 0 rgba(255,255,255,0)}}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.4)}100%{transform:scale(1)}}
+@keyframes idle{0%,100%{opacity:.2}50%{opacity:.6}}
+#start{position:fixed;left:0;top:0;right:0;bottom:0;z-index:500;background:#0b0f14;display:flex;align-items:center;justify-content:center;padding:16px;}
+#startBox{width:100%;max-width:380px;text-align:center;}
+#stCode{font-size:56px;font-weight:900;letter-spacing:.1em;}
+#stTotal{font-size:18px;opacity:.7;margin-bottom:14px;}
+#startBox label{display:block;text-align:left;font-size:12px;opacity:.7;margin:10px 0 3px;text-transform:uppercase;}
+#startBox input{width:100%;height:46px;font-size:22px;font-weight:700;padding:0 12px;border-radius:8px;border:2px solid #455a64;background:#16202a;color:#fff;-webkit-user-select:text;user-select:text;outline:none;}
+#startBox input.err{border-color:#ff1744;}
+#goBtn{width:100%;height:60px;margin-top:18px;font-size:26px;font-weight:900;border:0;border-radius:10px;background:#00c853;color:#fff;}
+#stWarn{margin-top:10px;font-size:13px;color:#ffab40;min-height:16px;}
+#cap{position:fixed;left:0;top:0;width:80px;height:34px;opacity:.01;border:0;padding:0;pointer-events:none;font-size:16px;}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
+#pin{position:fixed;left:0;top:0;right:0;bottom:0;z-index:700;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:16px;}
+#pinBox{width:100%;max-width:320px;text-align:center;background:#16202a;border-radius:12px;padding:16px;font-size:16px;font-weight:800;}
+#pinIn{width:100%;height:50px;margin-top:10px;font-size:26px;font-weight:800;text-align:center;border-radius:8px;border:2px solid #455a64;background:#0b0f14;color:#fff;-webkit-user-select:text;user-select:text;outline:none;}
+#pinBtns{display:flex;gap:10px;margin-top:12px;}
+#pinBtns button{flex:1;height:50px;font-size:20px;font-weight:900;border:0;border-radius:8px;color:#fff;}
+#pinOk{background:#00c853;}#pinNo{background:#546e7a;}
+#toast{position:fixed;left:10px;right:10px;bottom:60px;z-index:800;background:rgba(0,0,0,.88);color:#fff;padding:10px;border-radius:8px;font-size:16px;font-weight:800;text-align:center;display:none;}
 </style>
 </head>
 <body>
-<div id="hdr">
-<div id="topLine">
-<input id="scanInput" type="text" autocomplete="off" autofocus
-placeholder="Skanuj karton...">
-<div id="taskCode" title="touch and hold to export">
-7355</div>
+<div id='app' class='s-idle'>
+<div id='top'>
+<div id='taskCode' title='dlugo przytrzymaj = eksport'>5229</div>
+<div id='prog'><div id='progNum'><b id='foundCnt'>0</b><i>/</i><span id='totalCnt'>0</span></div>
+<div id='progLbl'>HIT vs ALL</div></div>
+<div id='user'><div id='userName'>-</div><div id='userTerm'>-</div></div>
 </div>
-<div id="meta">
-<span>iskat: <b id="allCount">0</b></span>
-<span>skanov: <b id="scanCount">0</b></span>
-<span>naszel: <b id="hitCount">0</b></span>
-<button id="resetBtn" type="button">reset</button>
+<div id='bar'><div id='barFill'></div></div>
+<div id='card'><div id='icon'>&#9678;</div><div id='big'>SKANUJ KARTON</div>
+<div id='label'></div><div id='info'></div><div id='tags'></div></div>
+<div id='hist'></div>
+<div id='foot'><span id='net'>online</span><span id='scanCnt'>skanow: 0</span><span id='dbg'></span>
+<button id='resetBtn' type='button'>reset</button></div>
 </div>
-<div id="dupWarning">!!!DUPLIKAT!!!</div>
-</div>
-<div id="wrap">
-<table id="tbl">
-<thead><tr>
-<th class="sc"></th>
-<th class="nr">nr</th>
-<th class="brand">brand</th>
-<th class="loc">loc</th>
-<th class="klik">Klikaj tutaj</th>
-</tr></thead>
-<tbody id="tb"></tbody>
-</table>
-</div>
-<textarea id="exportText" readonly></textarea>
+<input id='cap' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>
+<div id='start'><div id='startBox'>
+<div id='stCode'>----</div><div id='stTotal'></div>
+<label>Imie</label><input id='inName' type='text' autocomplete='off'>
+<label>Numer terminala</label><input id='inTerm' type='text' autocomplete='off'>
+<button id='goBtn' type='button'>START</button>
+<div id='stWarn'></div>
+</div></div>
+<div id='pin'><div id='pinBox'>Kod zadania<input id='pinIn' type='tel' autocomplete='off'>
+<div id='pinBtns'><button id='pinOk' type='button'>OK</button><button id='pinNo' type='button'>X</button></div></div></div>
+<div id='toast'></div>
+<textarea id='exportText' readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-10-19_1743";
-const DEFAULT_TASK_CODE = "7355";
+const DEFAULT_TASK_VERSION = "macro_2026-10-20_1735";
+const DEFAULT_TASK_CODE = "5229";
 const DATA = [];
 DATA.push({
-loc:"PTO044AP00",
+loc:"PTO045AP00",
+brand:"HOUSE",
+nr:"3027435298",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO088AP00",
 brand:"RESERVED",
-nr:"2078561878",
+nr:"2078584696",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO033AP00",
+brand:"RESERVED",
+nr:"2078436099",
+prio:"BLOK",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO099AP00",
+brand:"RESERVED",
+nr:"2078516366",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO033AP00",
+brand:"RESERVED",
+nr:"2078603849",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO035AP00",
+brand:"RESERVED",
+nr:"2078494011",
+prio:"BLOK",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO001AP00",
+brand:"RESERVED",
+nr:"2078010499",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO033AP00",
+brand:"RESERVED",
+nr:"2078434307",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2078438454",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078540202",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078078086",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078584636",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078601320",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078571729",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078534579",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027425263",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078597283",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078011815",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078546017",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078336154",
+nr:"3027436549",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2077740118",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078534531",
-prio:"PRIORYTET 1",
+nr:"2078595060",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO088AP00",
 brand:"RESERVED",
-nr:"2078523380",
-prio:"PRIORYTET 1",
+nr:"2078522400",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO099AP00",
+brand:"RESERVED",
+nr:"2078559065",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"2078175799",
+nr:"3027437061",
 prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO033AP00",
+brand:"RESERVED",
+nr:"2078584604",
+prio:"BLOK",
 tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO099AP00",
+brand:"RESERVED",
+nr:"4506780733",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO099AP00",
+brand:"RESERVED",
+nr:"2076759216",
+prio:"PRIORYTET 1",
+tsu:"RSORT"
+});
+DATA.push({
+loc:"PTO099AP00",
+brand:"RESERVED",
+nr:"2077769436",
+prio:"BLOK",
+tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2078539300",
+nr:"2078187854",
+prio:"PRIORYTET 1",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO033AP00",
+brand:"RESERVED",
+nr:"2077662755",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO033AP00",
+brand:"RESERVED",
+nr:"2078537240",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO088AP00",
+brand:"RESERVED",
+nr:"2078608749",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO099AP00",
+brand:"RESERVED",
+nr:"4506780592",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2078585212",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027423814",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078211019",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078561375",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077898261",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078566917",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078574148",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506776489",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078543014",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078528925",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078532507",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078566230",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078597252",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2076187822",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078531732",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078585427",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423851",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078528989",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077131345",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078597974",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077486986",
-prio:"PRIORYTET 1",
+nr:"2069906614",
+prio:"BLOK",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2078597221",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078592907",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027424970",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078551453",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078553794",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027422472",
-prio:"PRIORYTET 1",
+nr:"3027417491",
+prio:"BLOK",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"4506780945",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027426080",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078562677",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078565094",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078563214",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078526874",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078563435",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078547073",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078574244",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078592949",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078584923",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078561597",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078510499",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078633683",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078560493",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078562983",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078438658",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077833012",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078592973",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078537347",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078060221",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027422644",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078572942",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077767282",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078583192",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078592617",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027424987",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078188668",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078609780",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077753951",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078523273",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078449909",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077362409",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078583238",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078582831",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078503075",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423968",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"3027426102",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077598139",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077773005",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078503087",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078590696",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027419444",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078140162",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078546982",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078483871",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078561876",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078536279",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078595474",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078522381",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078239362",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077902455",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027421890",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"4506780980",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078522581",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077612047",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506780785",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078536396",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506780934",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078574707",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078502202",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027424287",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078525953",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078567000",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078175791",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078566122",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423910",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078541758",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078175825",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077754899",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078175871",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423157",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423229",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078449735",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"3027424613",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"3027424727",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077895325",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078522409",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078592994",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078447604",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078521679",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078535552",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078523732",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077755284",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078331501",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078561295",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423647",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"3027425864",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506780825",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078594414",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078598004",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078553437",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027424200",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078541750",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078601688",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078532785",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027425070",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078175811",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078566184",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"4506780958",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078609774",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078545930",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078551617",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078551347",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078598781",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077133407",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078425860",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078177531",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078563189",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078533405",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2077033157",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078564974",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078590359",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506778599",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"4506780977",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027425944",
+nr:"3027435420",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"2078574174",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078538596",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078536187",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078562748",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027422537",
+nr:"3027435410",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078553786",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"3027424100",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078498441",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2077895528",
-prio:"PRIORYTET 1",
+nr:"2078132531",
+prio:"BLOK",
+tsu:"MDTPUT"
+});
+DATA.push({
+loc:"PTO099AP00",
+brand:"RESERVED",
+nr:"4506779105",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO088AP00",
 brand:"RESERVED",
-nr:"2077499064",
-prio:"PRIORYTET 1",
+nr:"2078536286",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
-loc:"PTO035AP00",
+loc:"PTO099AP00",
 brand:"RESERVED",
-nr:"3027425264",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027424309",
-prio:"PRIORYTET 1",
+nr:"2078528968",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
-nr:"2078175851",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077873971",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506779269",
+nr:"2078220822",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"3027421779",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027417169",
-prio:"PRIORYTET 1",
+nr:"2078536066",
+prio:"BLOK",
 tsu:"RSORT"
 });
 DATA.push({
-loc:"PTO044AP00",
+loc:"PTO033AP00",
 brand:"RESERVED",
-nr:"2078609779",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078523958",
-prio:"PRIORYTET 1",
+nr:"2078532379",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2078532622",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078582178",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078595580",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078553752",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423518",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078219559",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078551811",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423256",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078060236",
-prio:"PRIORYTET 1",
+nr:"2075014219",
+prio:"BLOK",
 tsu:"RSORT"
 });
 DATA.push({
-loc:"PTO035AP00",
+loc:"PTO099AP00",
 brand:"RESERVED",
-nr:"3027417019",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077863157",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078562813",
-prio:"PRIORYTET 1",
+nr:"2075709249",
+prio:"BLOK",
 tsu:"MDTPUT"
 });
 DATA.push({
-loc:"PTO088AP00",
+loc:"PTO033AP00",
 brand:"RESERVED",
-nr:"3027424060",
+nr:"2078535797",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078532781",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078535949",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078539288",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078547326",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078572904",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077903191",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078611767",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078561554",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077895106",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078561528",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"4506780587",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"4506780969",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"4506780830",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077487465",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078524023",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078522434",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078585286",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"4506780946",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078540285",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078523708",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078545957",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078597772",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078531729",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078591288",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078537258",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078584639",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078551873",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078465921",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078503035",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078608967",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078559711",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078592655",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078478219",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078561558",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423014",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078060198",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078555714",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027424022",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027417540",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027425090",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078532919",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"2078404713",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027423689",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078544350",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO088AP00",
-brand:"RESERVED",
-nr:"2078577722",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078532878",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027422634",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078539232",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078552100",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078584597",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078010622",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2078591287",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078563095",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO044AP00",
-brand:"RESERVED",
-nr:"2077895813",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078528978",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078590374",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-const tb = document.getElementById('tb');
-const wrap = document.getElementById('wrap');
-const scanInput = document.getElementById('scanInput');
-const taskCodeBox = document.getElementById('taskCode');
+const $ = id => document.getElementById(id);
+let cap = $('cap'); const app = $('app'), startEl = $('start');
+try { const cm = /Chrome\/(\d+)/.exec(navigator.userAgent || ''); if (cm && +cm[1] >= 145) cap.setAttribute('inputmode', 'none'); } catch (_) {}
+const iconEl = $('icon'), bigEl = $('big'), labelEl = $('label');
+const infoEl = $('info'), tagsEl = $('tags'), histEl = $('hist');
+const taskCodeBox = $('taskCode');
 const scans = [];
 const counts = new Map();
 const byNr = new Map();
+const histArr = [];
 const taskVersion = DEFAULT_TASK_VERSION;
 const taskCode = DEFAULT_TASK_CODE;
-const terminalId = 'macro';
-const employeeName = 'macro';
 const JOURNAL_KEY = 'oos_macro_journal_v2';
+let started = false;
 let journalCache = null;
 let journalSaveTimer = null;
+function lsGet(k) { try { return localStorage.getItem(k) || ''; } catch (_) { return ''; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (_) {} }
+let terminalId = lsGet('oos_macro_term');
+let employeeName = lsGet('oos_macro_user');
 const TIMER_BOOT_ID = 'boot_' + Date.now().toString(36) +
   Math.random().toString(36).slice(2, 8);
 const TIMER_BOOT_START = performance.now();
-let timerSessionId = localStorage.getItem('oos_macro_timer_session_id');
+let timerSessionId = lsGet('oos_macro_timer_session_id');
 if (!timerSessionId) {
   timerSessionId = 'sess_' + Date.now().toString(36) +
     Math.random().toString(36).slice(2, 8);
 }
-localStorage.setItem('oos_macro_timer_session_id', timerSessionId);
+lsSet('oos_macro_timer_session_id', timerSessionId);
 function norm(v){let s=String(v||'').toUpperCase().trim();s=s.replace(/^'+/,'');s=s.replace(/^K/,'');s=s.replace(/\D/g,'');return s;}
 function esc(v) {
   return String(v == null ? '' : v).replace(/[&<>]/g, c =>
@@ -1909,9 +389,7 @@ function makeId(prefix) {
   return (prefix || 'id') + '_' + Date.now().toString(36) +
     '_' + Math.random().toString(36).slice(2, 10);
 }
-function scanKey() {
-  return 'oos_macro_scans_' + taskVersion;
-}
+function scanKey() { return 'oos_macro_scans_' + taskVersion; }
 DATA.forEach(d => {
   const k = norm(d.nr);
   if (!byNr.has(k)) byNr.set(k, []);
@@ -1921,17 +399,13 @@ function loadJournal() {
   try {
     const rows = JSON.parse(localStorage.getItem(JOURNAL_KEY) || '[]');
     return Array.isArray(rows) ? rows.slice(-15000) : [];
-  } catch (_) {
-    return [];
-  }
+  } catch (_) { return []; }
 }
 function saveJournal(rows) {
   try {
     localStorage.setItem(JOURNAL_KEY, JSON.stringify((rows || []).slice(-15000)));
   } catch (_) {
-    try {
-      localStorage.setItem(JOURNAL_KEY, JSON.stringify((rows || []).slice(-5000)));
-    } catch (__) {}
+    try { localStorage.setItem(JOURNAL_KEY, JSON.stringify((rows || []).slice(-5000))); } catch (__) {}
   }
 }
 function getJournalCache() {
@@ -1939,10 +413,7 @@ function getJournalCache() {
   return journalCache;
 }
 function flushJournal() {
-  if (journalSaveTimer) {
-    clearTimeout(journalSaveTimer);
-    journalSaveTimer = null;
-  }
+  if (journalSaveTimer) { clearTimeout(journalSaveTimer); journalSaveTimer = null; }
   saveJournal(getJournalCache());
 }
 function scheduleJournalSave() {
@@ -1958,18 +429,12 @@ function remember(row) {
 }
 function logEvent(event, details) {
   remember({
-    kind: 'event',
-    id: makeId('evt'),
-    event,
+    kind: 'event', id: makeId('evt'), event,
     ts: new Date().toISOString(),
-    task_version: taskVersion,
-    task_code: taskCode,
-    device_id: terminalId,
-    employee: employeeName,
-    timer_session_id: timerSessionId,
-    timer_boot_id: TIMER_BOOT_ID,
-    elapsed_ms: elapsedMs(),
-    details: details || {}
+    task_version: taskVersion, task_code: taskCode,
+    device_id: terminalId, employee: employeeName,
+    timer_session_id: timerSessionId, timer_boot_id: TIMER_BOOT_ID,
+    elapsed_ms: elapsedMs(), details: details || {}
   });
 }
 function color(d) {
@@ -1986,183 +451,101 @@ function color(d) {
   if (p === 'BRASTORN') return 'turquoise';
   if (p === 'SERED') return 'orange';
   if (p !== '') return 'purple';
-  return '';
+  return 'green';
 }
-function stripe(c) {
-  return c === 'green' ? 'sg' :
-    c === 'red' ? 'sr' :
-    c === 'blue' ? 'sb' :
-    c === 'yellow' ? 'sy' :
-    c === 'turquoise' ? 'st' :
-    c === 'orange' ? 'sp' :
-    c === 'purple' ? 'sv' : '';
+const HEX = {green:'#00c853', red:'#ff1744', blue:'#2979ff', yellow:'#ffd600',
+  turquoise:'#00bcd4', orange:'#f59780', purple:'#7c4dff'};
+const DARKTXT = {yellow:1, orange:1, turquoise:1};
+function hexOf(c) { return HEX[c] || '#00c853'; }
+function fgOf(c) { return DARKTXT[c] ? '#000' : '#fff'; }
+function vib(p) { try { if (navigator.vibrate) navigator.vibrate(p); } catch (_) {} }
+function foundUnique() {
+  const f = new Set();
+  scans.forEach(s => { const k = norm(s.nr); if (byNr.has(k)) f.add(k); });
+  return f.size;
 }
-function hitCls(c) {
-  return c === 'green' ? 'hitGreen' :
-    c === 'red' ? 'hitRed' :
-    c === 'blue' ? 'hitBlue' :
-    c === 'yellow' ? 'hitYellow' :
-    c === 'turquoise' ? 'hitTurquoise' :
-    c === 'orange' ? 'hitOrange' :
-    c === 'purple' ? 'hitPurple' : 'noHit';
-}
-function marker(c) {
-  return c === 'green' ? '#00c853' :
-    c === 'red' ? '#ff1744' :
-    c === 'blue' ? '#2979ff' :
-    c === 'yellow' ? '#ffd600' :
-    c === 'turquoise' ? '#00bcd4' :
-    c === 'orange' ? '#f59780' :
-    c === 'purple' ? '#7c4dff' : '';
-}
-function destStripe(d) {
-  if (!d) return '';
-  const c = color(d);
-  if (c !== 'turquoise' && c !== 'orange' && c !== 'purple') return '';
-  const t = String(d.tsu || '').toUpperCase();
-  if (t.indexOf('MDTPUT') >= 0) return 'dR';
-  if (t.indexOf('RSORT') >= 0) return 'dY';
-  return '';
-}
-function destHex(ds) {
-  return ds === 'dR' ? '#ff1744' : ds === 'dY' ? '#ffd600' : '';
-}
-function vibrateHit() {
-  if (navigator.vibrate) navigator.vibrate(100);
-}
-function vibrateDup() {
-  if (navigator.vibrate) navigator.vibrate([40, 60, 40, 60, 40]);
-}
-function render(center) {
-  wrap.style.top = document.getElementById('dupWarning').style.display ===
-    'block' ? '112px' : '86px';
-  const found = new Set();
-  const clickCounts = new Map();
-  scans.forEach(s => {
-    const sn = norm(s.nr);
-    clickCounts.set(sn, (clickCounts.get(sn) || 0) + 1);
-    if (byNr.has(sn)) found.add(sn);
-  });
-  let html = '';
-  let hits = 0;
-  const rows = Math.max(DATA.length, scans.length, 1);
-  for (let i = 0; i < rows; i++) {
-    const d = DATA[i] || null;
-    const s = scans[i] || null;
-    const n = d ? norm(d.nr) : '';
-    const c = d ? color(d) : '';
-    const matches = s ? byNr.get(norm(s.nr)) : null;
-    const match = matches ? matches[0] : null;
-    const isDup = s && clickCounts.get(norm(s.nr)) > 1;
-    const cellClass = s ? (isDup ? 'dupScan' :
-      (match ? hitCls(color(match)) : 'noHit')) : '';
-    const destHexVal = s && match ? destHex(destStripe(match)) : '';
-    const styleParts = [];
-    if (s && isDup && match) styleParts.push('--dup-color:' + marker(color(match)));
-    if (destHexVal) styleParts.push('--dest-color:' + destHexVal);
-    const style = styleParts.length ?
-      ' style="' + styleParts.join(';') + '"' : '';
-    if (s && match && !s.dup) hits++;
-    const cls = [c, stripe(c), d ? destStripe(d) : '',
-      d && found.has(n) ? 'found' : '',
-      s && d && norm(s.nr) === n ? 'match' : '']
-      .filter(Boolean).join(' ');
-    html += '<tr class="' + cls + '" data-n="' + n + '">' +
-      '<td class="sc"></td>' +
-      '<td class="nr">' + (d ? esc(d.nr) : '') + '</td>' +
-      '<td class="brand">' + (d ? esc(d.brand) : '') + '</td>' +
-      '<td class="loc">' + (d ? esc(d.loc || '') : '') + '</td>' +
-      '<td class="klik ' + cellClass + '"' + style +
-      ' data-i="' + i + '">' + (s ? esc(s.nr) : '') + '</td>' +
-      '</tr>';
+function updateCounters(bump) {
+  const f = foundUnique(), t = byNr.size;
+  $('foundCnt').textContent = f;
+  $('totalCnt').textContent = t;
+  $('barFill').style.width = (t ? Math.round(f * 100 / t) : 0) + '%';
+  $('scanCnt').textContent = 'skanow: ' + scans.length;
+  if (bump) {
+    const el = $('foundCnt');
+    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
   }
-  tb.innerHTML = html;
-  document.getElementById('allCount').textContent = DATA.length;
-  document.getElementById('scanCount').textContent = scans.length;
-  document.getElementById('hitCount').textContent = hits;
-  if (center && scans.length) {
-    const el = tb.querySelector('[data-i="' + (scans.length - 1) + '"]');
-    if (el) el.scrollIntoView({block: 'center', inline: 'nearest'});
+  return f;
+}
+function mixHex(a, b, t) {
+  const p = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16));
+  const x = p(a), y = p(b);
+  return '#' + x.map((v, i) => Math.round(v * (1 - t) + y[i] * t).toString(16).padStart(2, '0')).join('');
+}
+function dupColors(c) {
+  const h = hexOf(c);
+  return [mixHex(h, '#263238', .55), mixHex(h, '#263238', .72)];
+}
+function renderHist() {
+  histEl.innerHTML = histArr.map(h =>
+    `<span style='background:${h.bg};color:${h.fg}'>${esc(String(h.v).slice(-5))}</span>`).join('');
+}
+function pushHist(kind, c, v) {
+  let bg, fg = '#fff';
+  if (kind === 'hit') { bg = hexOf(c); fg = fgOf(c); }
+  else if (kind === 'dup' && c) {
+    const d = dupColors(c);
+    bg = `repeating-linear-gradient(45deg,${d[0]} 0,${d[0]} 5px,${d[1]} 5px,${d[1]} 10px)`;
   }
-  setTimeout(() => scanInput.focus(), 10);
+  else if (kind === 'dup') {
+    bg = 'repeating-linear-gradient(45deg,#f8bbd0 0,#f8bbd0 5px,#fce4ec 5px,#fce4ec 10px)';
+    fg = '#880e4f';
+  }
+  else bg = '#546e7a';
+  histArr.push({bg, fg, v});
+  while (histArr.length > 6) histArr.shift();
+  renderHist();
 }
-function findFirstMatch(v) {
-  const matches = byNr.get(norm(v));
-  return matches && matches.length ? matches[0] : null;
+function showIdle() {
+  app.className = 's-idle';
+  app.style.removeProperty('--bg'); app.style.removeProperty('--fg');
+  iconEl.innerHTML = '&#9678;'; bigEl.textContent = 'SKANUJ KARTON';
+  labelEl.textContent = ''; infoEl.textContent = ''; tagsEl.innerHTML = '';
 }
-function scanDupCount(v) {
-  const k = norm(v);
-  let n = 0;
-  scans.forEach(s => { if (norm(s.nr) === k) n++; });
-  return n;
+function showResult(kind, v, m, cnt) {
+  const c = m ? color(m) : '';
+  app.className = 's-' + kind + (kind === 'dup' && !m ? ' s-dupPink' : '');
+  ['--bg', '--fg', '--d1', '--d2'].forEach(k => app.style.removeProperty(k));
+  if (kind === 'hit') {
+    app.style.setProperty('--bg', hexOf(c));
+    app.style.setProperty('--fg', fgOf(c));
+  } else if (kind === 'dup') {
+    if (m) {
+      const d = dupColors(c);
+      app.style.setProperty('--d1', d[0]);
+      app.style.setProperty('--d2', d[1]);
+      app.style.setProperty('--fg', '#fff');
+    } else {
+      app.style.setProperty('--fg', '#880e4f');
+    }
+  }
+  if (kind === 'hit') { iconEl.innerHTML = '&#10003;'; labelEl.textContent = 'HIT'; }
+  else if (kind === 'dup') { iconEl.innerHTML = '&#10227;'; labelEl.textContent = 'DUBL x' + cnt + ' - JUZ SKANOWANY'; }
+  else { iconEl.innerHTML = '&#10005;'; labelEl.textContent = 'NIE'; }
+  bigEl.textContent = v;
+  infoEl.textContent = m ? ((m.loc || '') + (m.brand ? '   ' + m.brand : '')) : '';
+  let tg = '';
+  if (m && m.prio) tg += '<span>' + esc(m.prio) + '</span>';
+  if (m && m.tsu) tg += '<span>' + esc(m.tsu) + '</span>';
+  tagsEl.innerHTML = tg;
+  void app.offsetWidth;
+  app.className += ' anim';
 }
-function updateCountersFast() {
-  let hits = 0;
-  scans.forEach(s => { if (s && s.hit && !s.dup) hits++; });
-  document.getElementById('allCount').textContent = DATA.length;
-  document.getElementById('scanCount').textContent = scans.length;
-  document.getElementById('hitCount').textContent = hits;
-}
-function ensureScanRow(i) {
-  let cell = tb.querySelector('[data-i="' + i + '"]');
-  if (cell) return cell;
-  const tr = document.createElement('tr');
-  tr.innerHTML = '<td class="sc"></td>' +
-    '<td class="nr"></td>' +
-    '<td class="brand"></td>' +
-    '<td class="loc"></td>' +
-    '<td class="klik" data-i="' + i + '"></td>';
-  tb.appendChild(tr);
-  return tr.querySelector('[data-i="' + i + '"]');
-}
-function updateScanCell(i) {
-  const s = scans[i];
-  if (!s) return;
-  const cell = ensureScanRow(i);
-  const match = findFirstMatch(s.nr);
-  const isDup = scanDupCount(s.nr) > 1;
-  let cls = 'klik ';
-  if (isDup) cls += 'dupScan';
-  else cls += match ? hitCls(color(match)) : 'noHit';
-  cell.className = cls;
-  if (isDup && match) cell.style.setProperty('--dup-color', marker(color(match)));
-  else cell.style.removeProperty('--dup-color');
-  const destHexVal = match ? destHex(destStripe(match)) : '';
-  if (destHexVal) cell.style.setProperty('--dest-color', destHexVal);
-  else cell.style.removeProperty('--dest-color');
-  cell.textContent = s.nr || '';
-}
-function updateSameScanCells(v) {
-  const k = norm(v);
-  scans.forEach((s, i) => { if (norm(s.nr) === k) updateScanCell(i); });
-}
-function markFoundRows(v) {
-  const k = norm(v);
-  tb.querySelectorAll('tr[data-n="' + k + '"]').forEach(tr => {
-    tr.classList.add('found');
-  });
-}
-function updateAfterScan(v) {
-  wrap.style.top = document.getElementById('dupWarning').style.display ===
-    'block' ? '112px' : '86px';
-  markFoundRows(v);
-  updateSameScanCells(v);
-  updateCountersFast();
-  const el = tb.querySelector('[data-i="' + (scans.length - 1) + '"]');
-  if (el) el.scrollIntoView({block: 'center', inline: 'nearest'});
-  setTimeout(() => scanInput.focus(), 10);
-}
-function saveLocal() {
-  try {
-    localStorage.setItem(scanKey(), JSON.stringify(scans));
-  } catch (_) {}
-}
+function saveLocal() { try { localStorage.setItem(scanKey(), JSON.stringify(scans)); } catch (_) {} }
 function loadLocal() {
   try {
     const saved = JSON.parse(localStorage.getItem(scanKey()) || '[]');
     if (Array.isArray(saved)) {
-      scans.length = 0;
-      counts.clear();
+      scans.length = 0; counts.clear();
       saved.forEach(s => {
         if (s && s.nr) {
           scans.push(s);
@@ -2171,75 +554,212 @@ function loadLocal() {
       });
     }
   } catch (_) {}
+  histArr.length = 0;
+  const seen = new Set();
+  scans.forEach(s => {
+    const k = norm(s.nr), m = byNr.get(k);
+    const kind = seen.has(k) ? 'dup' : (m ? 'hit' : 'miss');
+    seen.add(k);
+    pushHist(kind, m ? color(m[0]) : '', k);
+  });
 }
-function processScan() {
-  const v = norm(scanInput.value);
-  if (!v) return;
-  scanInput.value = '';
+function handleCode(raw) {
+  const v = norm(raw);
+  if (!v || !started || modalOpen) return;
   const count = (counts.get(v) || 0) + 1;
   counts.set(v, count);
-  const hit = byNr.has(v);
-  const isDup = count > 1;
+  const matches = byNr.get(v) || null;
+  const m = matches ? matches[0] : null;
+  const hit = !!m, isDup = count > 1;
   const row = {
-    kind: 'scan',
-    id: makeId('scan'),
-    nr: v,
-    dup: isDup,
-    hit,
+    kind: 'scan', id: makeId('scan'), nr: v, dup: isDup, hit,
     ts: new Date().toISOString(),
-    task_version: taskVersion,
-    task_code: taskCode,
-    device_id: terminalId,
-    employee: employeeName,
-    timer_session_id: timerSessionId,
-    timer_boot_id: TIMER_BOOT_ID,
+    task_version: taskVersion, task_code: taskCode,
+    device_id: terminalId, employee: employeeName,
+    timer_session_id: timerSessionId, timer_boot_id: TIMER_BOOT_ID,
     elapsed_ms: elapsedMs()
   };
   scans.push(row);
   remember(row);
   saveLocal();
-  if (isDup && hit) vibrateDup();
-  else if (hit) vibrateHit();
-  document.getElementById('dupWarning').style.display =
-    isDup ? 'block' : 'none';
-  updateAfterScan(v);
-}
-function encodeDetails(v) {
-  try {
-    return encodeURIComponent(JSON.stringify(v || {}));
-  } catch (_) {
-    return '%7B%7D';
+  const kind = isDup ? 'dup' : (hit ? 'hit' : 'miss');
+  if (hit) vib(100);
+  showResult(kind, v, m, count);
+  pushHist(kind, m ? color(m) : '', v);
+  const f = updateCounters(kind === 'hit');
+  if (kind === 'hit' && f >= byNr.size && byNr.size > 0) {
+    labelEl.textContent = 'KONIEC! WSZYSTKO ZNALEZIONE';
+    vib([100, 80, 100, 80, 300]);
   }
+}
+let buf = '', bufTimer = null;
+function flushBuf() {
+  clearTimeout(bufTimer);
+  const b = buf; buf = '';
+  if (b) handleCode(b);
+}
+document.addEventListener('keydown', e => {
+  if (!started || modalOpen) return;
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+  if (e.key === 'Enter' || e.key === 'Tab') {
+    e.preventDefault();
+    clearTimeout(inpTimer); if (buf) flushBuf(); else if (cap.value) { const t = cap.value; cap.value = ''; handleCode(t); }
+    return;
+  }
+  if (e.key && e.key.length === 1 && document.activeElement !== cap) {
+    e.preventDefault();
+    buf += e.key;
+    clearTimeout(bufTimer);
+    bufTimer = setTimeout(flushBuf, 220);
+  }
+}, true);
+let inpTimer = null;
+document.addEventListener('input', e => {
+  if (e.target.id !== 'cap') return;
+  gotInput = true; clearTimeout(deadT);
+  clearTimeout(inpTimer);
+  if (cap.value.trim()) inpTimer = setTimeout(() => { const t = cap.value; cap.value = ''; handleCode(t); }, 220);
+}, true);
+function keepFocus() {
+  if (!started || modalOpen) return;
+  if (document.activeElement !== cap) { focusCap(); }
+}
+setInterval(keepFocus, 400);
+document.addEventListener('focusout', e => { if (e.target.id === 'cap') setTimeout(keepFocus, 20); });
+window.addEventListener('focus', () => setTimeout(keepFocus, 20));
+document.addEventListener('mousedown', e => { if (started && !modalOpen && !/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) e.preventDefault(); }, true);
+function focusCap() {
+  try {
+    cap.setAttribute('readonly', 'readonly');
+    cap.focus({preventScroll: true});
+    setTimeout(() => { try { cap.removeAttribute('readonly'); } catch (_) {} }, 60);
+  } catch (_) {}
+}
+let gotInput = true, deadT = null;
+function reviveCap() {
+  const t = cap.value; buf = ''; clearTimeout(bufTimer); clearTimeout(inpTimer);
+  const n = cap.cloneNode(false); n.value = '';
+  cap.parentNode.replaceChild(n, cap); cap = n;
+  focusCap();
+  if (t && t.trim()) handleCode(t);
+}
+document.addEventListener('keydown', e => {
+  if (!started || modalOpen || e.key !== 'Unidentified') return;
+  gotInput = false; clearTimeout(deadT);
+  deadT = setTimeout(() => { if (!gotInput) { logEvent('cap_dead', {active: (document.activeElement && document.activeElement.id) || '', hf: document.hasFocus()}); reviveCap(); } }, 600);
+}, true);
+let modalOpen = false, pinCb = null, resetT = null, resetArmed = false;
+function toast(t) {
+  const el = $('toast'); el.textContent = t; el.style.display = 'block';
+  clearTimeout(el._t); el._t = setTimeout(() => { el.style.display = 'none'; }, 2500);
+}
+function refocus() {
+  buf = ''; clearTimeout(bufTimer); clearTimeout(inpTimer); cap.value = '';
+  try { cap.blur(); } catch (_) {}
+  setTimeout(() => { if (started && !modalOpen) { focusCap(); } }, 40);
+}
+function askCode(cb) {
+  pinCb = cb; modalOpen = true; $('pinIn').value = ''; $('pin').style.display = 'flex';
+  setTimeout(() => { try { $('pinIn').focus(); } catch (_) {} }, 60);
+}
+function closeCode(val) {
+  const cb = pinCb; pinCb = null; modalOpen = false; $('pin').style.display = 'none';
+  try { $('pinIn').blur(); } catch (_) {}
+  setTimeout(refocus, 60);
+  if (cb && val !== null) cb(val);
+}
+$('pinOk').addEventListener('click', () => closeCode($('pinIn').value));
+$('pinNo').addEventListener('click', () => closeCode(null));
+$('pinIn').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); closeCode($('pinIn').value); } });
+window.addEventListener('focus', () => setTimeout(refocus, 50));
+document.addEventListener('visibilitychange', () => { if (!document.hidden) setTimeout(refocus, 50); });
+let rawKeys = 0, lastHasFocus = true, lastIdleLog = 0, lastOddLog = 0;
+function dbgUpdate() {
+  const ok = document.hasFocus();
+  $('dbg').textContent = 'k' + rawKeys + (ok ? '' : ' !F') + (started ? '' : ' !S');
+}
+document.addEventListener('keydown', e => {
+  rawKeys++;
+  const now = Date.now();
+  if (!started && now - lastIdleLog > 10000) { lastIdleLog = now; logEvent('key_while_not_started', {}); }
+  if (e.key && e.key.length > 1 && e.key !== 'Enter' && e.key !== 'Tab' && now - lastOddLog > 5000) {
+    lastOddLog = now; logEvent('key_odd', {key: e.key, kc: e.keyCode});
+  }
+  dbgUpdate();
+}, true);
+document.addEventListener('input', e => { if (e.target.id === 'cap') { rawKeys++; dbgUpdate(); } }, true);
+setInterval(() => {
+  const f = document.hasFocus();
+  if (f !== lastHasFocus) {
+    lastHasFocus = f;
+    logEvent(f ? 'win_focus' : 'win_blur', {active: (document.activeElement && document.activeElement.id) || ''});
+  }
+  dbgUpdate();
+}, 1000);
+let wl = null;
+async function getWake() {
+  try { if (navigator.wakeLock && started && !document.hidden) wl = await navigator.wakeLock.request('screen'); } catch (_) {}
+}
+function showUser() {
+  $('userName').textContent = employeeName || '-';
+  $('userTerm').textContent = terminalId ? 'T' + terminalId : '-';
+}
+function openStart() {
+  started = false;
+  startEl.style.display = 'flex';
+  $('inName').value = employeeName; $('inTerm').value = terminalId;
+  $('stCode').textContent = taskCode;
+  $('stTotal').textContent = byNr.size + ' kartonow do znalezienia';
+  $('stWarn').textContent = navigator.vibrate ? '' : 'Uwaga: ta przegladarka nie wspiera wibracji';
+}
+function goStart() {
+  const n = $('inName').value.trim().replace(/\|/g, '/');
+  const t = $('inTerm').value.trim().replace(/\|/g, '/');
+  $('inName').classList.toggle('err', !n);
+  $('inTerm').classList.toggle('err', !t);
+  if (!n || !t) { vib(200); return; }
+  const changed = (n !== employeeName || t !== terminalId);
+  employeeName = n; terminalId = t;
+  lsSet('oos_macro_user', n); lsSet('oos_macro_term', t);
+  started = true;
+  try { localStorage.setItem('oos_started_' + taskCode, '1'); } catch (_) {}
+  startEl.style.display = 'none';
+  vib(80);
+  showUser();
+  logEvent(changed ? 'user_set' : 'session_start', {name: n, terminal: t});
+  getWake();
+  keepFocus();
+}
+$('goBtn').addEventListener('click', goStart);
+$('inName').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); $('inTerm').focus(); } });
+$('inTerm').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); goStart(); } });
+$('user').addEventListener('click', () => { if (started) return; logEvent('user_change_open', {}); openStart(); });
+function encodeDetails(v) {
+  try { return encodeURIComponent(JSON.stringify(v || {})); } catch (_) { return '%7B%7D'; }
 }
 function exportRows() {
   const m = new Map();
   function add(e) {
     if (!e) return;
-    const k = (e.kind || 'scan') + '|' +
-      (e.id || ((e.nr || e.event || '') + '|' + (e.ts || '')));
+    const k = (e.kind || 'scan') + '|' + (e.id || ((e.nr || e.event || '') + '|' + (e.ts || '')));
     if (!m.has(k)) m.set(k, e);
   }
   flushJournal();
   getJournalCache().forEach(add);
   scans.forEach(add);
-  return Array.from(m.values()).sort((a, b) =>
-    String(a.ts || '').localeCompare(String(b.ts || '')));
+  return Array.from(m.values()).sort((a, b) => String(a.ts || '').localeCompare(String(b.ts || '')));
 }
 function doExport() {
   logEvent('manual_export', {trigger: 'task_code_long_press'});
   const rows = exportRows();
-  if (!rows.length) {
-    alert('empty');
-    return;
-  }
+  if (!rows.length) { toast('pusto'); return; }
   const lines = rows.map(e => {
     if ((e.kind || 'scan') === 'event') {
       return [
         '@EVENT', e.event || 'event', e.ts || '',
         e.task_version || taskVersion, e.task_code || taskCode,
         e.id || '', e.employee || employeeName, e.device_id || terminalId,
-        e.timer_session_id || timerSessionId,
-        e.timer_boot_id || TIMER_BOOT_ID,
+        e.timer_session_id || timerSessionId, e.timer_boot_id || TIMER_BOOT_ID,
         e.elapsed_ms || 0, encodeDetails(e.details || {})
       ].join('|');
     }
@@ -2247,101 +767,89 @@ function doExport() {
       e.nr, e.ts || '', e.dup ? 'DUP' : (e.hit ? 'HIT' : 'MISS'),
       e.task_version || taskVersion, e.task_code || taskCode,
       e.id || '', e.employee || employeeName, e.device_id || terminalId,
-      e.timer_session_id || timerSessionId,
-      e.timer_boot_id || TIMER_BOOT_ID, e.elapsed_ms || 0
+      e.timer_session_id || timerSessionId, e.timer_boot_id || TIMER_BOOT_ID,
+      e.elapsed_ms || 0
     ].join('|');
   }).join('\n');
   const txt = terminalId + '|' + employeeName + '|mixed|' + taskCode +
     '|OOS_EXPORT_V2|' + new Date().toISOString() + '\n' + lines;
-  document.getElementById('exportText').value = txt;
+  $('exportText').value = txt;
   try {
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([txt], {
-      type: 'text/plain;charset=utf-8'
-    }));
-    a.download = 'oos_macro_' + taskCode + '.txt';
+    a.href = URL.createObjectURL(new Blob([txt], {type: 'text/plain;charset=utf-8'}));
+    a.download = 'oos_' + String(terminalId).replace(/[^A-Za-z0-9_-]/g, '') + '_' + taskCode + '.txt';
     document.body.appendChild(a);
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-    alert('Eksport gotowy: ' + rows.length + ' events');
+    toast('Eksport gotowy: ' + rows.length);
+    setTimeout(refocus, 400); setTimeout(refocus, 1800);
   } catch (_) {
-    prompt('Kopiuj:', txt);
+    toast('blad eksportu');
   }
 }
 function setupCodeExport() {
-  let timer = null;
-  let fired = false;
+  let timer = null, fired = false;
   function start(e) {
     fired = false;
     if (e && e.type === 'touchstart') e.preventDefault();
     clearTimeout(timer);
     timer = setTimeout(() => {
       fired = true;
-      const p = prompt('nazmi cancel i ne liz siudy');
-      if (p !== null && String(p).trim() === String(taskCode).trim()) {
-        doExport();
-      } else if (p !== null) {
-        alert('zapraszam do spm');
-      }
+      askCode(p => {
+        if (String(p).trim() === String(taskCode).trim()) doExport();
+        else toast('zapraszam do spm');
+      });
     }, 1200);
   }
-  function stop() {
-    clearTimeout(timer);
-  }
+  function stop() { clearTimeout(timer); }
   taskCodeBox.addEventListener('mousedown', start);
   taskCodeBox.addEventListener('touchstart', start, {passive: false});
-  ['mouseup', 'mouseleave', 'touchend', 'touchcancel']
-    .forEach(ev => taskCodeBox.addEventListener(ev, stop));
-  taskCodeBox.addEventListener('click', e => {
-    if (fired) e.preventDefault();
-  });
+  ['mouseup', 'mouseleave', 'touchend', 'touchcancel'].forEach(ev => taskCodeBox.addEventListener(ev, stop));
+  taskCodeBox.addEventListener('click', e => { if (fired) e.preventDefault(); });
 }
 function clearAll() {
-  if (!confirm('vsio udalit?')) return;
+  const b = $('resetBtn');
+  if (!resetArmed) {
+    resetArmed = true; b.textContent = 'POTWIERDZ?'; b.style.background = '#c62828';
+    clearTimeout(resetT);
+    resetT = setTimeout(() => { resetArmed = false; b.textContent = 'reset'; b.style.background = ''; }, 3000);
+    return;
+  }
+  clearTimeout(resetT); resetArmed = false; b.textContent = 'reset'; b.style.background = '';
   logEvent('visible_log_reset', {});
-  scans.length = 0;
-  counts.clear();
-  document.getElementById('dupWarning').style.display = 'none';
-  try {
-    localStorage.removeItem(scanKey());
-  } catch (_) {}
-  render(false);
-  scanInput.focus();
+  scans.length = 0; counts.clear(); histArr.length = 0;
+  try { localStorage.removeItem(scanKey()); } catch (_) {}
+  renderHist(); showIdle(); updateCounters(false);
+  refocus();
 }
-let clearTimer = null;
-scanInput.addEventListener('input', () => {
-  clearTimeout(clearTimer);
-  if (scanInput.value.trim()) {
-    clearTimer = setTimeout(processScan, 220);
-  }
-});
-scanInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' || e.key === 'Tab') {
-    e.preventDefault();
-    clearTimeout(clearTimer);
-    setTimeout(processScan, 10);
-  }
-});
-window.addEventListener('pagehide', () => {
-  logEvent('page_hide', {});
-  flushJournal();
-});
+$('resetBtn').addEventListener('click', clearAll);
+function showNet() {
+  const el = $('net');
+  if (navigator.onLine === false) { el.textContent = 'OFFLINE - dziala, dane lokalnie'; el.className = 'off'; }
+  else { el.textContent = 'online'; el.className = ''; }
+}
+window.addEventListener('online', () => { showNet(); logEvent('net_online', {}); });
+window.addEventListener('offline', () => { showNet(); logEvent('net_offline', {}); });
+window.addEventListener('pagehide', () => { logEvent('page_hide', {}); flushJournal(); });
 document.addEventListener('visibilitychange', () => {
   logEvent(document.hidden ? 'page_hidden' : 'page_visible', {});
-  if (document.hidden) flushJournal();
-});
-document.getElementById('resetBtn').addEventListener('click', clearAll);
-document.addEventListener('click', e => {
-  if (e.target.closest('#taskCode') || e.target.closest('#resetBtn')) return;
-  scanInput.focus();
+  if (document.hidden) flushJournal(); else { getWake(); setTimeout(keepFocus, 50); }
 });
 setupCodeExport();
 loadLocal();
+showNet();
+showUser();
+showIdle();
+updateCounters(false);
 logEvent('page_open', {href: location.href, ua: navigator.userAgent || ''});
 logEvent('task_loaded', {total: DATA.length, unique: byNr.size});
-render(false);
-setTimeout(() => scanInput.focus(), 30);
+let resumed = false;
+try { resumed = !!(employeeName && terminalId && localStorage.getItem('oos_started_' + taskCode)); } catch (_) {}
+if (resumed) {
+  started = true; startEl.style.display = 'none'; showUser();
+  logEvent('session_resume', {}); keepFocus();
+} else { openStart(); }
 </script>
 </body>
 </html>
