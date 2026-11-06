@@ -63,6 +63,8 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#0b0f1
 #goBtn{width:100%;height:60px;margin-top:18px;font-size:26px;font-weight:900;border:0;border-radius:10px;background:#00c853;color:#fff;}
 #stWarn{margin-top:10px;font-size:13px;color:#ffab40;min-height:16px;}
 #cap{position:fixed;left:0;top:0;width:80px;height:34px;opacity:.01;border:0;padding:0;pointer-events:none;font-size:16px;}
+#kdot{position:fixed;right:5px;top:5px;width:11px;height:11px;border-radius:50%;background:#00e676;opacity:0;pointer-events:none;z-index:9999;}
+#kdot.odd{background:#ffab00;}
 #exportText{position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;}
 #pin{position:fixed;left:0;top:0;right:0;bottom:0;z-index:700;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:16px;}
 #pinBox{width:100%;max-width:320px;text-align:center;background:#16202a;border-radius:12px;padding:16px;font-size:16px;font-weight:800;}
@@ -76,7 +78,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#0b0f1
 <body>
 <div id='app' class='s-idle'>
 <div id='top'>
-<div id='taskCode' title='dlugo przytrzymaj = eksport'>3007</div>
+<div id='taskCode' title='dlugo przytrzymaj = eksport'>8262</div>
 <div id='prog'><div id='progNum'><b id='foundCnt'>0</b><i>/</i><span id='totalCnt'>0</span></div>
 <div id='progLbl'>HIT vs ALL</div></div>
 <div id='user'><div id='userName'>-</div><div id='userTerm'>-</div></div>
@@ -89,6 +91,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#0b0f1
 <button id='resetBtn' type='button'>reset</button></div>
 </div>
 <input id='cap' type='text' autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'>
+<div id='kdot'></div>
 <div id='start'><div id='startBox'>
 <div id='stCode'>----</div><div id='stTotal'></div>
 <label>Imie</label><input id='inName' type='text' autocomplete='off'>
@@ -101,17 +104,10 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#0b0f1
 <div id='toast'></div>
 <textarea id='exportText' readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-11-06_1340";
-const DEFAULT_TASK_CODE = "3007";
-const GEN_LOCAL = "2026-11-06T13:40:55";
+const DEFAULT_TASK_VERSION = "macro_2026-11-06_2000";
+const DEFAULT_TASK_CODE = "8262";
+const GEN_LOCAL = "2026-11-06T20:00:39";
 const DATA = [];
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804872",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
@@ -120,86 +116,9 @@ prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982805086",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982805087",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804585",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982802485",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804597",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO033AP00",
-brand:"RESERVED",
-nr:"2078772358",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078760567",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027589354",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
 nr:"2076754404",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078760679",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804602",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078912287",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -225,37 +144,9 @@ prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804625",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078760684",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
 nr:"2078591459",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804542",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982802476",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -269,28 +160,7 @@ tsu:"MDTPUT"
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2077599139",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
 nr:"2078402114",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804658",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804805",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -323,37 +193,9 @@ prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982802467",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"3027578648",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078911768",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
 loc:"PTO033AP00",
 brand:"RESERVED",
 nr:"2078932129",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078951225",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -367,28 +209,7 @@ tsu:"MDTPUT"
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2078834543",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
 nr:"3027577467",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804665",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804824",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -416,28 +237,7 @@ tsu:"MDTPUT"
 DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
-nr:"2078912040",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
 nr:"2078691874",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804859",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804708",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -445,20 +245,6 @@ DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
 nr:"3027589703",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027590099",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804875",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -477,58 +263,9 @@ prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
 DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804684",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804745",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804867",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804735",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
 loc:"PTO001AP00",
 brand:"RESERVED",
 nr:"2078458921",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804638",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2078760671",
-prio:"PRIORYTET 1",
-tsu:"MDTPUT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2982804599",
 prio:"PRIORYTET 1",
 tsu:"MDTPUT"
 });
@@ -543,20 +280,6 @@ DATA.push({
 loc:"PTO035AP00",
 brand:"RESERVED",
 nr:"3027589615",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO035AP00",
-brand:"RESERVED",
-nr:"2077662442",
-prio:"PRIORYTET 1",
-tsu:"RSORT"
-});
-DATA.push({
-loc:"PTO001AP00",
-brand:"RESERVED",
-nr:"3027589419",
 prio:"PRIORYTET 1",
 tsu:"RSORT"
 });
@@ -1024,20 +747,40 @@ function handleCode0(raw) {
   }
 }
 let lastKeyTs = 0, sinceRefresh = 0, lastTick = performance.now(), skipLag = 0, lastScanTs = 0;
-const st = {enter: 0, empty: 0, ign: 0};
-document.addEventListener('visibilitychange', () => { lastTick = performance.now(); skipLag = 8; });
-document.addEventListener('keydown', () => { lastKeyTs = Date.now(); }, true);
-document.addEventListener('input', () => { lastKeyTs = Date.now(); }, true);
+const st = {enter: 0, empty: 0, ign: 0, keys: 0, inp: 0};
+let kdotT = 0, scanTimes = [], qp = null, visTs = 0;
+document.addEventListener('visibilitychange', () => { lastTick = performance.now(); skipLag = 8; visTs = Date.now(); if (qp) qp.vis++; });
+window.addEventListener('focus', () => { visTs = Date.now(); });
+function kflash(odd) {
+  try {
+    const d = $('kdot'); d.className = odd ? 'odd' : ''; d.style.opacity = 1;
+    clearTimeout(kdotT); kdotT = setTimeout(() => { d.style.opacity = 0; }, 160);
+  } catch (_) {}
+}
+function keyArrived(e, isInput) {
+  const now = Date.now();
+  lastKeyTs = now;
+  if (isInput) st.inp++; else st.keys++;
+  kflash(!isInput && !!e && (e.key === 'Unidentified' || e.keyCode === 229));
+  if (qp) {
+    const endBy = qp.vis > 0 ? 'lock' : ((qp.rebindAt && now - qp.rebindAt < 4000) ? 'rebind' : 'self');
+    logEvent('input_resumed', {quiet_ms: now - qp.start, attempts: qp.attempts, since_rebind_ms: qp.rebindAt ? now - qp.rebindAt : null, ended_by: endBy, vis_changes: qp.vis, key: (e && e.key) ? String(e.key).slice(0, 12) : (isInput ? 'input' : '')});
+    qp = null;
+  }
+}
+document.addEventListener('keydown', e => keyArrived(e, false), true);
+document.addEventListener('input', () => keyArrived(null, true), true);
+['keyup', 'beforeinput', 'compositionupdate'].forEach(ev => document.addEventListener(ev, () => kflash(true), true));
 function handleCode(raw) {
   const t0 = performance.now();
   gotInput = true; clearTimeout(deadT);
   const n0 = scans.length;
-  lastScanTs = Date.now();
+  lastScanTs = Date.now(); scanTimes.push(lastScanTs); if (scanTimes.length > 20) scanTimes.shift();
   handleCode0(raw);
   const d = performance.now() - t0;
   if (scans.length === n0) { st.ign++; logEvent('scan_ignored', {raw: String(raw).slice(0, 30), started, modal: modalOpen}); }
   else { const nl = norm(raw).length; if (nl !== 10 && nl !== 16) logEvent('odd_code', {raw: String(raw).slice(0, 30)}); }
-  if (scans.length > n0 && scans.length % 25 === 0) logEvent('stats', {enter: st.enter, empty: st.empty, ign: st.ign, scans: scans.length});
+  if (scans.length > n0 && scans.length % 25 === 0) logEvent('stats', {enter: st.enter, empty: st.empty, ign: st.ign, keys: st.keys, inp: st.inp, scans: scans.length});
   if (d > 120) logEvent('slow_scan', {ms: Math.round(d), scans: n0});
   if (scans.length > n0 && ++sinceRefresh >= 120) scheduleRefresh();
 }
@@ -1108,6 +851,25 @@ document.addEventListener('keydown', e => {
   gotInput = false; clearTimeout(deadT);
   deadT = setTimeout(() => { if (!gotInput && Date.now() - lastScanTs > 1500) { logEvent('cap_dead', {active: (document.activeElement && document.activeElement.id) || '', hf: document.hasFocus()}); reviveCap(); } }, 600);
 }, true);
+setInterval(() => {
+  try {
+    if (!started || modalOpen || document.hidden || !lastKeyTs) return;
+    const now = Date.now(), base = Math.max(lastKeyTs, visTs), sil = now - base;
+    if (!qp) {
+      if (sil < 10000) return;
+      if (scanTimes.filter(t => t > lastKeyTs - 60000).length < 8) return;
+      qp = {start: base, attempts: 0, vis: 0, rebindAt: 0};
+    }
+    const need = [10000, 30000, 60000][qp.attempts];
+    if (need !== undefined && sil >= need) {
+      if (buf || cap.value) return;
+      qp.attempts++; qp.rebindAt = now;
+      logEvent('input_rebind', {attempt: qp.attempts, silent_ms: sil, active: (document.activeElement && document.activeElement.id) || '', hf: document.hasFocus(), keys: st.keys, inp: st.inp});
+      reviveCap(); setTimeout(refocus, 80);
+      try { window.focus(); } catch (_) {}
+    }
+  } catch (_) {}
+}, 1000);
 let modalOpen = false, pinCb = null, resetT = null, resetArmed = false;
 function toast(t) {
   const el = $('toast'); el.textContent = t; el.style.display = 'block';
@@ -1320,7 +1082,7 @@ showNet();
 showUser();
 showIdle();
 updateCounters(false);
-logEvent('page_open', {href: location.href, ua: navigator.userAgent || '', build: 'v18'});
+logEvent('page_open', {href: location.href, ua: navigator.userAgent || '', build: 'v21'});
 logEvent('task_loaded', {total: DATA.length, unique: byNr.size});
 try { if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (_) {}
 let resumed = false;
