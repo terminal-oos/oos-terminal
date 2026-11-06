@@ -78,7 +78,7 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#0b0f1
 <body>
 <div id='app' class='s-idle'>
 <div id='top'>
-<div id='taskCode' title='dlugo przytrzymaj = eksport'>8262</div>
+<div id='taskCode' title='dlugo przytrzymaj = eksport'>5481</div>
 <div id='prog'><div id='progNum'><b id='foundCnt'>0</b><i>/</i><span id='totalCnt'>0</span></div>
 <div id='progLbl'>HIT vs ALL</div></div>
 <div id='user'><div id='userName'>-</div><div id='userTerm'>-</div></div>
@@ -104,9 +104,9 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:#0b0f1
 <div id='toast'></div>
 <textarea id='exportText' readonly></textarea>
 <script>
-const DEFAULT_TASK_VERSION = "macro_2026-11-06_2000";
-const DEFAULT_TASK_CODE = "8262";
-const GEN_LOCAL = "2026-11-06T20:00:39";
+const DEFAULT_TASK_VERSION = "macro_2026-11-06_2013";
+const DEFAULT_TASK_CODE = "5481";
+const GEN_LOCAL = "2026-11-06T20:13:43";
 const DATA = [];
 DATA.push({
 loc:"PTO035AP00",
@@ -365,6 +365,7 @@ try { timeOff = +localStorage.getItem('oos_time_off') || 0; } catch (_) {}
 try { const g = new Date(GEN_LOCAL).getTime(); if (g && Date.now() + timeOff > g + 3 * 86400000) timeOff = 0; if (g && Date.now() + timeOff < g - 600000) timeOff = g - Date.now(); } catch (_) {}
 function nowMs() { return Date.now() + timeOff; }
 function nowIso() { return new Date(nowMs()).toISOString(); }
+let bootSynced = false;
 function syncTime() {
   try {
     const t0 = Date.now();
@@ -372,6 +373,21 @@ function syncTime() {
       const d = r.headers.get('date'), srv = d ? new Date(d).getTime() : 0;
       if (!srv) return;
       const off = srv - Math.round((t0 + Date.now()) / 2);
+      if (!bootSynced) {
+        bootSynced = true;
+        const delta = off - timeOff;
+        if (delta) {
+          try {
+            const rows = getJournalCache(); let first = -1;
+            for (let i = 0; i < rows.length; i++) {
+              const r = rows[i];
+              if (r.timer_boot_id === TIMER_BOOT_ID) { if (first < 0) first = i; r.ts = new Date(Date.parse(r.ts) + delta).toISOString(); }
+            }
+            if (first >= 0) { jDirty = Math.min(jDirty, first); scheduleJournalSave(); }
+            saveAllChunks();
+          } catch (_) {}
+        }
+      }
       timeOff = off;
       try { localStorage.setItem('oos_time_off', String(off)); } catch (_) {}
       logEvent('time_sync', {off: off});
@@ -753,7 +769,7 @@ document.addEventListener('visibilitychange', () => { lastTick = performance.now
 window.addEventListener('focus', () => { visTs = Date.now(); });
 function kflash(odd) {
   try {
-    const d = $('kdot'); d.className = odd ? 'odd' : ''; d.style.opacity = 1;
+    const d = $('kdot'); d.className = ''; d.style.opacity = 1;
     clearTimeout(kdotT); kdotT = setTimeout(() => { d.style.opacity = 0; }, 160);
   } catch (_) {}
 }
@@ -763,7 +779,7 @@ function keyArrived(e, isInput) {
   if (isInput) st.inp++; else st.keys++;
   kflash(!isInput && !!e && (e.key === 'Unidentified' || e.keyCode === 229));
   if (qp) {
-    const endBy = qp.vis > 0 ? 'lock' : ((qp.rebindAt && now - qp.rebindAt < 4000) ? 'rebind' : 'self');
+    const endBy = qp.vis > 0 ? 'lock' : ((qp.rebindAt && now - qp.rebindAt < 4000) ? (now - qp.start >= 20000 ? 'rebind' : 'rebind_short') : 'self');
     logEvent('input_resumed', {quiet_ms: now - qp.start, attempts: qp.attempts, since_rebind_ms: qp.rebindAt ? now - qp.rebindAt : null, ended_by: endBy, vis_changes: qp.vis, key: (e && e.key) ? String(e.key).slice(0, 12) : (isInput ? 'input' : '')});
     qp = null;
   }
@@ -1082,7 +1098,7 @@ showNet();
 showUser();
 showIdle();
 updateCounters(false);
-logEvent('page_open', {href: location.href, ua: navigator.userAgent || '', build: 'v21'});
+logEvent('page_open', {href: location.href, ua: navigator.userAgent || '', build: 'v22'});
 logEvent('task_loaded', {total: DATA.length, unique: byNr.size});
 try { if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (_) {}
 let resumed = false;
